@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlantFilter, PlantService } from '../plant.service';
 import { PlantSummaryResponse } from '../plant';
 import { Page } from 'src/app/shared/model/page';
-import { LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 
@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 })
 export class PlantSearchComponent {
 
-  statusOptions: any[] = [{label: 'Ativas', value: 'active'}, {label: 'Inativas', value: 'inactive'}];
+  statusOptions: any[] = [{ label: 'Ativas', value: 'active' }, { label: 'Inativas', value: 'inactive' }];
 
   plants: PlantSummaryResponse[] = [];
   totalElements: number = 0;
@@ -21,7 +21,10 @@ export class PlantSearchComponent {
 
   @ViewChild('table') grid!: Table;
 
-  constructor(private plantService: PlantService, private messageService: MessageService) {}
+  constructor(
+    private plantService: PlantService,
+    private messageService: MessageService,
+    private confirmation: ConfirmationService) { }
 
   search(page: number = 0): void {
     this.filter.page = page;
@@ -42,27 +45,39 @@ export class PlantSearchComponent {
   }
 
   inactivate(id: number) {
-    this.plantService.inactivate(id).subscribe({
-      next: res => {
-        this.grid.reset();
-        this.messageService.add({ severity: 'success', detail: 'Planta inativada com sucesso!' });
-      },
-      error: err => {
-        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Planta inativada com sucesso!' });
+    this.confirmation.confirm({
+      message: 'Tem certeza que desena inativar a Planta?',
+      accept: () => {
+        this.plantService.inactivate(id).subscribe({
+          next: res => {
+            this.grid.reset();
+            this.messageService.add({ severity: 'success', detail: 'Planta inativada com sucesso!' });
+          },
+          error: err => {
+            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao inativar a Planta' });
+          }
+        });
       }
-    });
+    })
+
   }
 
   activate(id: number) {
-    this.plantService.activate(id).subscribe({
-      next: res => {
-        this.grid.reset();
-        this.messageService.add({ severity: 'success', detail: 'Planta ativada com sucesso!' });
-      },
-      error: err => {
-        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Planta inativada com sucesso!' });
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja ativar a Planta?',
+      accept: () => {
+        this.plantService.activate(id).subscribe({
+          next: res => {
+            this.grid.reset();
+            this.messageService.add({ severity: 'success', detail: 'Planta ativada com sucesso!' });
+          },
+          error: err => {
+            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao ativar a Planta' });
+          }
+        });
       }
     });
+
   }
 
 }
