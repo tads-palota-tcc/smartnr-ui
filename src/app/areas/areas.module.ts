@@ -9,6 +9,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { AreaFormComponent } from './area-form/area-form.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +19,7 @@ import { AreaFormComponent } from './area-form/area-form.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     ButtonModule,
     TableModule,

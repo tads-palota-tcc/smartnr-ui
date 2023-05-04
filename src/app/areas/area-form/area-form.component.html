@@ -14,22 +14,22 @@
       <label>Código</label>
       <input pInputText type="text" name="code" ngModel #code="ngModel" [required]="true" [minlength]="2"
         [maxlength]="20">
-      <!-- <app-message [control]="code.control" error="required" text="Campo obrigatório"></app-message>
+      <app-message [control]="code.control" error="required" text="Campo obrigatório"></app-message>
       <app-message [control]="code.control" error="minlength"
         text="Mínimo {{code.errors?.['minlength']?.requiredLength}} caracteres"></app-message>
       <app-message [control]="code.control" error="maxlength"
-        text="Mínimo {{code.errors?.['maxlength']?.requiredLength}} caracteres"></app-message> -->
+        text="Mínimo {{code.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
     </div>
 
     <div class="col-12 md:col-9 p-fluid">
       <label>Nome</label>
-      <input pInputText type="text" name="name" ngModel #name="ngModel" [required]="true" [minlength]="2"
+      <input pInputText type="text" name="name" ngModel #name="ngModel" [required]="true" [minlength]="5"
         [maxlength]="40">
-      <!-- <app-message [control]="name.control" error="required" text="Campo obrigatório"></app-message>
+      <app-message [control]="name.control" error="required" text="Campo obrigatório"></app-message>
       <app-message [control]="name.control" error="minlength"
         text="Mínimo {{name.errors?.['minlength']?.requiredLength}} caracteres"></app-message>
       <app-message [control]="name.control" error="maxlength"
-        text="Mínimo {{name.errors?.['maxlength']?.requiredLength}} caracteres"></app-message> -->
+        text="Mínimo {{name.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
     </div>
 
     <div class="col-12 md:col-4 p-fluid">

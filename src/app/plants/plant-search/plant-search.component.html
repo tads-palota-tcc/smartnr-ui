@@ -4,25 +4,28 @@
       <h1>Plantas</h1>
     </div>
   </div>
-  <div class="grid">
-    <div class="col-2 p-fluid">
-      <label for="">Id</label>
-      <input pInputText id="" name="" type="text">
+  
+  <form (submit)="search()">
+    <div class="grid">
+      <div class="col-2 p-fluid">
+        <label for="">Id</label>
+        <input pInputText [(ngModel)]="filter.id" name="id" name="id" type="text">
+      </div>
+      <div class="col-2 p-fluid">
+        <label for="">Código</label>
+        <input pInputText [(ngModel)]="filter.code" name="code" type="text">
+      </div>
+      <div class="col p-fluid">
+        <label for="">Nome</label>
+        <input pInputText [(ngModel)]="filter.name" name="name" type="text">
+      </div>
     </div>
-    <div class="col-2 p-fluid">
-      <label for="">Código</label>
-      <input pInputText id="" name="" type="text">
+    <div class="grid mb-4">
+      <div class="col-2">
+        <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
+      </div>
     </div>
-    <div class="col p-fluid">
-      <label for="">Nome</label>
-      <input pInputText id="" name="" type="text">
-    </div>
-  </div>
-  <div class="grid mb-4">
-    <div class="col-2">
-      <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
-    </div>
-  </div>
+  </form>
 
   <div class="grid">
     <div class="col">
