@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="grid">
+    <div class="col">
+      <h1>Plantas</h1>
+    </div>
+  </div>
+  
+  <form (submit)="search()">
+    <div class="grid">
+      <div class="col-2 p-fluid">
+        <label for="">Id</label>
+        <input pInputText [(ngModel)]="filter.id" name="id" name="id" type="text">
+      </div>
+      <div class="col-2 p-fluid">
+        <label for="">Código</label>
+        <input pInputText [(ngModel)]="filter.code" name="code" type="text">
+      </div>
+      <div class="col-6 p-fluid">
+        <label for="">Nome</label>
+        <input pInputText [(ngModel)]="filter.name" name="name" type="text">
+      </div>
+      <div class="col p-fluid">
+        <label for="">Planta</label>
+        <input pInputText [(ngModel)]="filter.plantCode" name="plantCode" type="text">
+      </div>
+    </div>
+    <div class="grid mb-4">
+      <div class="col-2">
+        <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="grid">
+    <div class="col">
+      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="areas" [paginator]="true" [rows]="5" [responsive]="true"
+        responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Planta</th>
+            <th>Status</th>
+            <th class="col-actions-header">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-area>
+          <tr>
+            <td>
+              <span class="p-column-title">Id</span>
+              {{ area.id }}
+            </td>
+            <td>
+              <span class="p-column-title">Código</span>
+              {{ area.code }}
+            </td>
+            <td>
+              <span class="p-column-title">Nome</span>
+              {{ area.name }}
+            </td>
+            <td>
+              <span class="p-column-title">Planta</span>
+              {{ area.plant.code }}
+            </td>
+            <td>
+              <span class="p-column-title">Status</span>
+              {{ area.active ? 'Ativo' : 'Inativo' }}
+            </td>
+            <td class="col-actions">
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <button pButton icon="pi pi-plus" label="Nova Área" pTooltip="Nova Área"
+        tooltipPosition="top"></button>
+    </div>
+  </div>
+</div>

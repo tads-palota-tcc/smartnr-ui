@@ -11,12 +11,14 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { AreaFormComponent } from './area-form/area-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { AreaSearchComponent } from './area-search/area-search.component';
 
 
 
 @NgModule({
   declarations: [
-    AreaFormComponent
+    AreaFormComponent,
+    AreaSearchComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { SharedModule } from '../shared/shared.module';
     AutoCompleteModule
   ],
   exports: [
-    AreaFormComponent
+    AreaFormComponent,
+    AreaSearchComponent
   ]
 })
 export class AreasModule { }
