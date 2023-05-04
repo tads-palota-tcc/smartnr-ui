@@ -1,0 +1,101 @@
+<div class="container">
+
+  <div class="grid">
+
+    <div class="col-12">
+      <h1>Cadastro de Planta</h1>
+    </div>
+
+    <div class="col-12">
+      <h3>Dados gerais</h3>
+    </div>
+
+    <div class="col-12 md:col-3 p-fluid">
+      <label>Código</label>
+      <input pInputText type="text" name="code" ngModel #code="ngModel" [required]="true" [minlength]="2">
+      <app-message [control]="code.control" error="required" text="Campo obrigatório"></app-message>
+      <app-message [control]="code.control" error="minlength"
+        text="Mínimo {{code.errors?.['minlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-9 p-fluid">
+      <label>Nome</label>
+      <input pInputText type="text" name="name" ngModel #name="ngModel" [required]="true" [minlength]="4"
+        [maxlength]="60">
+      <app-message [control]="name.control" error="required" text="Campo obrigatório"></app-message>
+      <app-message [control]="name.control" error="minlength"
+        text="Mínimo {{name.errors?.['minlength']?.requiredLength}} caracteres"></app-message>
+      <app-message [control]="name.control" error="maxlength"
+        text="Máximo {{name.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12">
+      <h3>Endereço</h3>
+    </div>
+
+    <div class="col-12 md:col-4 p-fluid">
+      <label>Rua</label>
+      <input pInputText type="text" name="streetName" ngModel #streetName="ngModel" [maxlength]="40">
+      <app-message [control]="streetName.control" error="maxlength"
+        text="Máximo {{streetName.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-2 p-fluid">
+      <label>Número</label>
+      <input pInputText type="text" name="number" ngModel #number="ngModel" [maxlength]="10">
+      <app-message [control]="number.control" error="maxlength"
+        text="Máximo {{number.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-2 p-fluid">
+      <label>Complemento</label>
+      <input pInputText type="text" name="complement" ngModel #complement="ngModel" [maxlength]="20">
+      <app-message [control]="complement.control" error="maxlength"
+        text="Máximo {{complement.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-4 p-fluid">
+      <label>Bairro</label>
+      <input pInputText type="text" name="neigborhood" ngModel #neigborhood="ngModel" [maxlength]="40">
+      <app-message [control]="neigborhood.control" error="maxlength"
+        text="Máximo {{neigborhood.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-4 p-fluid">
+      <label>Cidade</label>
+      <input pInputText type="text" name="city" ngModel #city="ngModel" [required]="true" [maxlength]="40">
+      <app-message [control]="city.control" error="required" text="Campo obrigatório"></app-message>
+      <app-message [control]="city.control" error="maxlength"
+        text="Máximo {{city.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+    </div>
+
+    <div class="col-12 md:col-3 p-fluid">
+      <label>Estado</label>
+      <p-dropdown [options]="estados" [(ngModel)]="estadoSelecionado" optionLabel="name" optionValue="code"
+        placeholder="Selecione um estado" [filter]="true" [required]="true"></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-2 p-fluid">
+      <label>CEP</label>
+      <p-inputMask mask="99.999-999" [unmask]="true"></p-inputMask>
+    </div>
+
+    <div class="col-12">
+      <h3>Situação</h3>
+    </div>
+
+    <div class="col-6">
+      <div class="flex align-items-center gap-1">
+        <p-checkbox [(ngModel)]="ativo" [binary]="true"></p-checkbox>
+        <label>Ativa</label>
+      </div>
+    </div>
+
+    <div class="col-12 flex align-items-center justify-content-start mt-4">
+      <button pButton type="submit">Salvar</button>
+      <button class="p-button-info" pButton type="button">Novo</button>
+      <a href="javascript:;">Voltar para a listagem</a>
+    </div>
+
+  </div>
+</div>
