@@ -9,8 +9,8 @@ import { AreaFilter, AreaService } from '../area.service';
 export class AreaSearchComponent implements OnInit {
 
   areas = [];
-
-  filter: AreaFilter = {id: '', code: '', name: '', status: 'active', plantCode: ''}
+  totalElements: number = 0;
+  filter = new AreaFilter();
 
   constructor(private areaService: AreaService) {}
 
@@ -18,11 +18,12 @@ export class AreaSearchComponent implements OnInit {
     this.search()
   }
 
-  search(): void {
-    console.log(this.filter)
+  search(page: number = 0): void {
+    this.filter.page = page;
     this.areaService.search(this.filter).subscribe({
       next: res => {
-        this.areas = res.content
+        this.areas = res.content;
+        this.totalElements = res.totalElements;
       },
       error: err => {
         alert(err.error.userMessage || 'Aconteceu um erro inesperado no sistema.')
