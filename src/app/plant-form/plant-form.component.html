@@ -12,7 +12,7 @@
 
     <div class="col-12 md:col-3 p-fluid">
       <label>Código</label>
-      <input pInputText type="text" name="code" ngModel #code="ngModel" [required]="true" [minlength]="2">
+      <input pInputText type="text" name="code" ngModel #code="ngModel" [required]="true" [minlength]="2" [maxlength]="10">
       <app-message [control]="code.control" error="required" text="Campo obrigatório"></app-message>
       <app-message [control]="code.control" error="minlength"
         text="Mínimo {{code.errors?.['minlength']?.requiredLength}} caracteres"></app-message>
