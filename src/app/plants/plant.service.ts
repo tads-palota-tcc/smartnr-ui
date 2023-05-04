@@ -46,4 +46,13 @@ export class PlantService {
   findTopPlants(code: string): Observable<any[]> {
     return this.http.get<Observable<any>[]>(`${this.plantsUrl}/top10?code=${code}`)
   }
+
+  inactivate(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.plantsUrl}/${id}/inactivate`, {});
+  }
+
+  activate(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.plantsUrl}/${id}/activate`, {});
+  }
+
 }

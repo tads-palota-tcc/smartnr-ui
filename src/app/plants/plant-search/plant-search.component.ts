@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlantFilter, PlantService } from '../plant.service';
 import { PlantSummaryResponse } from '../plant';
 import { Page } from 'src/app/shared/model/page';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-plant-search',
@@ -14,6 +15,8 @@ export class PlantSearchComponent {
   plants: PlantSummaryResponse[] = [];
   totalElements: number = 0;
   filter = new PlantFilter()
+
+  @ViewChild('table') grid!: Table;
 
   constructor(private plantService: PlantService) {}
 
@@ -34,4 +37,16 @@ export class PlantSearchComponent {
     const page = event!.first! / event!.rows!
     this.search(page);
   }
+
+  inactivate(id: number) {
+    this.plantService.inactivate(id).subscribe({
+      next: res => {
+        this.grid.reset();
+      },
+      error: err => {
+        alert(err.error.userMessage || 'Erro ao inativar registro');
+      }
+    });
+  }
+
 }
