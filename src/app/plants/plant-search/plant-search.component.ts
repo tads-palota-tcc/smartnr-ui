@@ -12,6 +12,8 @@ import { Table } from 'primeng/table';
 })
 export class PlantSearchComponent {
 
+  statusOptions: any[] = [{label: 'Ativas', value: 'active'}, {label: 'Inativas', value: 'inactive'}];
+
   plants: PlantSummaryResponse[] = [];
   totalElements: number = 0;
   filter = new PlantFilter()
@@ -45,6 +47,17 @@ export class PlantSearchComponent {
       },
       error: err => {
         alert(err.error.userMessage || 'Erro ao inativar registro');
+      }
+    });
+  }
+
+  activate(id: number) {
+    this.plantService.activate(id).subscribe({
+      next: res => {
+        this.grid.reset();
+      },
+      error: err => {
+        alert(err.error.userMessage || 'Erro ao ativar registro');
       }
     });
   }
