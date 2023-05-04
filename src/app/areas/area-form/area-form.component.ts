@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PlantService } from 'src/app/plants/plant.service';
 
 @Component({
   selector: 'app-area-form',
@@ -11,12 +12,15 @@ export class AreaFormComponent {
 
   plantaSelecionada!: number;
 
-  plantas = [
-    {code: 'RGD1', id: 1, name: 'Rio Grande 1'},
-    {code: 'RGD2', id: 2, name: 'Rio Grande 2'},
-    {code: 'PEL1', id: 3, name: 'Pelotas 1'},
-    {code: 'PEL2', id: 4, name: 'Pelotas 2'},
-    {code: 'POA1', id: 5, name: 'Porto Alegre 1'},
-    {code: 'POA2', id: 6, name: 'Porto Alegre 2'},
-  ]
+  constructor(private plantService: PlantService) { }
+
+  plants: any[] = []
+
+  atualizaLista(event: string) {
+    this.plantService.findTopPlants(event).subscribe({
+      next: res => {
+        this.plants = res;
+      }
+    })
+  }
 }

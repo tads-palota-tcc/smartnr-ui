@@ -32,12 +32,9 @@
         text="Mínimo {{name.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
     </div>
 
-    <div class="col-12 md:col-4 p-fluid">
+    <div class="col-12 md:col-3 p-fluid">
       <label>Planta</label>
-      <p-dropdown [options]="plantas" [(ngModel)]="plantaSelecionada" optionLabel="code" optionValue="id"
-        placeholder="Selecione uma Planta" [filter]="true" [required]="true"></p-dropdown>
-    </div>
-
+      <p-autoComplete [(ngModel)]="plantaSelecionada" [dropdown]="true" [suggestions]="plants" [forceSelection]="true" [required]="true" (completeMethod)="atualizaLista($event.query)" field="code"></p-autoComplete>
     <div class="col-12">
       <h3>Situação</h3>
     </div>

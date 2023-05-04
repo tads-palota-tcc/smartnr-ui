@@ -7,6 +7,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { AreaFormComponent } from './area-form/area-form.component';
 import { SharedModule } from '../shared/shared.module';
@@ -26,7 +27,8 @@ import { SharedModule } from '../shared/shared.module';
     TooltipModule,
     InputTextModule,
     CheckboxModule,
-    DropdownModule
+    DropdownModule,
+    AutoCompleteModule
   ],
   exports: [
     AreaFormComponent

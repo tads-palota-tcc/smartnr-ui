@@ -32,4 +32,8 @@ export class PlantService {
 
     return this.http.get<any>(this.plantsUrl, {params})
   }
+
+  findTopPlants(code: string): Observable<any[]> {
+    return this.http.get<Observable<any>[]>(`${this.plantsUrl}/top10?code=${code}`)
+  }
 }
