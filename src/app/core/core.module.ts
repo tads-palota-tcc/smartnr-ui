@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
@@ -9,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
   imports: [
     CommonModule
   ],
-  exports: [NavbarComponent]
+  exports: [NavbarComponent],
+  providers: [ErrorHandlerService]
 })
 export class CoreModule { }

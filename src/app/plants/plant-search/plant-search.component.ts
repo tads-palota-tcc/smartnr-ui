@@ -5,6 +5,7 @@ import { Page } from 'src/app/shared/model/page';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-plant-search',
@@ -24,7 +25,8 @@ export class PlantSearchComponent {
   constructor(
     private plantService: PlantService,
     private messageService: MessageService,
-    private confirmation: ConfirmationService) { }
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService) { }
 
   search(page: number = 0): void {
     this.filter.page = page;
@@ -34,7 +36,7 @@ export class PlantSearchComponent {
         this.totalElements = res.totalElements;
       },
       error: err => {
-        alert(err.error.userMessage || 'Aconteceu um erro inesperado no sistema.')
+        this.errorHandler.handle(err)
       }
     })
   }
@@ -54,7 +56,7 @@ export class PlantSearchComponent {
             this.messageService.add({ severity: 'success', detail: 'Planta inativada com sucesso!' });
           },
           error: err => {
-            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao inativar a Planta' });
+            this.errorHandler.handle(err);
           }
         });
       }
@@ -72,7 +74,7 @@ export class PlantSearchComponent {
             this.messageService.add({ severity: 'success', detail: 'Planta ativada com sucesso!' });
           },
           error: err => {
-            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao ativar a Planta' });
+            this.errorHandler.handle(err);
           }
         });
       }
