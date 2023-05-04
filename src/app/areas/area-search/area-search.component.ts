@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AreaFilter, AreaService } from '../area.service';
 import { Table } from 'primeng/table';
 import { LazyLoadEvent } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-area-search',
@@ -18,7 +19,7 @@ export class AreaSearchComponent implements OnInit {
 
   @ViewChild('table') grid!: Table;
 
-  constructor(private areaService: AreaService) {}
+  constructor(private areaService: AreaService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.search()
@@ -46,9 +47,11 @@ export class AreaSearchComponent implements OnInit {
     this.areaService.inactivate(id).subscribe({
       next: res => {
         this.grid.reset();
+        this.messageService.add({ severity: 'success', detail: 'Área inativada com sucesso!' });
       },
       error: err => {
         alert(err.error.userMessage || 'Erro ao inativar registro');
+        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao inativar registro' });
       }
     });
   }
@@ -57,9 +60,10 @@ export class AreaSearchComponent implements OnInit {
     this.areaService.activate(id).subscribe({
       next: res => {
         this.grid.reset();
+        this.messageService.add({ severity: 'success', detail: 'Área ativada com sucesso!' });
       },
       error: err => {
-        alert(err.error.userMessage || 'Erro ao ativar registro');
+        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao ativar registro' });
       }
     });
   }

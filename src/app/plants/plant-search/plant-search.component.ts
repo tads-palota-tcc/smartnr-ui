@@ -4,6 +4,7 @@ import { PlantSummaryResponse } from '../plant';
 import { Page } from 'src/app/shared/model/page';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-plant-search',
@@ -20,7 +21,7 @@ export class PlantSearchComponent {
 
   @ViewChild('table') grid!: Table;
 
-  constructor(private plantService: PlantService) {}
+  constructor(private plantService: PlantService, private messageService: MessageService) {}
 
   search(page: number = 0): void {
     this.filter.page = page;
@@ -44,9 +45,10 @@ export class PlantSearchComponent {
     this.plantService.inactivate(id).subscribe({
       next: res => {
         this.grid.reset();
+        this.messageService.add({ severity: 'success', detail: 'Planta inativada com sucesso!' });
       },
       error: err => {
-        alert(err.error.userMessage || 'Erro ao inativar registro');
+        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Planta inativada com sucesso!' });
       }
     });
   }
@@ -55,9 +57,10 @@ export class PlantSearchComponent {
     this.plantService.activate(id).subscribe({
       next: res => {
         this.grid.reset();
+        this.messageService.add({ severity: 'success', detail: 'Planta ativada com sucesso!' });
       },
       error: err => {
-        alert(err.error.userMessage || 'Erro ao ativar registro');
+        this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Planta inativada com sucesso!' });
       }
     });
   }
