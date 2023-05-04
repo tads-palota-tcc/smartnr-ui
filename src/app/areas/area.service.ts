@@ -49,4 +49,12 @@ export class AreaService {
   findTopAreas(code: string): Observable<any[]> {
     return this.http.get<Observable<any>[]>(`${this.areasUrl}/top10?code=${code}`)
   }
+
+  inactivate(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.areasUrl}/${id}/inactivate`, {});
+  }
+
+  activate(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.areasUrl}/${id}/activate`, {});
+  }
 }

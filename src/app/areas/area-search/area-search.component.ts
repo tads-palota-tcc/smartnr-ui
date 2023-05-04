@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AreaFilter, AreaService } from '../area.service';
+import { Table } from 'primeng/table';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-area-search',
@@ -8,9 +10,13 @@ import { AreaFilter, AreaService } from '../area.service';
 })
 export class AreaSearchComponent implements OnInit {
 
+  statusOptions: any[] = [{label: 'Ativas', value: 'active'}, {label: 'Inativas', value: 'inactive'}];
+
   areas = [];
   totalElements: number = 0;
   filter = new AreaFilter();
+
+  @ViewChild('table') grid!: Table;
 
   constructor(private areaService: AreaService) {}
 
@@ -29,5 +35,32 @@ export class AreaSearchComponent implements OnInit {
         alert(err.error.userMessage || 'Aconteceu um erro inesperado no sistema.')
       }
     })
+  }
+
+  onChangePage(event: LazyLoadEvent) {
+    const page = event!.first! / event!.rows!
+    this.search(page);
+  }
+
+  inactivate(id: number) {
+    this.areaService.inactivate(id).subscribe({
+      next: res => {
+        this.grid.reset();
+      },
+      error: err => {
+        alert(err.error.userMessage || 'Erro ao inativar registro');
+      }
+    });
+  }
+
+  activate(id: number) {
+    this.areaService.activate(id).subscribe({
+      next: res => {
+        this.grid.reset();
+      },
+      error: err => {
+        alert(err.error.userMessage || 'Erro ao ativar registro');
+      }
+    });
   }
 }

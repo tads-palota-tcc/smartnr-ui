@@ -1,14 +1,13 @@
 <div class="container">
-  <div class="grid">
+  <div class="grid flex flex-row align-items-center">
     <div class="col">
       <h1>Plantas</h1>
     </div>
-    <div class="col-4 md:col-2">
-      <button pButton icon="pi pi-plus" label="Nova Planta" pTooltip="Nova Planta"
-        tooltipPosition="top"></button>
+    <div class="col-4 md:col-2 p-fluid">
+      <button pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Planta" tooltipPosition="top"></button>
     </div>
   </div>
-  
+
   <form (submit)="search()">
     <div class="grid">
       <div class="col-12 md:col-2 p-fluid">
@@ -27,7 +26,8 @@
     <div class="grid mb-4">
       <div class="md:col"></div>
       <div class="col-6 md:col-2 p-fluid">
-        <p-selectButton (onOptionClick)="search()" [options]="statusOptions" [(ngModel)]="filter.status" name="status" optionLabel="label" optionValue="value"></p-selectButton>
+        <p-selectButton (onOptionClick)="search()" [options]="statusOptions" [(ngModel)]="filter.status" name="status"
+          optionLabel="label" optionValue="value"></p-selectButton>
       </div>
       <div class="col-6 md:col-2 p-fluid">
         <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
@@ -37,19 +37,9 @@
 
   <div class="grid">
     <div class="col">
-      <p-table
-        styleClass="p-datatable-sm p-datatable-gridlines"
-        [value]="plants"
-        [paginator]="true"
-        [lazy]="true"
-        [totalRecords]="totalElements"
-        (onLazyLoad)="onChangePage($event)"
-        [rows]="5"
-        [responsive]="true"
-        responsiveLayout='stack'
-        [breakpoint]="'960px'"
-        [tableStyle]="{ 'min-width': '1rem' }"
-        #table>
+      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="plants" [paginator]="true" [lazy]="true"
+        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" [responsive]="true"
+        responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
@@ -79,18 +69,14 @@
             </td>
             <td class="col-actions">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button *ngIf="filter.status === 'active'" pButton (click)="inactivate(plant.id)" icon="pi pi-trash" pTooltip="Inativar" tooltipPosition="top"></button>
-              <button *ngIf="filter.status === 'inactive'" pButton (click)="activate(plant.id)" icon="pi pi-undo" pTooltip="Ativar" tooltipPosition="top"></button>
+              <button *ngIf="filter.status === 'active'" pButton (click)="inactivate(plant.id)" icon="pi pi-trash"
+                pTooltip="Inativar" tooltipPosition="top"></button>
+              <button *ngIf="filter.status === 'inactive'" pButton (click)="activate(plant.id)" icon="pi pi-undo"
+                pTooltip="Ativar" tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>
       </p-table>
-    </div>
-  </div>
-  <div class="grid">
-    <div class="col">
-      <button pButton icon="pi pi-plus" label="Nova Planta" pTooltip="Nova Planta"
-        tooltipPosition="top"></button>
     </div>
   </div>
 </div>
