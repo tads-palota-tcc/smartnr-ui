@@ -3,6 +3,7 @@ import { AreaFilter, AreaService } from '../area.service';
 import { Table } from 'primeng/table';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-area-search',
@@ -22,7 +23,8 @@ export class AreaSearchComponent implements OnInit {
   constructor(
     private areaService: AreaService,
     private messageService: MessageService,
-    private confirmation: ConfirmationService) {}
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService) {}
 
   ngOnInit(): void {
     this.search()
@@ -36,7 +38,7 @@ export class AreaSearchComponent implements OnInit {
         this.totalElements = res.totalElements;
       },
       error: err => {
-        alert(err.error.userMessage || 'Aconteceu um erro inesperado no sistema.')
+        this.errorHandler.handle(err);
       }
     })
   }
@@ -56,7 +58,7 @@ export class AreaSearchComponent implements OnInit {
             this.messageService.add({ severity: 'success', detail: 'Área inativada com sucesso!' });
           },
           error: err => {
-            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao inativar a Área' });
+            this.errorHandler.handle(err);
           }
         });
       }
@@ -74,7 +76,7 @@ export class AreaSearchComponent implements OnInit {
             this.messageService.add({ severity: 'success', detail: 'Área ativada com sucesso!' });
           },
           error: err => {
-            this.messageService.add({ severity: 'error', detail: err.error.userMessage || 'Erro ao ativar a Área' });
+            this.errorHandler.handle(err);
           }
         });
       }
