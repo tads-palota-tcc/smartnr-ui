@@ -29,7 +29,15 @@
 
   <div class="grid">
     <div class="col">
-      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="plants" [paginator]="true" [rows]="5" [responsive]="true"
+      <p-table
+        styleClass="p-datatable-sm p-datatable-gridlines"
+        [value]="plants"
+        [paginator]="true"
+        [lazy]="true"
+        [totalRecords]="totalElements"
+        (onLazyLoad)="onChangePage($event)"
+        [rows]="5"
+        [responsive]="true"
         responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }">
         <ng-template pTemplate="header">
           <tr>
