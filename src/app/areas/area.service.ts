@@ -51,8 +51,16 @@ export class AreaService {
     return this.http.get<any>(this.areasUrl, {params})
   }
 
+  findById(id: number): Observable<Area> {
+    return this.http.get<Area>(`${this.areasUrl}/${id}`);
+  }
+
   findTopAreas(code: string): Observable<any[]> {
     return this.http.get<Observable<any>[]>(`${this.areasUrl}/top10?code=${code}`)
+  }
+
+  update(id: number, area: Area): Observable<Area> {
+    return this.http.put<Area>(`${this.areasUrl}/${id}`, area);
   }
 
   inactivate(id: number): Observable<void> {

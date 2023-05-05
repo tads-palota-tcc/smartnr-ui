@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./area-form.component.scss']
 })
 export class AreaFormComponent implements OnInit {
-  
+
   plants: any[] = []
 
   teste!: any;
@@ -29,7 +29,20 @@ export class AreaFormComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    console.log(id);
+    if (id) {
+      this.areaService.findById(id).subscribe({
+        next: (res) => {
+          this.area = res;
+        },
+        error: (err) => {
+          this.errorHandler.handle(err);
+        }
+      })
+    }
+  }
+
+  get updating(): boolean {
+    return Boolean(this.area.id);
   }
 
   atualizaLista(event: string) {
@@ -41,6 +54,14 @@ export class AreaFormComponent implements OnInit {
   }
 
   save(form: NgForm) {
+    if (this.area.id) {
+      this.update(this.area.id, form);
+    } else {
+      this.create(form);
+    }
+  }
+
+  private create(form: NgForm) {
     this.areaService.create(this.area).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: `Área ${res.code} cadastrada com Id=${res.id}`});
@@ -51,4 +72,16 @@ export class AreaFormComponent implements OnInit {
       }
     });
   }
+
+  private update(id: number, form: NgForm) {
+    this.areaService.update(id, this.area).subscribe({
+      next: (res) => {
+        this.messageService.add({severity: 'success', detail: 'Área atualizada com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
 }
