@@ -11,9 +11,13 @@
 
   <ul [ngClass]="showMenu ? 'navbar-menu' : 'navbar-menu-hidden'">
     <li class="navbar-user">José da Silva</li>
-    <li class="navbar-menu-item"><a href="#">Lançamentos</a></li>
-    <li class="navbar-menu-item"><a href="#">Pessoas</a></li>
-    <li class="navbar-menu-item"><a href="#">Logout</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/areas">Áreas</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/devices">Dispositivo</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/calibrations">Calibrações</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/inspections">Inspeções</a></li>
+    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/pendencies">Pendências</a></li>
   </ul>
 
 </nav>

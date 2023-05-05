@@ -13,6 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from '../shared/shared.module';
 import { PlantFormComponent } from './plant-form/plant-form.component';
 import { PlantSearchComponent } from './plant-search/plant-search.component';
+import { PlantsRoutingModule } from './plants-routing.module';
 
 
 
@@ -23,6 +24,7 @@ import { PlantSearchComponent } from './plant-search/plant-search.component';
   ],
   imports: [
     CommonModule,
+    PlantsRoutingModule,
     SharedModule,
     FormsModule,
     ButtonModule,

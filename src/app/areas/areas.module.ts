@@ -13,6 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SharedModule } from '../shared/shared.module';
 import { AreaFormComponent } from './area-form/area-form.component';
 import { AreaSearchComponent } from './area-search/area-search.component';
+import { AreasRoutingModule } from './areas-routing.module';
 
 
 
@@ -23,6 +24,7 @@ import { AreaSearchComponent } from './area-search/area-search.component';
   ],
   imports: [
     CommonModule,
+    AreasRoutingModule,
     SharedModule,
     FormsModule,
     ButtonModule,
