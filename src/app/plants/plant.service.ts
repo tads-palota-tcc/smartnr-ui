@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Page } from '../shared/model/page';
 import { PlantSummaryResponse } from './plant';
+import { Plant } from '../core/model/plant';
 
 export class PlantFilter {
   id?: string;
@@ -21,6 +22,11 @@ export class PlantService {
   plantsUrl = 'http://localhost:8080/plants'
 
   constructor(private http: HttpClient) { }
+
+  create(plant: Plant): Observable<Plant> {
+    console.log('Service' + plant)
+    return this.http.post<Plant>(`${this.plantsUrl}`, plant);
+  }
 
   search(filter: PlantFilter): Observable<any> {
     let params = new HttpParams()
