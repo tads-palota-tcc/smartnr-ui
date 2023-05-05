@@ -26,10 +26,31 @@ export class PlantFormComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    console.log(id);
+    if (id) {
+      this.plantService.findById(id).subscribe({
+        next: (res) => {
+          this.plant = res;
+        },
+        error: (err) => {
+          this.errorHandler.handle(err);
+        }
+      })
+    }
+  }
+
+  get updating(): boolean {
+    return Boolean(this.plant.id);
   }
 
   save(form: NgForm) {
+    if (this.plant.id) {
+      this.update(this.plant.id, form);
+    } else {
+      this.create(form);
+    }
+  }
+
+  private create(form: NgForm) {
     this.plantService.create(this.plant).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: `Planta ${res.code} cadastrada com Id=${res.id}`});
@@ -38,6 +59,17 @@ export class PlantFormComponent implements OnInit {
       error: (err) => {
         this.errorHandler.handle(err);
       }
-    })
+    });
+  }
+
+  private update(id: number, form: NgForm) {
+    this.plantService.update(id, this.plant).subscribe({
+      next: (res) => {
+        this.messageService.add({severity: 'success', detail: 'Planta atualizada com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
   }
 }

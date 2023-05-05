@@ -48,8 +48,16 @@ export class PlantService {
     return this.http.get<any>(this.plantsUrl, {params})
   }
 
+  findById(id: number): Observable<Plant> {
+    return this.http.get<Plant>(`${this.plantsUrl}/${id}`);
+  }
+
   findTopPlants(code: string): Observable<any[]> {
     return this.http.get<Observable<any>[]>(`${this.plantsUrl}/top10?code=${code}`)
+  }
+
+  update(id: number, plant: Plant): Observable<Plant> {
+    return this.http.put<Plant>(`${this.plantsUrl}/${id}`, plant);
   }
 
   inactivate(id: number): Observable<void> {
