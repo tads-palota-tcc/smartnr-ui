@@ -5,7 +5,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Area } from 'src/app/core/model/area';
 import { PlantService } from 'src/app/plants/plant.service';
 import { AreaService } from '../area.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-area-form',
@@ -25,7 +25,8 @@ export class AreaFormComponent implements OnInit {
     private plantService: PlantService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -65,7 +66,7 @@ export class AreaFormComponent implements OnInit {
     this.areaService.create(this.area).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: `Área ${res.code} cadastrada com Id=${res.id}`});
-        form.reset();
+        this.router.navigate([`/areas/${res.id}`])
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -82,6 +83,12 @@ export class AreaFormComponent implements OnInit {
         this.errorHandler.handle(err);
       }
     });
+  }
+
+  newArea(form: NgForm) {
+    form.reset();
+    this.area = new Area();
+    this.router.navigate(['/areas/create']);
   }
 
 }

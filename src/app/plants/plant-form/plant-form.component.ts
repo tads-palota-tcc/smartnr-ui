@@ -5,7 +5,7 @@ import { BRAZILIAN_STATES } from 'src/app/shared/utils/states';
 import { PlantService } from '../plant.service';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-plant-form',
@@ -22,7 +22,8 @@ export class PlantFormComponent implements OnInit {
     private plantService: PlantService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -54,7 +55,8 @@ export class PlantFormComponent implements OnInit {
     this.plantService.create(this.plant).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: `Planta ${res.code} cadastrada com Id=${res.id}`});
-        form.reset();
+        // form.reset();
+        this.router.navigate([`/plants/${res.id}`]);
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -71,5 +73,11 @@ export class PlantFormComponent implements OnInit {
         this.errorHandler.handle(err);
       }
     });
+  }
+
+  newPlant(form: NgForm) {
+    form.reset();
+    this.plant = new Plant();
+    this.router.navigate(['/plants/create']);
   }
 }

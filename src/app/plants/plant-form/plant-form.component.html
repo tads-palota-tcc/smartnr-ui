@@ -100,7 +100,7 @@
     <div class="grid">
       <div class="col-12 flex align-items-center justify-content-start mt-4">
         <button [disabled]="!f.valid" pButton type="submit">Salvar</button>
-        <a class="p-button-info ml-1" routerLink="/plants/{{plant.id}}" pButton type="button">Novo</a>
+        <button (click)="newPlant(f)" class="p-button-info ml-1" pButton type="button">Novo</button>
         <a class="ml-1" routerLink="/plants">Voltar para a listagem</a>
       </div>
     </div>
