@@ -16,6 +16,10 @@ const routes: Routes = [
     component: PageNotFoundComponent
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
+  },
+  {
     path: '**',
     redirectTo: 'page-not-found'
   }

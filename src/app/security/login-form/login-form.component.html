@@ -1,0 +1,22 @@
+<div class="form-login flex flex-column align-items-center justify-content-center">
+  <h1>Login</h1>
+
+  <form (submit)="login()" autocomplete="off">
+    <div class="grid flex flex-column justify-content-center align-items-center">
+      <div class="col-12 p-fluid">
+        <input class="login-input" type="text" name="id" [(ngModel)]="id" pInputText
+          placeholder="Id de usuário" [required]="true"/>
+      </div>
+      <div class="col-12 p-fluid">
+        <p-password class="login-input" name="password" [(ngModel)]="password"
+          [toggleMask]="true" placeholder="Senha" [feedback]="false" [required]="true"></p-password>
+      </div>
+    </div>
+    <div class="grid mt-4">
+      <div class="col-12 p-fluid">
+        <p-button type="submit" label="Entrar"></p-button>
+      </div>
+    </div>
+  </form>
+
+</div>
