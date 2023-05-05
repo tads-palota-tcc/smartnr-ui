@@ -16,7 +16,6 @@ import { AreaSearchComponent } from './area-search/area-search.component';
 import { AreasRoutingModule } from './areas-routing.module';
 
 
-
 @NgModule({
   declarations: [
     AreaFormComponent,
@@ -36,9 +35,6 @@ import { AreasRoutingModule } from './areas-routing.module';
     AutoCompleteModule,
     SelectButtonModule
   ],
-  exports: [
-    AreaFormComponent,
-    AreaSearchComponent
-  ]
+  exports: []
 })
 export class AreasModule { }

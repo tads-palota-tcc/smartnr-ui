@@ -36,9 +36,6 @@ import { PlantsRoutingModule } from './plants-routing.module';
     InputMaskModule,
     SelectButtonModule
   ],
-  exports: [
-    PlantFormComponent,
-    PlantSearchComponent
-  ]
+  exports: []
 })
 export class PlantsModule { }
