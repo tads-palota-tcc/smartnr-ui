@@ -4,6 +4,7 @@ import { Table } from 'primeng/table';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-area-search',
@@ -24,9 +25,11 @@ export class AreaSearchComponent implements OnInit {
     private areaService: AreaService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
-    private errorHandler: ErrorHandlerService) {}
+    private errorHandler: ErrorHandlerService,
+    private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Pesquisa de Área');
     this.search()
   }
 

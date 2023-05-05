@@ -5,6 +5,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -15,6 +16,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
     RouterModule
   ],
   exports: [NavbarComponent],
-  providers: [ErrorHandlerService]
+  providers: [ErrorHandlerService, Title]
 })
 export class CoreModule { }

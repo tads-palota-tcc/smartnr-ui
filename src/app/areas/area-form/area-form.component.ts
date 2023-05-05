@@ -6,6 +6,7 @@ import { Area } from 'src/app/core/model/area';
 import { PlantService } from 'src/app/plants/plant.service';
 import { AreaService } from '../area.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-area-form',
@@ -26,11 +27,14 @@ export class AreaFormComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Cadastro de Área');
     const id = this.route.snapshot.params['id'];
     if (id) {
+      this.title.setTitle('Atualização de Área')
       this.areaService.findById(id).subscribe({
         next: (res) => {
           this.area = res;
@@ -38,7 +42,7 @@ export class AreaFormComponent implements OnInit {
         error: (err) => {
           this.errorHandler.handle(err);
         }
-      })
+      });
     }
   }
 

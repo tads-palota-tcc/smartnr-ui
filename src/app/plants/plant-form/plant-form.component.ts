@@ -6,6 +6,7 @@ import { PlantService } from '../plant.service';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-plant-form',
@@ -23,11 +24,14 @@ export class PlantFormComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Cadastro de Planta');
     const id = this.route.snapshot.params['id'];
     if (id) {
+      this.title.setTitle('Atualização de Planta');
       this.plantService.findById(id).subscribe({
         next: (res) => {
           this.plant = res;
