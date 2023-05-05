@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'create',
     component: AreaFormComponent
+  },
+  {
+    path: ':id',
+    component: AreaFormComponent
   }
 ];
 

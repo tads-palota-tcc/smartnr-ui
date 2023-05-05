@@ -16,7 +16,11 @@ const routes: Routes = [
   {
     path: 'create',
     component: PlantFormComponent
-  }
+  },
+  {
+    path: ':id',
+    component: PlantFormComponent
+  },
 ];
 
 @NgModule({

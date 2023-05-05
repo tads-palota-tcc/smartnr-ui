@@ -4,7 +4,7 @@
       <h1>Plantas</h1>
     </div>
     <div class="col-4 md:col-2 p-fluid">
-      <button pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Planta" tooltipPosition="top"></button>
+      <a routerLink="/plants/create" pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Planta" tooltipPosition="top"></a>
     </div>
   </div>
 
@@ -68,7 +68,7 @@
               {{ plant.active ? 'Ativo' : 'Inativo' }}
             </td>
             <td class="col-actions">
-              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <a routerLink="/plants/{{plant.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
               <button *ngIf="filter.status === 'active'" pButton (click)="inactivate(plant.id)" icon="pi pi-trash"
                 pTooltip="Inativar" tooltipPosition="top"></button>
               <button *ngIf="filter.status === 'inactive'" pButton (click)="activate(plant.id)" icon="pi pi-undo"

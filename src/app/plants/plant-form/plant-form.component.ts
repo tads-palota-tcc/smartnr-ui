@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Plant } from 'src/app/core/model/plant';
 import { BRAZILIAN_STATES } from 'src/app/shared/utils/states';
 import { PlantService } from '../plant.service';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-plant-form',
   templateUrl: './plant-form.component.html',
   styleUrls: ['./plant-form.component.scss']
 })
-export class PlantFormComponent {
+export class PlantFormComponent implements OnInit {
 
   states = BRAZILIAN_STATES;
 
@@ -20,7 +21,13 @@ export class PlantFormComponent {
   constructor(
     private plantService: PlantService,
     private errorHandler: ErrorHandlerService,
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.params['id'];
+    console.log(id);
+  }
 
   save(form: NgForm) {
     this.plantService.create(this.plant).subscribe({

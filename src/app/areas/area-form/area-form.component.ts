@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Area } from 'src/app/core/model/area';
 import { PlantService } from 'src/app/plants/plant.service';
 import { AreaService } from '../area.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-area-form',
   templateUrl: './area-form.component.html',
   styleUrls: ['./area-form.component.scss']
 })
-export class AreaFormComponent {
+export class AreaFormComponent implements OnInit {
   
   plants: any[] = []
 
@@ -23,7 +24,13 @@ export class AreaFormComponent {
     private areaService: AreaService,
     private plantService: PlantService,
     private errorHandler: ErrorHandlerService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.params['id'];
+    console.log(id);
+  }
 
   atualizaLista(event: string) {
     this.plantService.findTopPlants(event).subscribe({
