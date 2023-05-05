@@ -25,7 +25,7 @@ export class PlantFormComponent {
   save(form: NgForm) {
     this.plantService.create(this.plant).subscribe({
       next: (res) => {
-        this.messageService.add({severity: 'success', detail: 'Planta cadastrada com sucesso'});
+        this.messageService.add({severity: 'success', detail: `Planta ${res.code} cadastrada com Id=${res.id}`});
         form.reset();
       },
       error: (err) => {

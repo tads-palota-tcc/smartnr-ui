@@ -24,7 +24,6 @@ export class PlantService {
   constructor(private http: HttpClient) { }
 
   create(plant: Plant): Observable<Plant> {
-    console.log('Service' + plant)
     return this.http.post<Plant>(`${this.plantsUrl}`, plant);
   }
 

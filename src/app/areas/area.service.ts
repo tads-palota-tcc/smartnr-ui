@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Area } from '../core/model/area';
 
 export class AreaFilter {
   id?: string;
@@ -20,6 +21,10 @@ export class AreaService {
   areasUrl = 'http://localhost:8080/areas'
 
   constructor(private http: HttpClient) { }
+
+  create(area: Area): Observable<Area> {
+    return this.http.post<Area>(`${this.areasUrl}`, area);
+  }
 
   search(filter: AreaFilter): Observable<any> {
     let params = new HttpParams()
