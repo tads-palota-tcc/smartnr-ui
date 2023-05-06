@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
-import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { Title } from '@angular/platform-browser';
 
 
 

@@ -14,6 +14,7 @@ import { CoreModule } from './core/core.module';
 import { PlantsModule } from './plants/plants.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 registerLocaleData(localePt);
 
@@ -33,17 +34,24 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return '';
+        }
+      },
+    }),
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     CoreModule,
     PlantsModule,
     AreasModule,
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService, ConfirmationService, TranslateService],
+  providers: [MessageService, ConfirmationService, TranslateService, JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

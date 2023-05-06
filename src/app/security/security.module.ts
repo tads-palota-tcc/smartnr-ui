@@ -22,6 +22,7 @@ import { SecurityRoutingModule } from './security-routing.module';
     InputTextModule,
     PasswordModule,
     ButtonModule
-  ]
+  ],
+  providers: []
 })
 export class SecurityModule { }

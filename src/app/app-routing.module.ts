@@ -4,6 +4,11 @@ import { PageNotFoundComponent } from './core/page-not-found.component';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth'
+  },
+  {
     path: 'plants',
     loadChildren: () => import('./plants/plants.module').then(m => m.PlantsModule)
   },
