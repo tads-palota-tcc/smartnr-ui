@@ -4,8 +4,8 @@
   <form #f="ngForm" (submit)="login()" autocomplete="off">
     <div class="grid flex flex-column justify-content-center align-items-center">
       <div class="col-12 p-fluid">
-        <input class="login-input" type="text" name="id" [(ngModel)]="id" pInputText
-          placeholder="Id de usuário" [required]="true"/>
+        <input class="login-input" type="email" name="email" [(ngModel)]="email" pInputText
+          placeholder="E-mail" [required]="true"/>
       </div>
       <div class="col-12 p-fluid">
         <p-password class="login-input" name="password" [(ngModel)]="password"

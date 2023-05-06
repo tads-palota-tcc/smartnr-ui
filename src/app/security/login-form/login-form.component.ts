@@ -20,12 +20,13 @@ export class LoginFormComponent {
     private errorHandler: ErrorHandlerService) {
   }
 
-  id = '';
-  password = '';
+  email = 'alexandre.palota@gmail.com';
+  password = '123456';
   jwtPayload!: any;
 
   login() {
-    this.authService.login(this.id, this.password)
+    const resultado = this.authService.login(this.email, this.password);
+    console.log(resultado);
   }
 
 }

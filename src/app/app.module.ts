@@ -44,7 +44,7 @@ export function tokenGetter(): string {
       config: {
         tokenGetter,
         allowedDomains: ['localhost:8080'],
-        disallowedRoutes: ['http://localhost:8080/auth']
+        disallowedRoutes: ['http://localhost:8080/auth/login', 'http://localhost:8080/auth/refresh-token']
       },
     }),
     BrowserModule,

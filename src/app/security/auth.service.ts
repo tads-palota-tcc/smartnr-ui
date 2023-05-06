@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 export class AuthResponse {
   access_token: string = '';
+  refresh_token: string = '';
 }
 
 @Injectable({
@@ -21,11 +22,25 @@ export class AuthService {
     this.loadToken();
   }
 
-  login(id: string, password: string) {
-    return this.http.post<AuthResponse>(this.authUrl, {id, password}).subscribe({
+  login(email: string, password: string) {
+    this.http.post<AuthResponse>(`${this.authUrl}/login`, {email, password}).subscribe({
       next: (res) => {
         this.storeToken(res.access_token);
+        this.storeRefreshToken(res.refresh_token);
         this.router.navigate(['/plants']);
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  getNewAccessToken() {
+    const refreshToken = localStorage.getItem('refreshToken') || '';
+    return this.http.post<AuthResponse>(`${this.authUrl}/refresh-token`, {refresh_token: refreshToken}, ).subscribe({
+      next: (res) => {
+        this.storeToken(res.access_token);
+        this.storeRefreshToken(res.refresh_token);
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -38,12 +53,20 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  private storeRefreshToken(token: string) {
+    localStorage.setItem('refreshToken', token);
+  }
+
   private loadToken() {
     const token = localStorage.getItem('token');
 
     if (token) {
       this.storeToken(token);
     }
+  }
+
+  hasPermission(persmission: string) {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(persmission);
   }
 
 }

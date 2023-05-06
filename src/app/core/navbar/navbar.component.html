@@ -5,19 +5,27 @@
         <a href="javascript:;" class="navbar-toggle" (click)="showMenu = !showMenu">
           <i class="pi pi-bars"></i>
         </a>
+        <button type="button" (click)="createNewAccessToken()">Novo token</button>
       </div>
     </div>
   </div>
 
   <ul [ngClass]="showMenu ? 'navbar-menu' : 'navbar-menu-hidden'">
     <li class="navbar-user">{{ authService.jwtPayload?.name }}</li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/areas">Áreas</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/devices">Dispositivo</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/calibrations">Calibrações</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/inspections">Inspeções</a></li>
-    <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/pendencies">Pendências</a></li>
+    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
+    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/areas">Áreas</a></li>
+    <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>
+    <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/devices">Dispositivo</a></li>
+    <li *ngIf="authService.hasPermission('INTERVENTION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/calibrations">Calibrações</a></li>
+    <li *ngIf="authService.hasPermission('INTERVENTION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/inspections">Inspeções</a></li>
+    <li *ngIf="authService.hasPermission('ACTIONS_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/pendencies">Pendências</a></li>
   </ul>
 
 </nav>
