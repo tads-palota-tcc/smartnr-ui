@@ -22,6 +22,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
+export function tokenGetter(): string {
+  const token = localStorage.getItem('token');
+  return token ? token : '';
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -37,9 +42,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return '';
-        }
+        tokenGetter,
+        allowedDomains: ['localhost:8080'],
+        disallowedRoutes: ['http://localhost:8080/auth']
       },
     }),
     BrowserModule,
