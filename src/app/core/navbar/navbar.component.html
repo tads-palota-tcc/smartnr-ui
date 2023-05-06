@@ -10,7 +10,7 @@
   </div>
 
   <ul [ngClass]="showMenu ? 'navbar-menu' : 'navbar-menu-hidden'">
-    <li class="navbar-user">José da Silva</li>
+    <li class="navbar-user">{{ authService.jwtPayload?.name }}</li>
     <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
     <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/areas">Áreas</a></li>
     <li class="navbar-menu-item" routerLinkActive="active"><a (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>

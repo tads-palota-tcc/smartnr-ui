@@ -18,7 +18,6 @@ export class LoginFormComponent {
     private jwtHelper: JwtHelperService,
     private router: Router,
     private errorHandler: ErrorHandlerService) {
-    this.loadToken();
   }
 
   id = '';
@@ -26,29 +25,7 @@ export class LoginFormComponent {
   jwtPayload!: any;
 
   login() {
-    this.authService.login(this.id, this.password).subscribe({
-      next: (res) => {
-        this.storeToken(res.access_token);
-        this.router.navigate(['/plants']);
-      },
-      error: (err) => {
-        this.errorHandler.handle(err);
-        this.password = '';
-      }
-    })
-  }
-
-  private storeToken(token: string) {
-    this.jwtPayload = this.jwtHelper.decodeToken(token);
-    localStorage.setItem('token', token);
-  }
-
-  private loadToken() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.storeToken(token);
-    }
+    this.authService.login(this.id, this.password)
   }
 
 }
