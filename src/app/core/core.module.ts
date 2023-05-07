@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { AccessDeniedComponent } from './access-denied.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, PageNotFoundComponent],
+  declarations: [NavbarComponent, PageNotFoundComponent, AccessDeniedComponent],
   imports: [
     CommonModule,
     RouterModule

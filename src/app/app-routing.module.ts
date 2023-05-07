@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/page-not-found.component';
+import { AuthGuard } from './security/auth.guard';
+import { AccessDeniedComponent } from './core/access-denied.component';
 
 const routes: Routes = [
   {
@@ -10,15 +12,23 @@ const routes: Routes = [
   },
   {
     path: 'plants',
-    loadChildren: () => import('./plants/plants.module').then(m => m.PlantsModule)
+    loadChildren: () => import('./plants/plants.module').then(m => m.PlantsModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
   },
   {
     path: 'areas',
-    loadChildren: () => import('./areas/areas.module').then(m => m.AreasModule)
+    loadChildren: () => import('./areas/areas.module').then(m => m.AreasModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
   },
   {
     path: 'page-not-found',
     component: PageNotFoundComponent
+  },
+  {
+    path: 'access-denied',
+    component: AccessDeniedComponent
   },
   {
     path: 'auth',
