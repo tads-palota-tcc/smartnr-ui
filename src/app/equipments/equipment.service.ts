@@ -8,7 +8,6 @@ export class EquipmentFilter {
   tag?: string;
   name?: string;
   areaCode?: string;
-  category?: string;
   status: 'active' | 'inactive' = 'active';
   page: number = 0;
   size: number = 5;
@@ -19,13 +18,13 @@ export class EquipmentFilter {
 })
 export class EquipmentService {
 
-  equipmentsUrl = 'http://localhost:8080/equipments'
+  baseUrl = 'http://localhost:8080/equipments'
 
   constructor(private http: HttpClient) { }
 
-  create(equipment: Equipment): Observable<Equipment> {
-    console.log(equipment);
-    return this.http.post<Equipment>(`${this.equipmentsUrl}`, equipment);
+  create(object: Equipment): Observable<Equipment> {
+    console.log(object);
+    return this.http.post<Equipment>(`${this.baseUrl}`, object);
   }
 
   search(filter: EquipmentFilter): Observable<any> {
@@ -49,27 +48,23 @@ export class EquipmentService {
     if (filter.areaCode) {
       params = params.set('areaCode', filter.areaCode)
     }
-
-    if (filter.category) {
-      params = params.set('category', filter.category)
-    }
-
-    return this.http.get<any>(this.equipmentsUrl, {params})
+    
+    return this.http.get<any>(this.baseUrl, {params})
   }
 
   findById(id: number): Observable<Equipment> {
-    return this.http.get<Equipment>(`${this.equipmentsUrl}/${id}`);
+    return this.http.get<Equipment>(`${this.baseUrl}/${id}`);
   }
 
-  update(id: number, equipment: Equipment): Observable<Equipment> {
-    return this.http.put<Equipment>(`${this.equipmentsUrl}/${id}`, equipment);
+  update(id: number, object: Equipment): Observable<Equipment> {
+    return this.http.put<Equipment>(`${this.baseUrl}/${id}`, object);
   }
 
   inactivate(id: number): Observable<void> {
-    return this.http.patch<void>(`${this.equipmentsUrl}/${id}/inactivate`, {});
+    return this.http.patch<void>(`${this.baseUrl}/${id}/inactivate`, {});
   }
 
   activate(id: number): Observable<void> {
-    return this.http.patch<void>(`${this.equipmentsUrl}/${id}/activate`, {});
+    return this.http.patch<void>(`${this.baseUrl}/${id}/activate`, {});
   }
 }

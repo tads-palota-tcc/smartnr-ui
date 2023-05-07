@@ -18,7 +18,9 @@
     <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>
     <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
-        (click)="showMenu = !showMenu" routerLink="/devices">Dispositivo</a></li>
+        (click)="showMenu = !showMenu" routerLink="/pressure-indicators">Indicadores de pressão</a></li>
+    <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+        (click)="showMenu = !showMenu" routerLink="/pressure-safety-valves">Válvulas de segurança</a></li>
     <li *ngIf="authService.hasPermission('INTERVENTION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/calibrations">Calibrações</a></li>
     <li *ngIf="authService.hasPermission('INTERVENTION_READ')" class="navbar-menu-item" routerLinkActive="active"><a

@@ -1,0 +1,137 @@
+<div class="container">
+
+  <div class="grid">
+    <div class="col-12">
+      <h1>{{ !auth.hasPermission('EQUIPMENT_WRITE') ? 'Detalhe' : updating ? 'Atualização' : 'Cadastro'}} de
+        Indicador de Pressão</h1>
+    </div>
+  </div>
+
+  <form #f="ngForm" (submit)="save(f)">
+    <p-tabView>
+      <p-tabPanel header="Indicador de Pressão">
+
+        <div class="grid">
+          <div class="col-12">
+            <h3>Dados gerais</h3>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Tag</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="text" name="TAG"
+              [(ngModel)]="pressureIndicator.tag" ngModel #tag="ngModel" [required]="true" [maxlength]="20">
+            <app-message [control]="tag.control" error="required" text="Campo obrigatório"></app-message>
+            <app-message [control]="tag.control" error="maxlength"
+              text="Máximo {{tag.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+          </div>
+          <div class="col-12 md:col-4 p-fluid">
+            <label>Descrição</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="text" name="description"
+              [(ngModel)]="pressureIndicator.description" ngModel #description="ngModel" [maxlength]="40">
+            <app-message [control]="description.control" error="maxlength"
+              text="Máximo {{description.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+          </div>
+          <div class="col-12 md:col-4 p-fluid">
+            <label>Fabricante</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="text" name="manufacturer"
+              [(ngModel)]="pressureIndicator.manufacturer" ngModel #manufacturer="ngModel" [maxlength]="40">
+            <app-message [control]="manufacturer.control" error="maxlength"
+              text="Máximo {{manufacturer.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+          </div>
+          <div class="col-12 md:col-4 p-fluid">
+            <label>Modelo</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="text" name="model"
+              [(ngModel)]="pressureIndicator.model" ngModel #model="ngModel" [maxlength]="40">
+            <app-message [control]="model.control" error="maxlength"
+              text="Máximo {{model.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+          </div>
+          <div class="col-12 md:col-4 p-fluid">
+            <label>Tamanho da conexão</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="text" name="connectionSize"
+              [(ngModel)]="pressureIndicator.connectionSize" ngModel #connectionSize="ngModel" [maxlength]="20">
+            <app-message [control]="connectionSize.control" error="maxlength"
+              text="Máximo {{connectionSize.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
+          </div>
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Escala mínima (kgf/cm²)</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="number" name="minGauge"
+              [(ngModel)]="pressureIndicator.minGauge" ngModel #minGauge="ngModel" [min]="0">
+            <app-message [control]="minGauge.control" error="min" text="Valor mínimo é 0"></app-message>
+          </div>
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Escala máxima (kgf/cm²)</label>
+            <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="number" name="maxGauge"
+              [(ngModel)]="pressureIndicator.maxGauge" ngModel #maxGauge="ngModel" [min]="0">
+            <app-message [control]="maxGauge.control" error="min" text="Valor mínimo é 0"></app-message>
+          </div>
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Planta</label>
+            <p-autoComplete [readonly]="!auth.hasPermission('EQUIPMENT_WRITE')" [required]="true" name="plant"
+              [(ngModel)]="pressureIndicator.plant" [suggestions]="plants" [forceSelection]="true" [required]="true"
+              (completeMethod)="updateList($event.query)" field="code"></p-autoComplete>
+          </div>
+        </div>
+
+      </p-tabPanel>
+
+      <p-tabPanel header="Calibrações">
+
+        <div class="grid">
+          <div class="col-12">
+            <h3>Calibrações recentes</h3>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col">
+            <p-table styleClass="p-datatable-sm p-datatable-gridlines" [paginator]="true" [rows]="5" [value]="calibrations"
+              responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Certificado</th>
+                  <th>Executante</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-calibration>
+                <tr>
+                  <td>
+                    <span class="p-column-title">Certificado</span>
+                    {{ calibration.reportNumber ? calibration.reportNumber : '-' }}
+                  </td>
+                  <td>
+                    <span class="p-column-title">Executante</span>
+                    {{ calibration.executorCompany }}
+                  </td>
+                  <td>
+                    <span class="p-column-title">Data</span>
+                    {{ calibration.executionDate | date:"dd/MM/yy" }}
+                  </td>
+                  <td>
+                    <span class="p-column-title">Status</span>
+                    {{ calibration.status === 'DONE' ? 'Concluído' : 'Aguardando certificado' }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+      </p-tabPanel>
+
+    </p-tabView>
+    <p-divider></p-divider>
+    <div class="grid">
+      <div class="col-12 flex align-items-center justify-content-start mt-4">
+        <button *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" [disabled]="!f.valid" pButton
+          type="submit">Salvar</button>
+        <button *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" (click)="newPressureIndicator(f)" class="p-button-info ml-1"
+          pButton type="button">Novo</button>
+        <a class="ml-1" routerLink="/pressure-indicators">Voltar para a listagem</a>
+      </div>
+    </div>
+  </form>
+</div>

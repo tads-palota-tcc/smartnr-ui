@@ -29,6 +29,12 @@ const routes: Routes = [
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
+    path: 'pressure-indicators',
+    loadChildren: () => import('./pressure-indicators/pressure-indicators.module').then(m => m.PressureIndicatorsModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
+  },
+  {
     path: 'page-not-found',
     component: PageNotFoundComponent
   },

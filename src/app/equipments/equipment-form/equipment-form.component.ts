@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/security/auth.service';
 export class EquipmentFormComponent implements OnInit {
 
   areas: any[] = []
+  
   fluidClasses: {code: string, description: string}[] = [
     {code: 'A', description: 'CLASSE “A”'},
     {code: 'B', description: 'CLASSE “B”'},
