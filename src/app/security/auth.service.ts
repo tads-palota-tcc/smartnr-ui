@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, firstValueFrom } from 'rxjs';
-import { ErrorHandlerService } from '../core/error-handler.service';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { ErrorHandlerService } from '../core/error-handler.service';
+import { Observable } from 'rxjs';
 
 export class AuthResponse {
   access_token: string = '';
@@ -22,38 +23,21 @@ export class AuthService {
     this.loadToken();
   }
 
-  login(email: string, password: string) {
-    this.http.post<AuthResponse>(`${this.authUrl}/login`, {email, password}).subscribe({
-      next: (res) => {
-        this.storeToken(res.access_token);
-        this.storeRefreshToken(res.refresh_token);
-        this.router.navigate(['/plants']);
-      },
-      error: (err) => {
-        this.errorHandler.handle(err);
-      }
-    });
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.authUrl}/login`, {email, password});
   }
 
   getNewAccessToken() {
     const refreshToken = localStorage.getItem('refreshToken') || '';
-    return this.http.post<AuthResponse>(`${this.authUrl}/refresh-token`, {refresh_token: refreshToken}, ).subscribe({
-      next: (res) => {
-        this.storeToken(res.access_token);
-        this.storeRefreshToken(res.refresh_token);
-      },
-      error: (err) => {
-        this.errorHandler.handle(err);
-      }
-    });
+    return this.http.post<AuthResponse>(`${this.authUrl}/refresh-token`, {refresh_token: refreshToken})
   }
 
-  private storeToken(token: string) {
+  storeToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     localStorage.setItem('token', token);
   }
 
-  private storeRefreshToken(token: string) {
+  storeRefreshToken(token: string) {
     localStorage.setItem('refreshToken', token);
   }
 
@@ -63,6 +47,12 @@ export class AuthService {
     if (token) {
       this.storeToken(token);
     }
+  }
+
+  isAccessTokenInvalid() {
+    const token = localStorage.getItem('token');
+
+    return !token || this.jwtHelper.isTokenExpired(token);
   }
 
   hasPermission(persmission: string) {

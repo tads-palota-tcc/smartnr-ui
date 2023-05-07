@@ -11,8 +11,5 @@ export class NavbarComponent {
   showMenu = false;
 
   constructor(public authService: AuthService) {}
-
-  createNewAccessToken() {
-    this.authService.getNewAccessToken();
-  }
+  
 }

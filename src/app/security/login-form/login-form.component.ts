@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 import { AuthService } from '../auth.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +13,6 @@ export class LoginFormComponent {
 
   constructor(
     public authService: AuthService,
-    private jwtHelper: JwtHelperService,
     private router: Router,
     private errorHandler: ErrorHandlerService) {
   }
@@ -25,8 +22,16 @@ export class LoginFormComponent {
   jwtPayload!: any;
 
   login() {
-    const resultado = this.authService.login(this.email, this.password);
-    console.log(resultado);
+    const resultado = this.authService.login(this.email, this.password).subscribe({
+      next: (res) => {
+        this.authService.storeToken(res.access_token);
+        this.authService.storeRefreshToken(res.refresh_token);
+        this.router.navigate(['/plants']);
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
   }
 
 }

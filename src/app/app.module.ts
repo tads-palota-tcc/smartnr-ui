@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import { PlantsModule } from './plants/plants.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { AppHttpInterceptor } from './security/app-http-interceptor';
 
 registerLocaleData(localePt);
 
@@ -56,7 +57,17 @@ export function tokenGetter(): string {
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService, ConfirmationService, TranslateService, JwtHelperService],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    TranslateService,
+    JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
