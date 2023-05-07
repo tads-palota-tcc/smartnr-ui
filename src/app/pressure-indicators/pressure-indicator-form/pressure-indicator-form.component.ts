@@ -36,7 +36,6 @@ export class PressureIndicatorFormComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Cadastro de Indicador de Pressão');
     const id = this.route.snapshot.params['id'];
-    // this.loadCalibrations = this.loadCalibrations.bind(this);
     if (id) {
       this.title.setTitle('Atualização de Indicador de Pressão');
       this.loadPressureIndicator(id);

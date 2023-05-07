@@ -35,6 +35,12 @@ const routes: Routes = [
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
+    path: 'pressure-safety-valves',
+    loadChildren: () => import('./pressure-safety-valves/pressure-safety-valves.module').then(m => m.PressureSafetyValvesModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
+  },
+  {
     path: 'page-not-found',
     component: PageNotFoundComponent
   },
