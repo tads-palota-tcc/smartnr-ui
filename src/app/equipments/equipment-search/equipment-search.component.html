@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="grid flex flex-row align-items-center">
+    <div class="col">
+      <h1>Equipamentos</h1>
+    </div>
+    <div *ngIf="auth.hasPermission('INSTALATION_WRITE')" class="col-4 md:col-2 p-fluid">
+      <a routerLink="/areas/create" pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Área" tooltipPosition="top"></a>
+    </div>
+  </div>
+
+  <form (submit)="search()">
+    <div class="grid">
+      <div class="col-12 md:col-2 p-fluid">
+        <label for="">Id</label>
+        <input pInputText [(ngModel)]="filter.id" name="id" name="id" type="text">
+      </div>
+      <div class="col-12 md:col-2 p-fluid">
+        <label for="">Tag</label>
+        <input pInputText [(ngModel)]="filter.tag" name="tag" type="text">
+      </div>
+      <div class="col-12 md:col-2 p-fluid">
+        <label for="">Código da Área</label>
+        <input pInputText [(ngModel)]="filter.areaCode" name="areaCode" type="text">
+      </div>
+      <div class="col-12 md:col-4 p-fluid">
+        <label for="">Nome do equipamento</label>
+        <input pInputText [(ngModel)]="filter.name" name="name" type="text">
+      </div>
+      <div class="col-12 md:col p-fluid">
+        <label for="">Categoria</label>
+        <input pInputText [(ngModel)]="filter.category" name="category" type="text">
+      </div>
+    </div>
+    <div class="grid mb-4">
+      <div class="md:col"></div>
+      <div class="col-6 md:col-2 p-fluid">
+        <p-selectButton (onOptionClick)="search()" [options]="statusOptions" [(ngModel)]="filter.status" name="status"
+          optionLabel="label" optionValue="value"></p-selectButton>
+      </div>
+      <div class="col-6 md:col-2 p-fluid">
+        <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="grid">
+    <div class="col">
+      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipments" [paginator]="true" [lazy]="true"
+        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Tag</th>
+            <th>Nome</th>
+            <th>Área</th>
+            <th>Categoria</th>
+            <th>Status</th>
+            <th class="col-actions-header">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-equipment>
+          <tr>
+            <td>
+              <span class="p-column-title">Id</span>
+              {{ equipment.id }}
+            </td>
+            <td>
+              <span class="p-column-title">Tag</span>
+              {{ equipment.tag }}
+            </td>
+            <td>
+              <span class="p-column-title">Nome</span>
+              {{ equipment.name }}
+            </td>
+            <td>
+              <span class="p-column-title">Área</span>
+              {{ equipment.area.code }}
+            </td>
+            <td>
+              <span class="p-column-title">Categoria</span>
+              {{ equipment.category }}
+            </td>
+            <td>
+              <span class="p-column-title">Status</span>
+              {{ equipment.active ? 'Ativo' : 'Inativo' }}
+            </td>
+            <td class="col-actions">
+              <a routerLink="/equipments/{{equipment.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton (click)="inactivate(equipment.id)" icon="pi pi-trash"
+                pTooltip="Inativar" tooltipPosition="top"></button>
+              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton (click)="activate(equipment.id)" icon="pi pi-undo"
+                pTooltip="Ativar" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -24,13 +24,12 @@ import { AreasRoutingModule } from './areas-routing.module';
   imports: [
     CommonModule,
     AreasRoutingModule,
-    SharedModule,
     FormsModule,
+    SharedModule,
     ButtonModule,
     TableModule,
     TooltipModule,
     InputTextModule,
-    CheckboxModule,
     DropdownModule,
     AutoCompleteModule,
     SelectButtonModule

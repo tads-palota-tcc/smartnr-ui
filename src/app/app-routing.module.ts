@@ -23,6 +23,12 @@ const routes: Routes = [
     data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
   },
   {
+    path: 'equipments',
+    loadChildren: () => import('./equipments/equipments.module').then(m => m.EquipmentsModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
+  },
+  {
     path: 'page-not-found',
     component: PageNotFoundComponent
   },
