@@ -24,6 +24,7 @@ export class EquipmentService {
   constructor(private http: HttpClient) { }
 
   create(equipment: Equipment): Observable<Equipment> {
+    console.log(equipment);
     return this.http.post<Equipment>(`${this.equipmentsUrl}`, equipment);
   }
 

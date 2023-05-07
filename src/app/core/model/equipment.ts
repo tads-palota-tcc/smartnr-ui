@@ -1,5 +1,4 @@
-import { Area } from "./area";
-import { Plant } from "./plant";
+import { Area } from './area';
 
 export class Equipment {
   id?: number;
@@ -18,7 +17,7 @@ export class Equipment {
   diameter = 0;
   volume = 0;
   fluidClass = '';
-  category = '';
+  category?: string;
   hasTwoWideExits = false;
   hasVentilation = false;
   hasMaintenanceAccess = false;

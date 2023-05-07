@@ -4,7 +4,8 @@
       <h1>Equipamentos</h1>
     </div>
     <div *ngIf="auth.hasPermission('INSTALATION_WRITE')" class="col-4 md:col-2 p-fluid">
-      <a routerLink="/areas/create" pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Área" tooltipPosition="top"></a>
+      <a routerLink="/equipments/create" pButton icon="pi pi-plus" label="Novo" pTooltip="Novo Equipamento"
+        tooltipPosition="top"></a>
     </div>
   </div>
 
@@ -18,17 +19,13 @@
         <label for="">Tag</label>
         <input pInputText [(ngModel)]="filter.tag" name="tag" type="text">
       </div>
-      <div class="col-12 md:col-2 p-fluid">
-        <label for="">Código da Área</label>
-        <input pInputText [(ngModel)]="filter.areaCode" name="areaCode" type="text">
-      </div>
-      <div class="col-12 md:col-4 p-fluid">
+      <div class="col-12 md:col p-fluid">
         <label for="">Nome do equipamento</label>
         <input pInputText [(ngModel)]="filter.name" name="name" type="text">
       </div>
-      <div class="col-12 md:col p-fluid">
-        <label for="">Categoria</label>
-        <input pInputText [(ngModel)]="filter.category" name="category" type="text">
+      <div class="col-12 md:col-2 p-fluid">
+        <label for="">Código da Área</label>
+        <input pInputText [(ngModel)]="filter.areaCode" name="areaCode" type="text">
       </div>
     </div>
     <div class="grid mb-4">
@@ -46,7 +43,8 @@
   <div class="grid">
     <div class="col">
       <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipments" [paginator]="true" [lazy]="true"
-        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" responsiveLayout='stack'
+        [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
@@ -85,11 +83,13 @@
               {{ equipment.active ? 'Ativo' : 'Inativo' }}
             </td>
             <td class="col-actions">
-              <a routerLink="/equipments/{{equipment.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton (click)="inactivate(equipment.id)" icon="pi pi-trash"
-                pTooltip="Inativar" tooltipPosition="top"></button>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton (click)="activate(equipment.id)" icon="pi pi-undo"
-                pTooltip="Ativar" tooltipPosition="top"></button>
+              <a routerLink="/equipments/{{equipment.id}}" pButton icon="pi pi-pencil" pTooltip="Editar"
+                tooltipPosition="top"></a>
+              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton
+                (click)="inactivate(equipment.id)" icon="pi pi-trash" pTooltip="Inativar"
+                tooltipPosition="top"></button>
+              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton
+                (click)="activate(equipment.id)" icon="pi pi-undo" pTooltip="Ativar" tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>

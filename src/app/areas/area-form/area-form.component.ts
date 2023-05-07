@@ -18,8 +18,6 @@ export class AreaFormComponent implements OnInit {
 
   plants: any[] = []
 
-  teste!: any;
-
   area = new Area();
 
   constructor(

@@ -1,15 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
 
+import { SharedModule } from '../shared/shared.module';
 import { EquipmentFormComponent } from './equipment-form/equipment-form.component';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { EquipmentsRoutingModule } from './equipments-routing.module';
@@ -31,7 +35,11 @@ import { EquipmentsRoutingModule } from './equipments-routing.module';
     InputTextModule,
     DropdownModule,
     AutoCompleteModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TabViewModule,
+    InputSwitchModule,
+    DividerModule,
+    FileUploadModule
   ]
 })
 export class EquipmentsModule { }
