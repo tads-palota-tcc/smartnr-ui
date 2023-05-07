@@ -7,6 +7,7 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-plant-search',
@@ -28,6 +29,7 @@ export class PlantSearchComponent implements OnInit {
     private messageService: MessageService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService,
+    public auth: AuthService,
     private title: Title) { }
 
   ngOnInit(): void {

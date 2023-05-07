@@ -3,7 +3,7 @@
   <div class="grid">
 
     <div class="col-12">
-      <h1>{{updating ? 'Atualização' : 'Cadastro'}} de Planta</h1>
+      <h1>{{ !auth.hasPermission('INSTALATION_WRITE') ? 'Detalhe' : updating ? 'Atualização' : 'Cadastro'}} de Planta</h1>
     </div>
 
   </div>
@@ -18,7 +18,7 @@
     <div class="grid">
       <div class="col-12 md:col-3 p-fluid">
         <label>Código</label>
-        <input pInputText type="text" name="code" [(ngModel)]="plant.code" ngModel #code="ngModel" [required]="true"
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="code" [(ngModel)]="plant.code" ngModel #code="ngModel" [required]="true"
           [minlength]="2" [maxlength]="10">
         <app-message [control]="code.control" error="required" text="Campo obrigatório"></app-message>
         <app-message [control]="code.control" error="minlength"
@@ -27,7 +27,7 @@
   
       <div class="col-12 md:col-9 p-fluid">
         <label>Nome</label>
-        <input pInputText type="text" name="name" [(ngModel)]="plant.name" ngModel #name="ngModel" [required]="true"
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="name" [(ngModel)]="plant.name" ngModel #name="ngModel" [required]="true"
           [minlength]="4" [maxlength]="60">
         <app-message [control]="name.control" error="required" text="Campo obrigatório"></app-message>
         <app-message [control]="name.control" error="minlength"
@@ -46,7 +46,7 @@
     <div class="grid">
       <div class="col-12 md:col-4 p-fluid">
         <label>Rua</label>
-        <input pInputText type="text" name="streetName" [(ngModel)]="plant.address.streetName" ngModel
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="streetName" [(ngModel)]="plant.address.streetName" ngModel
           #streetName="ngModel" [maxlength]="40">
         <app-message [control]="streetName.control" error="maxlength"
           text="Máximo {{streetName.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
@@ -54,7 +54,7 @@
   
       <div class="col-12 md:col-2 p-fluid">
         <label>Número</label>
-        <input pInputText type="text" name="number" [(ngModel)]="plant.address.number" ngModel #number="ngModel"
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="number" [(ngModel)]="plant.address.number" ngModel #number="ngModel"
           [maxlength]="10">
         <app-message [control]="number.control" error="maxlength"
           text="Máximo {{number.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
@@ -62,7 +62,7 @@
   
       <div class="col-12 md:col-2 p-fluid">
         <label>Complemento</label>
-        <input pInputText type="text" name="complement" [(ngModel)]="plant.address.complement" ngModel
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="complement" [(ngModel)]="plant.address.complement" ngModel
           #complement="ngModel" [maxlength]="20">
         <app-message [control]="complement.control" error="maxlength"
           text="Máximo {{complement.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
@@ -70,7 +70,7 @@
   
       <div class="col-12 md:col-4 p-fluid">
         <label>Bairro</label>
-        <input pInputText type="text" name="neigborhood" [(ngModel)]="plant.address.neighborhood" ngModel
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="neigborhood" [(ngModel)]="plant.address.neighborhood" ngModel
           #neigborhood="ngModel" [maxlength]="40">
         <app-message [control]="neigborhood.control" error="maxlength"
           text="Máximo {{neigborhood.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
@@ -78,7 +78,7 @@
   
       <div class="col-12 md:col-4 p-fluid">
         <label>Cidade</label>
-        <input pInputText type="text" name="city" [(ngModel)]="plant.address.city" ngModel #city="ngModel"
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="city" [(ngModel)]="plant.address.city" ngModel #city="ngModel"
           [required]="true" [maxlength]="40">
         <app-message [control]="city.control" error="required" text="Campo obrigatório"></app-message>
         <app-message [control]="city.control" error="maxlength"
@@ -87,20 +87,20 @@
   
       <div class="col-12 md:col-3 p-fluid">
         <label>Estado</label>
-        <p-dropdown [options]="states" name="state" [(ngModel)]="plant.address.state" optionLabel="display" optionValue="value"
+        <p-dropdown [readonly]="!auth.hasPermission('INSTALATION_WRITE')" [options]="states" name="state" [(ngModel)]="plant.address.state" optionLabel="display" optionValue="value"
           placeholder="Selecione um estado" [filter]="true" [required]="true"></p-dropdown>
       </div>
   
       <div class="col-12 md:col-2 p-fluid">
         <label>CEP</label>
-        <p-inputMask name="zipCode" [(ngModel)]="plant.address.zipCode" mask="99.999-999" [unmask]="true"></p-inputMask>
+        <p-inputMask [readonly]="!auth.hasPermission('INSTALATION_WRITE')" name="zipCode" [(ngModel)]="plant.address.zipCode" mask="99.999-999" [unmask]="true"></p-inputMask>
       </div>
     </div>
 
     <div class="grid">
       <div class="col-12 flex align-items-center justify-content-start mt-4">
-        <button [disabled]="!f.valid" pButton type="submit">Salvar</button>
-        <button (click)="newPlant(f)" class="p-button-info ml-1" pButton type="button">Novo</button>
+        <button *ngIf="auth.hasPermission('INSTALATION_WRITE')" [disabled]="!f.valid" pButton type="submit">Salvar</button>
+        <button *ngIf="auth.hasPermission('INSTALATION_WRITE')" (click)="newPlant(f)" class="p-button-info ml-1" pButton type="button">Novo</button>
         <a class="ml-1" routerLink="/plants">Voltar para a listagem</a>
       </div>
     </div>

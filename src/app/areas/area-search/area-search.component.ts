@@ -5,6 +5,7 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-area-search',
@@ -25,6 +26,7 @@ export class AreaSearchComponent implements OnInit {
     private areaService: AreaService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
+    public auth: AuthService,
     private errorHandler: ErrorHandlerService,
     private title: Title) {}
 

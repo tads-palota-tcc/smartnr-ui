@@ -7,6 +7,7 @@ import { PlantService } from 'src/app/plants/plant.service';
 import { AreaService } from '../area.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-area-form',
@@ -28,6 +29,7 @@ export class AreaFormComponent implements OnInit {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public auth: AuthService,
     private title: Title) { }
 
   ngOnInit(): void {

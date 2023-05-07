@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-plant-form',
@@ -25,6 +26,7 @@ export class PlantFormComponent implements OnInit {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public auth: AuthService,
     private title: Title) {}
 
   ngOnInit(): void {
