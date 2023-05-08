@@ -7,6 +7,19 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
+  panel = [
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'NEAR', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'NEAR', calibrations: 'NOK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
+  ];
+
   pendenciesByPlant = {
     labels: ['RGD1', 'RGD2', 'PEL1', 'PEL2'],
     datasets: [
