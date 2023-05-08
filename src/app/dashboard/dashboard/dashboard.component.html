@@ -22,39 +22,111 @@
                 <td><a routerLink="/">{{equipment.tag}}</a></td>
                 <td>{{equipment.plant}}</td>
                 <td>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'OK'" icon="pi pi-check" severity="success"
-                    value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NOK'" icon="pi pi-times" severity="danger"
-                    value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NEAR'" icon="pi pi-exclamation" severity="warning"
-                    value="Vencendo"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'OK'" icon="pi pi-check" [rounded]="true"
+                    severity="success" value="Em dia"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NOK'" icon="pi pi-times" [rounded]="true"
+                    severity="danger" value="Atrasado"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NEAR'" icon="pi pi-exclamation" [rounded]="true"
+                    severity="warning" value="Vencendo"></p-tag>
                 </td>
                 <td>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'OK'" icon="pi pi-check" severity="success"
-                    value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NOK'" icon="pi pi-times" severity="danger"
-                    value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NEAR'" icon="pi pi-exclamation" severity="warning"
-                    value="Vencendo"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'OK'" icon="pi pi-check" [rounded]="true"
+                    severity="success" value="Em dia"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NOK'" icon="pi pi-times" [rounded]="true"
+                    severity="danger" value="Atrasado"></p-tag>
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NEAR'" icon="pi pi-exclamation" [rounded]="true"
+                    severity="warning" value="Vencendo"></p-tag>
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </p-tabPanel>
         <p-tabPanel header="Pendências por Planta">
-          <div class="col-12 md:col-6">
-            <p-panel header="Pendências por Planta">
-              <p-chart type="doughnut" [data]="pendenciesByPlant" [options]="pendenciesByPlantOptions"
-                height="40vh"></p-chart>
-            </p-panel>
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-panel header="Pendências por Planta">
+                <p-chart type="doughnut" [data]="pendenciesByPlant" [options]="pendenciesByPlantOptions"
+                  height="40vh"></p-chart>
+              </p-panel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-table [value]="panel" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Planta</th>
+                    <th>Vencimento</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-equipment>
+                  <tr>
+                    <td><a routerLink="/">{{equipment.tag}}</a></td>
+                    <td>{{equipment.plant}}</td>
+                    <td>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'OK'" icon="pi pi-check"
+                        severity="success" value="Em dia"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NOK'" icon="pi pi-times"
+                        severity="danger" value="Atrasado"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NEAR'" icon="pi pi-exclamation"
+                        severity="warning" value="Vencendo"></p-tag>
+                    </td>
+                    <td>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'OK'" icon="pi pi-check"
+                        severity="success" value="Em dia"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NOK'" icon="pi pi-times"
+                        severity="danger" value="Atrasado"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NEAR'" icon="pi pi-exclamation"
+                        severity="warning" value="Vencendo"></p-tag>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
           </div>
         </p-tabPanel>
         <p-tabPanel header="Pendências por Responsável">
-          <div class="col-12 md:col-6">
-            <p-panel header="Pendências por Responsável">
-              <p-chart type="doughnut" [data]="pendenciesByResponsible" [options]="pendenciesByResponsibleOptions"
-                height="40vh"></p-chart>
-            </p-panel>
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-panel header="Pendências por Responsável">
+                <p-chart type="doughnut" [data]="pendenciesByResponsible" [options]="pendenciesByResponsibleOptions"
+                  height="40vh"></p-chart>
+              </p-panel>
+            </div>
+            <div class="col-12 md:col-6">
+              <p-table [value]="panel" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Planta</th>
+                    <th>Vencimento</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-equipment>
+                  <tr>
+                    <td><a routerLink="/">{{equipment.tag}}</a></td>
+                    <td>{{equipment.plant}}</td>
+                    <td>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'OK'" icon="pi pi-check"
+                        severity="success" value="Em dia"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NOK'" icon="pi pi-times"
+                        severity="danger" value="Atrasado"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NEAR'" icon="pi pi-exclamation"
+                        severity="warning" value="Vencendo"></p-tag>
+                    </td>
+                    <td>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'OK'" icon="pi pi-check"
+                        severity="success" value="Em dia"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NOK'" icon="pi pi-times"
+                        severity="danger" value="Atrasado"></p-tag>
+                      <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NEAR'" icon="pi pi-exclamation"
+                        severity="warning" value="Vencendo"></p-tag>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
           </div>
         </p-tabPanel>
         <p-tabPanel header="Projeção de gastos">
