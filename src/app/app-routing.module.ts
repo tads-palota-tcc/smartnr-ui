@@ -8,7 +8,13 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth'
+    redirectTo: 'dashboard'
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['REPORTS_READ']}
   },
   {
     path: 'plants',

@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="grid">
+
+    <div class="col-12">
+      <h1>Dashboard</h1>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-panel header="Pendências por Planta">
+        <p-chart type="doughnut" [data]="pendenciesByPlant" [options]="pendenciesByPlantOptions" height="40vh"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-panel header="Pendências por Responsável">
+        <p-chart type="doughnut" [data]="pendenciesByResponsible" [options]="pendenciesByResponsibleOptions" height="40vh"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="col-12">
+      <p-panel header="Projeção de gastos por planta">
+        <p-chart type="bar" [data]="estimatedCost" [options]="estimatedCostOptions" height="40vh"></p-chart>
+      </p-panel>
+    </div>
+
+  </div>
+</div>

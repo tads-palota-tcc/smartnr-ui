@@ -13,6 +13,11 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+    if (this.auth.isAccessTokenInvalid()) {
+      this.router.navigate(['/auth/login']);
+      return false;
+    }
     
     if (route.data['roles'] && !this.auth.hasAnyRole(route.data['roles'])) {
       this.router.navigate(['/access-denied']);

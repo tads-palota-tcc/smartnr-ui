@@ -26,7 +26,7 @@ export class LoginFormComponent {
       next: (res) => {
         this.authService.storeToken(res.access_token);
         this.authService.storeRefreshToken(res.refresh_token);
-        this.router.navigate(['/plants']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.errorHandler.handle(err);
