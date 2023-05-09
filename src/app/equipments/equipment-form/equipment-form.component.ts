@@ -13,6 +13,7 @@ import { PressureIndicator } from 'src/app/core/model/pressure-indicator';
 import { Area } from 'src/app/core/model/area';
 import { PressureIndicatorService } from 'src/app/pressure-indicators/pressure-indicator.service';
 import { PressureSafetyValveService } from 'src/app/pressure-safety-valves/pressure-safety-valve.service';
+import { PressureSafetyValve } from 'src/app/core/model/pressure-safety-valve';
 
 @Component({
   selector: 'app-equipment-form',
@@ -26,6 +27,10 @@ export class EquipmentFormComponent implements OnInit {
   availablePressureIndicators: PressureIndicator[] = [];
   pressureIndicatorToBind = new PressureIndicator();
   pressureIndicatorDialogVisible = false;
+
+  availablePressureSafetyValves: PressureSafetyValve[] = [];
+  pressureSafetyValveToBind = new PressureSafetyValve();
+  pressureSafetyValveDialogVisible = false;
   
   fluidClasses: {code: string, description: string}[] = [
     {code: 'A', description: 'CLASSE “A”'},
@@ -54,6 +59,7 @@ export class EquipmentFormComponent implements OnInit {
     if (id) {
       this.title.setTitle('Atualização de Equipamento');
       this.loadPressureIndicatorList();
+      this.loadPressureSafetyValveList();
       this.loadEquipment(id);
     }
   }
@@ -92,10 +98,30 @@ export class EquipmentFormComponent implements OnInit {
     });
   }
 
+  loadPressureSafetyValveList() {
+    this.pressureSafetyValveService.findAvailable().subscribe({
+      next: (res) => {
+        this.availablePressureSafetyValves = res;
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
   setPressureIndicatorToBind(event: number) {
     for (let pi of this.availablePressureIndicators) {
       if (pi.id === event) {
         this.pressureIndicatorToBind = pi;
+        return;
+      }
+    }
+  }
+
+  setPressureSafetyValveToBind(event: number) {
+    for (let pi of this.availablePressureSafetyValves) {
+      if (pi.id === event) {
+        this.pressureSafetyValveToBind = pi;
         return;
       }
     }
@@ -142,10 +168,6 @@ export class EquipmentFormComponent implements OnInit {
 
   }
 
-  preparePressureIndicatorBinding() {
-    this.pressureIndicatorDialogVisible = true;
-  }
-
   onBindPressureIndicator() {
     this.equipmentService.bindPressureIndicator(this.equipment.id || 0, this.pressureIndicatorToBind.id || 0).subscribe({
       next: (res) => {
@@ -158,6 +180,20 @@ export class EquipmentFormComponent implements OnInit {
       }
     })
     this.pressureIndicatorDialogVisible = false;
+  }
+
+  onBindPressureSafetyValve() {
+    this.equipmentService.bindPressureSafetyValve(this.equipment.id || 0, this.pressureSafetyValveToBind.id || 0).subscribe({
+      next: (res) => {
+        this.loadPressureSafetyValveList();
+        this.loadEquipment(this.equipment.id || 0);
+        this.messageService.add({severity: 'success', detail: 'Dispositivo vinculado com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
+    this.pressureSafetyValveDialogVisible = false;
   }
 
   onUnbindPressureIndicator(id: number) {
@@ -175,7 +211,17 @@ export class EquipmentFormComponent implements OnInit {
   }
 
   onUnbindPressureSafetyValve(id: number) {
-    
+    this.equipmentService.unbindPressureSafetyValve(this.equipment.id || 0, id).subscribe({
+      next: (res) => {
+        this.loadPressureSafetyValveList();
+        this.loadEquipment(this.equipment.id || 0);
+        this.messageService.add({severity: 'success', detail: 'Dispositivo desvinculado com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
+    this.pressureSafetyValveDialogVisible = false;
   }
 
 }

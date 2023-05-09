@@ -68,6 +68,10 @@ export class PressureSafetyValveService {
     return this.http.get<CalibrationSummary[]>(`${this.deviceUrl}/${deviceId}/calibrations`);
   }
 
+  findAvailable(): Observable<PressureSafetyValve[]> {
+    return this.http.get<PressureSafetyValve[]>(`${this.baseUrl}/available`);
+  }
+
   update(id: number, object: PressureSafetyValve): Observable<PressureSafetyValve> {
     return this.http.put<PressureSafetyValve>(`${this.baseUrl}/${id}`, object);
   }

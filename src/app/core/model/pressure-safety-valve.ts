@@ -9,5 +9,6 @@ export class PressureSafetyValve {
   bodySize = '';
   openingPressure = 0;
   closingPressure = 0;
+  lastCalibration?: Date;
   plant = new Plant();
 }
