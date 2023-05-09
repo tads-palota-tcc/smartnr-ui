@@ -69,6 +69,10 @@ export class PressureIndicatorService {
     return this.http.get<CalibrationSummary[]>(`${this.deviceUrl}/${deviceId}/calibrations`);
   }
 
+  findAvailable(): Observable<PressureIndicator[]> {
+    return this.http.get<PressureIndicator[]>(`${this.baseUrl}/available`);
+  }
+
   update(id: number, object: PressureIndicator): Observable<PressureIndicator> {
     return this.http.put<PressureIndicator>(`${this.baseUrl}/${id}`, object);
   }

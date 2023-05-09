@@ -10,5 +10,6 @@ export class PressureIndicator {
   connectionSize = '';
   maxGauge = 0;
   minGauge = 0;
+  lastCalibration?: Date;
   plant = new Plant();
 }

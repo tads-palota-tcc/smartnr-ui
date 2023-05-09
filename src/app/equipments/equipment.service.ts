@@ -60,6 +60,22 @@ export class EquipmentService {
     return this.http.put<Equipment>(`${this.baseUrl}/${id}`, object);
   }
 
+  bindPressureSafetyValve(equipmentId: number, psvId: number): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${equipmentId}/pressure-safety-valves/${psvId}`, {});
+  }
+
+  unbindPressureSafetyValve(equipmentId: number, psvId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${equipmentId}/pressure-safety-valves/${psvId}`, {});
+  }
+
+  bindPressureIndicator(equipmentId: number, piId: number): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${equipmentId}/pressure-indicators/${piId}`, {});
+  }
+
+  unbindPressureIndicator(equipmentId: number, piId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${equipmentId}/pressure-indicators/${piId}`, {});
+  }
+
   inactivate(id: number): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/inactivate`, {});
   }

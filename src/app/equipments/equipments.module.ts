@@ -8,6 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -17,6 +18,7 @@ import { SharedModule } from '../shared/shared.module';
 import { EquipmentFormComponent } from './equipment-form/equipment-form.component';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { EquipmentsRoutingModule } from './equipments-routing.module';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { EquipmentsRoutingModule } from './equipments-routing.module';
     TabViewModule,
     InputSwitchModule,
     DividerModule,
-    FileUploadModule
+    FileUploadModule,
+    PanelModule,
+    DialogModule
   ]
 })
 export class EquipmentsModule { }
