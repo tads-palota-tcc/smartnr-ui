@@ -47,6 +47,12 @@ const routes: Routes = [
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
+    path: 'calibrations',
+    loadChildren: () => import('./calibrations/calibrations.module').then(m => m.CalibrationsModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
+  },
+  {
     path: 'page-not-found',
     component: PageNotFoundComponent
   },
