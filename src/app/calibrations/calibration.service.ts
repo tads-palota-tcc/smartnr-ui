@@ -62,4 +62,11 @@ export class CalibrationService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+  uploadHeaders() {
+    return new HttpHeaders()
+      .append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+      .append('Accept', 'application/json')
+      
+  }
+
 }

@@ -73,7 +73,29 @@
         <label>Custo (R$)</label>
         <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost" [(ngModel)]="calibration.cost">
       </div>
+    </div>
 
+    <div class="grid">
+      <div class="col-12">
+        <h3>Anexo</h3>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div *ngIf="calibration.id" class="col-12 md:col-4">
+        <label>Carregar arquivo PDF</label>
+        <p-fileUpload
+          name="file"
+          mode="basic"
+          [auto]="false"
+          [maxFileSize]="2097152"
+          chooseLabel="Anexar"
+          accept="application/pdf"
+          [headers]="uploadHeaders"
+          method="put"
+          [url]="urlUploadReport"
+          (onUpload)="showUploadConfirmation()"></p-fileUpload>
+      </div>
     </div>
 
     <div class="grid">

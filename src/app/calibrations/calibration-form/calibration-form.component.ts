@@ -21,7 +21,7 @@ export class CalibrationFormComponent implements OnInit {
   plants: any[] = [];
   devices: any[] = [];
   statusOptions: any[] = [{label: 'Aguardando relatório', value: 'WAITING_REPORT'}, {label: 'Concluído', value: 'DONE'}];
-
+  
   selectedPlant?: Plant;
 
   calibration = new Calibration();
@@ -53,6 +53,18 @@ export class CalibrationFormComponent implements OnInit {
     }
   }
 
+  get updating(): boolean {
+    return Boolean(this.calibration.id);
+  }
+
+  get urlUploadReport(): string {
+    return `${this.calibrationService.baseUrl}/${this.calibration.id}/reports`;
+  }
+
+  get uploadHeaders() {
+    return this.calibrationService.uploadHeaders();
+  }
+
   updatePlantList(event: string) {
     this.plantService.findTopPlants(event).subscribe({
       next: res => {
@@ -69,10 +81,6 @@ export class CalibrationFormComponent implements OnInit {
         this.devices = res;
       }
     });
-  }
-
-  get updating(): boolean {
-    return Boolean(this.calibration.id);
   }
 
   save(form: NgForm) {
@@ -110,6 +118,10 @@ export class CalibrationFormComponent implements OnInit {
     form.reset();
     this.calibration = new Calibration();
     this.router.navigate(['/calibrations/create']);
+  }
+
+  showUploadConfirmation() {
+    this.messageService.add({severity: 'success', detail: 'Arquivo anexado com sucesso'});
   }
 
 }

@@ -5,6 +5,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
@@ -33,7 +34,8 @@ import { CalibrationsRoutingModule } from './calibrations-routing.module';
     DropdownModule,
     AutoCompleteModule,
     CalendarModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FileUploadModule
   ]
 })
 export class CalibrationsModule { }
