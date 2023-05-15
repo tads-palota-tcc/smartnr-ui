@@ -17,9 +17,16 @@
     <div class="grid">
       <div class="col-12 md:col-3 p-fluid">
         <label>Planta</label>
-        <p-autoComplete [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [required]="true" name="plant"
-          [(ngModel)]="selectedPlant" [suggestions]="plants" [forceSelection]="true"
-          (completeMethod)="updatePlantList($event.query)" field="code"></p-autoComplete>
+        <p-autoComplete
+          dropdownMode="current"
+          [readonly]="!auth.hasPermission('INTERVENTION_WRITE')"
+          [required]="true"
+          name="plant"
+          [(ngModel)]="selectedPlant"
+          [suggestions]="plants"
+          [forceSelection]="true"
+          (completeMethod)="updatePlantList($event.query)"
+          field="code"></p-autoComplete>
       </div>
 
       <div *ngIf="selectedPlant?.id" class="col-12 md:col-3 p-fluid">
@@ -38,7 +45,7 @@
     </div>
 
     <div class="grid">
-      <div class="col-12 md:col-4 p-fluid">
+      <div class="col-12 md:col-3 p-fluid">
         <label>Empresa executante</label>
         <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="text" name="executorCompany"
           [(ngModel)]="calibration.executorCompany" ngModel #executorCompany="ngModel" [required]="true"
@@ -53,7 +60,7 @@
         <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
       </div>
 
-      <div class="col-12 md:col-3 p-fluid">
+      <div class="col-12 md:col-2 p-fluid">
         <label>Número do relatório</label>
         <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="text" name="reportNumber"
           [(ngModel)]="calibration.reportNumber" ngModel #reportNumber="ngModel" [maxlength]="20">
@@ -64,27 +71,22 @@
         <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="calibration.status" optionLabel="label" optionValue="value"></p-dropdown>
       </div>
 
+      <div class="col-12 md:col-2 p-fluid">
+        <label>Custo (R$)</label>
+        <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost" [(ngModel)]="calibration.cost">
+      </div>
+
       <div class="col-12 p-fluid">
         <label>Comentários</label>
         <textarea rows="5" pInputTextarea name="comments" [(ngModel)]="calibration.comments"></textarea>
       </div>
-
-      <div class="col-12 md:col-3 p-fluid">
-        <label>Custo (R$)</label>
-        <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost" [(ngModel)]="calibration.cost">
-      </div>
+      
     </div>
 
     <div class="grid">
-      <div class="col-12">
-        <h3>Anexo</h3>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div *ngIf="calibration.id" class="col-12 md:col-4">
-        <label>Carregar arquivo PDF</label>
+      <div *ngIf="calibration.id" class="col-6 col-offset-6 md:col-2 md:col-offset-10 p-fluid">
         <p-fileUpload
+          [style]="{'width':'100%'}"
           name="file"
           mode="basic"
           [auto]="false"

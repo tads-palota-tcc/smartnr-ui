@@ -1,3 +1,5 @@
+import { Device } from './device';
+
 export class CalibrationSummary {
   id = 0;
   executionDate?: Date;
@@ -11,11 +13,7 @@ export class Calibration extends CalibrationSummary {
   type?: 'PSI' | 'PSV';
   comments?: string;
   cost: number = 0;
-  device = new DeviceId();
-}
-
-class DeviceId {
-  id: number = 0;
+  device = new Device();
 }
 
 class File {

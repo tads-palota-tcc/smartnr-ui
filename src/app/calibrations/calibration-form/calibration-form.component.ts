@@ -45,6 +45,7 @@ export class CalibrationFormComponent implements OnInit {
       this.calibrationService.findById(id).subscribe({
         next: (res) => {
           this.calibration = res;
+          this.selectedPlant = res.device.plant
         },
         error: (err) => {
           this.errorHandler.handle(err);
