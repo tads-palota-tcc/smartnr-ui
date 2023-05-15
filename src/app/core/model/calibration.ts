@@ -1,6 +1,6 @@
 export class CalibrationSummary {
   id = 0;
-  executionDate = new Date();
+  executionDate?: Date;
   reportNumber = '';
   executorCompany = '';
   file = new File();

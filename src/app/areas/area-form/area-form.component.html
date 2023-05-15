@@ -39,7 +39,7 @@
       <div class="col-12 md:col-3 p-fluid">
         <label>Planta</label>
         <p-autoComplete [readonly]="!auth.hasPermission('INSTALATION_WRITE')" [required]="true" name="plant" [(ngModel)]="area.plant"  [suggestions]="plants" [forceSelection]="true"
-          [required]="true" (completeMethod)="atualizaLista($event.query)" field="code"></p-autoComplete>
+          [required]="true" (completeMethod)="updateList($event.query)" field="code"></p-autoComplete>
       </div>
     </div>
 

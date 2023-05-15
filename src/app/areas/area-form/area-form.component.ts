@@ -50,12 +50,12 @@ export class AreaFormComponent implements OnInit {
     return Boolean(this.area.id);
   }
 
-  atualizaLista(event: string) {
+  updateList(event: string) {
     this.plantService.findTopPlants(event).subscribe({
       next: res => {
         this.plants = res;
       }
-    })
+    });
   }
 
   save(form: NgForm) {
