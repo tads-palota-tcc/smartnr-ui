@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="grid flex flex-row align-items-center">
+    <div class="col">
+      <h1>Inspeções</h1>
+    </div>
+    <div *ngIf="auth.hasPermission('INTERVENTION_WRITE')" class="col-4 md:col-2 p-fluid">
+      <a routerLink="/inspections/create" pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Inspeção"
+        tooltipPosition="top"></a>
+    </div>
+  </div>
+
+  <form (submit)="search()">
+    <div class="grid">
+      <div class="col-12 md:col-2 p-fluid">
+        <label for="">Data da execução</label>
+        <input pInputText [(ngModel)]="filter.executionDate" name="executionDate" type="text">
+      </div>
+      <div class="col-12 md:col p-fluid">
+        <label for="">Relatório</label>
+        <input pInputText [(ngModel)]="filter.reportNumber" name="reportNumber" type="text">
+      </div>
+      <div class="col-12 md:col-4 p-fluid">
+        <label for="">Executante</label>
+        <input pInputText [(ngModel)]="filter.executorCompany" name="executorCompany" type="text">
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <label for="">Situação</label>
+        <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="filter.status" optionLabel="label" optionValue="value"></p-dropdown>
+      </div>
+    </div>
+    <div class="grid mb-4">
+      <div class="md:col"></div>
+      <div class="col-6 md:col-2 p-fluid">
+        <button pButton icon="pi pi-search" label="Pesquisar" style="margin-bottom: 0;"></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="grid">
+    <div class="col">
+      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="inspections" [paginator]="true" [lazy]="true"
+        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" responsiveLayout='stack'
+        [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Data da execução</th>
+            <th>Relatório</th>
+            <th>Executante</th>
+            <th>Situação</th>
+            <th class="col-actions-header">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-calibration>
+          <tr>
+            <td>
+              <span class="p-column-title">Id</span>
+              {{ calibration.id }}
+            </td>
+            <td>
+              <span class="p-column-title">Data da execução</span>
+              {{ calibration.executionDate | date: 'dd/MM/yyyy' }}
+            </td>
+            <td>
+              <span class="p-column-title">Relatório</span>
+              <div class="flex flex-row justify-content-between align-items-center">
+                {{ calibration.reportNumber || '-' }}
+              <p-button (onClick)="downloadReport(calibration.id)" *ngIf="calibration?.file?.url" type="button" icon="pi pi-download" styleClass="p-button-secondary p-button-sm"></p-button>
+              </div>
+            </td>
+            <td>
+              <span class="p-column-title">Executante</span>
+              {{ calibration.executorCompany }}
+            </td>
+            <td>
+              <span class="p-column-title">Situation</span>
+              {{ calibration.status === 'WAITING_REPORT' ? 'Aguardando relatório' : 'Concluído' }}
+            </td>
+            <td class="col-actions">
+              <a routerLink="/inspections/{{calibration.id}}" pButton icon="pi pi-pencil" pTooltip="Editar"
+                tooltipPosition="top"></a>
+              <button *ngIf="auth.hasPermission('INTERVENTION_WRITE')" pButton
+                (click)="delete(calibration.id)" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

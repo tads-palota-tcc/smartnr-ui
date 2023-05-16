@@ -1,29 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+import { InspectionFilter, InspectionService } from '../inspection.service';
 import { Table } from 'primeng/table';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/security/auth.service';
-
-import { CalibrationFilter, CalibrationService } from '../calibration.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-calibration-search',
-  templateUrl: './calibration-search.component.html',
-  styleUrls: ['./calibration-search.component.scss']
+  selector: 'app-inspection-search',
+  templateUrl: './inspection-search.component.html',
+  styleUrls: ['./inspection-search.component.scss']
 })
-export class CalibrationSearchComponent implements OnInit {
+export class InspectionSearchComponent implements OnInit {
 
   statusOptions: any[] = [{label: 'Todas', value: ''}, {label: 'Aguardando relatório', value: 'WAITING_REPORT'}, {label: 'Concluído', value: 'DONE'}];
 
-  calibrations = [];
+  inspections = [];
   totalElements: number = 0;
-  filter = new CalibrationFilter();
+  filter = new InspectionFilter();
 
   @ViewChild('table') grid!: Table;
 
   constructor(
-    private calibrationService: CalibrationService,
+    private inspectionService: InspectionService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
     public auth: AuthService,
@@ -31,22 +30,22 @@ export class CalibrationSearchComponent implements OnInit {
     private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Pesquisa de Calibrações');
+    this.title.setTitle('Pesquisa de Inspeções');
     this.search()
   }
 
   search(page: number = 0): void {
     this.filter.page = page;
-    this.calibrationService.search(this.filter).subscribe({
+    this.inspectionService.search(this.filter).subscribe({
       next: res => {
         console.log(res)
-        this.calibrations = res.content;
+        this.inspections = res.content;
         this.totalElements = res.totalElements;
       },
       error: err => {
         this.errorHandler.handle(err);
       }
-    })
+    });
   }
 
   onChangePage(event: LazyLoadEvent) {
@@ -58,10 +57,10 @@ export class CalibrationSearchComponent implements OnInit {
     this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir a calibração?\nAo confirmar, todos os arquivos e registros também serão excluídos permanentemente.',
       accept: () => {
-        this.calibrationService.delete(id).subscribe({
+        this.inspectionService.delete(id).subscribe({
           next: res => {
             this.grid.reset();
-            this.messageService.add({ severity: 'success', detail: 'Calibração excluída com sucesso!' });
+            this.messageService.add({ severity: 'success', detail: 'Inspeção excluída com sucesso!' });
           },
           error: err => {
             this.errorHandler.handle(err);
@@ -72,12 +71,12 @@ export class CalibrationSearchComponent implements OnInit {
   }
 
   downloadReport(id: number) {
-    this.calibrationService.downloadReport(id).subscribe({
+    this.inspectionService.downloadReport(id).subscribe({
       next: (res) => {
         let url = window.URL.createObjectURL(res);
         let a = document.createElement('a');
         a.href = url;
-        a.download = `certificado_calibracao_${id}`;
+        a.download = `relatorio_inspecao_${id}`;
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove();
