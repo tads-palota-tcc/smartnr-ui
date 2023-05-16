@@ -1,3 +1,4 @@
+import { ApplicableTestResponse } from './applicable-tests';
 import { Area } from './area';
 
 export class Equipment {
@@ -30,5 +31,6 @@ export class Equipment {
   hasInstallationProject = false;
   pressureSafetyValves: any[] = [];
   pressureIndicators: any[] = [];
+  applicableTests: ApplicableTestResponse[] = [];
   active = false;
 }

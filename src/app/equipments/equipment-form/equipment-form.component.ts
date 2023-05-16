@@ -14,6 +14,7 @@ import { Area } from 'src/app/core/model/area';
 import { PressureIndicatorService } from 'src/app/pressure-indicators/pressure-indicator.service';
 import { PressureSafetyValveService } from 'src/app/pressure-safety-valves/pressure-safety-valve.service';
 import { PressureSafetyValve } from 'src/app/core/model/pressure-safety-valve';
+import { ApplicableTest, ApplicableTestResponse, Test } from 'src/app/core/model/applicable-tests';
 
 @Component({
   selector: 'app-equipment-form',
@@ -31,6 +32,15 @@ export class EquipmentFormComponent implements OnInit {
   availablePressureSafetyValves: PressureSafetyValve[] = [];
   pressureSafetyValveToBind = new PressureSafetyValve();
   pressureSafetyValveDialogVisible = false;
+
+  tests: Test[] = [];
+  applicableTestToAdd = new ApplicableTest();
+  applicableTestDialogVisible = false;
+  frequencyTypes: {label: string, value: string}[] = [
+    {label: 'Dias', value: 'DAY'},
+    {label: 'Meses', value: 'MONTH'},
+    {label: 'Anos', value: 'YEAR'}
+  ];
   
   fluidClasses: {code: string, description: string}[] = [
     {code: 'A', description: 'CLASSE “A”'},
@@ -60,6 +70,7 @@ export class EquipmentFormComponent implements OnInit {
       this.title.setTitle('Atualização de Equipamento');
       this.loadPressureIndicatorList();
       this.loadPressureSafetyValveList();
+      this.loadTestsList();
       this.loadEquipment(id);
     }
   }
@@ -109,6 +120,17 @@ export class EquipmentFormComponent implements OnInit {
     });
   }
 
+  loadTestsList() {
+    this.equipmentService.findTests().subscribe({
+      next: (res) => {
+        this.tests = res;
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
   setPressureIndicatorToBind(event: number) {
     for (let pi of this.availablePressureIndicators) {
       if (pi.id === event) {
@@ -122,6 +144,17 @@ export class EquipmentFormComponent implements OnInit {
     for (let pi of this.availablePressureSafetyValves) {
       if (pi.id === event) {
         this.pressureSafetyValveToBind = pi;
+        return;
+      }
+    }
+  }
+
+  onSelectTestToApply(event: number) {
+    for (let test of this.tests) {
+      if (test.id === event) {
+        this.applicableTestToAdd.test = test;
+        this.applicableTestToAdd.frequency = test.frequency;
+        this.applicableTestToAdd.frequencyType = test.frequencyType;
         return;
       }
     }
@@ -222,6 +255,42 @@ export class EquipmentFormComponent implements OnInit {
       }
     })
     this.pressureSafetyValveDialogVisible = false;
+  }
+
+  onAddApplicableTest() {
+    this.equipmentService.addApplicableTest(this.equipment.id || 0, this.applicableTestToAdd).subscribe({
+      next: (res) => {
+        this.applicableTestToAdd = new ApplicableTest();
+        this.loadEquipment(this.equipment.id || 0);
+        this.messageService.add({severity: 'success', detail: 'Teste adicionado com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+    this.applicableTestDialogVisible = false;
+  }
+
+  frequencyToText(frequency: number, frequencyType: 'DAY' | 'MONTH' | 'YEAR' | null): string {
+    var dayText = frequency > 1 ? 'dias' : 'dia';
+    var monthText = frequency > 1 ? 'meses' : 'mês';
+    var yearText = frequency > 1 ? 'anos' : 'ano';
+    return `${frequency} ${frequencyType === 'YEAR' ? yearText : frequencyType === 'MONTH' ? monthText : dayText}`;
+  }
+
+  inactivateApplicableTest(testId: number) {
+
+  }
+
+  onOpenApplicableTestDialog(testId: number) {
+    for (let at of this.equipment.applicableTests) {
+      if (at.testId === testId) {
+        this.applicableTestToAdd.test.id = at.testId;
+        this.applicableTestToAdd.frequency = at.frequency;
+        this.applicableTestToAdd.frequencyType = at.frequencyType;
+      }
+    }
+    this.applicableTestDialogVisible = true;
   }
 
 }

@@ -248,8 +248,8 @@
         <div class="grid">
           <div class="col">
             <p-panel header="Indicadores de pressão instalados no equipamento">
-              <p-button (click)="pressureIndicatorDialogVisible = true" styleClass="mb-2 p-button-secondary" type="button"
-                label="Adicionar"></p-button>
+              <p-button (click)="pressureIndicatorDialogVisible = true" styleClass="mb-2 p-button-secondary"
+                type="button" label="Adicionar"></p-button>
               <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipment.pressureIndicators"
                 responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
                 <ng-template pTemplate="header">
@@ -300,8 +300,8 @@
         <div class="grid">
           <div class="col">
             <p-panel header="Válvulas de segurança instaladas no equipamento">
-              <p-button (click)="pressureSafetyValveDialogVisible = true" styleClass="mb-2 p-button-secondary" type="button"
-                label="Adicionar"></p-button>
+              <p-button (click)="pressureSafetyValveDialogVisible = true" styleClass="mb-2 p-button-secondary"
+                type="button" label="Adicionar"></p-button>
               <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipment.pressureSafetyValves"
                 responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
                 <ng-template pTemplate="header">
@@ -350,37 +350,50 @@
 
         <div class="grid">
           <div class="col">
-            <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipment.pressureIndicators"
-              responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
-              <ng-template pTemplate="header">
-                <tr>
-                  <th>Nome</th>
-                  <th>Executante</th>
-                  <th>Última execução</th>
-                  <th>Próxima execução</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-pi>
-                <tr>
-                  <td>
-                    <span class="p-column-title">Id</span>
-                    {{ pi.name }}
-                  </td>
-                  <td>
-                    <span class="p-column-title">Tag</span>
-                    {{ pi.executor }}
-                  </td>
-                  <td>
-                    <span class="p-column-title">Nome</span>
-                    {{ pi.lastInspection }}
-                  </td>
-                  <td>
-                    <span class="p-column-title">Nome</span>
-                    {{ pi.nextInspection }}
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+            <p-panel header="Ensaios aplicáveis ao equipamento">
+              <p-button (click)="applicableTestDialogVisible = true" styleClass="mb-2 p-button-secondary"
+                type="button" label="Adicionar"></p-button>
+              <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipment.applicableTests"
+                responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nome</th>
+                    <th class="col-values-header">Frequência</th>
+                    <th class="col-dates-header">Última execução</th>
+                    <th class="col-dates-header">Próxima execução</th>
+                    <th class="col-actions-header">Ação</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-test>
+                  <tr>
+                    <td>
+                      <span class="p-column-title">Nome</span>
+                      {{ test.name }}
+                    </td>
+                    <td>
+                      <span class="p-column-title">Frequência</span>
+                      {{ frequencyToText(test.frequency, test.frequencyType) }}
+                    </td>
+                    <td class="col-dates">
+                      <span class="p-column-title">Última execução</span>
+                      {{ test.lastTestDate | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td class="col-dates">
+                      <span class="p-column-title">Próxima execução</span>
+                      {{ test.nextTestDate | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td class="col-actions">
+                      <button class="mr-2" type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton
+                        (click)="onOpenApplicableTestDialog(test.testId)" icon="pi pi-pencil" pTooltip="Editar"
+                        tooltipPosition="top"></button>
+                      <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton
+                        (click)="inactivateApplicableTest(test.testId)" icon="pi pi-trash" pTooltip="Remover"
+                        tooltipPosition="top"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </p-panel>
           </div>
         </div>
 
@@ -473,6 +486,33 @@
     <div class="grid">
       <div class="col-12">
         <button type="button" pButton (click)="onBindPressureSafetyValve()">Instalar</button>
+      </div>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Nova teste aplicável" [(visible)]="applicableTestDialogVisible" [modal]="true"
+    [style]="{width: '70vw', height: '40vh'}">
+    <div class="grid">
+      <div class="col-12 md:col-4 p-fluid">
+        <label>Teste</label>
+        <p-dropdown [(ngModel)]="applicableTestToAdd.test.id" name="test" [options]="tests" [placeholder]="'Selecione um teste'"
+          (onChange)="onSelectTestToApply($event.value)" optionLabel="name" optionValue="id">
+        </p-dropdown>
+      </div>
+      <div class="col-12 md:col-4 p-fluid">
+        <label>Tipo de frequência</label>
+        <p-dropdown [options]="frequencyTypes" optionLabel="label" optionValue="value" name="frequencyType" [(ngModel)]="applicableTestToAdd.frequencyType">
+        </p-dropdown>
+      </div>
+      <div class="col-12 md:col-4 p-fluid">
+        <label>Frequência</label>
+        <input [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" pInputText type="number" step="1" name="frequency"
+          [(ngModel)]="applicableTestToAdd.frequency" [required]="true" [min]="1">
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-12">
+        <button type="button" pButton (click)="onAddApplicableTest()">Salvar</button>
       </div>
     </div>
   </p-dialog>

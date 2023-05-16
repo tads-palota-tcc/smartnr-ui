@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Equipment } from '../core/model/equipment';
 import { Observable } from 'rxjs';
+import { ApplicableTest, Test } from '../core/model/applicable-tests';
 
 export class EquipmentFilter {
   id?: string;
@@ -83,4 +84,13 @@ export class EquipmentService {
   activate(id: number): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/activate`, {});
   }
+
+  findTests(): Observable<Test[]> {
+    return this.http.get<Test[]>('http://localhost:8080/tests');
+  }
+
+  addApplicableTest(id: number, applicableTest: ApplicableTest): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${id}/applicable-tests`, applicableTest);
+  }
+  
 }
