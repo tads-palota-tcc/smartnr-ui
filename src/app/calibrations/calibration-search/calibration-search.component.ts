@@ -68,8 +68,24 @@ export class CalibrationSearchComponent implements OnInit {
           }
         });
       }
-    })
+    });
+  }
 
+  downloadReport(id: number) {
+    this.calibrationService.downloadReport(id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `certificado_calibracao_${id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
   }
 
 }

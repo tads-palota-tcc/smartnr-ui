@@ -17,5 +17,7 @@ export class Calibration extends CalibrationSummary {
 }
 
 class File {
+  id?: number;
+  name: string = '';
   url: string = '';
 }

@@ -62,6 +62,16 @@ export class CalibrationService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+  downloadReport(id: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.baseUrl}/${id}/reports`, {headers: headers, responseType: 'blob'});
+  }
+
+  deleteReport(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}/reports`);
+  }
+
   uploadHeaders() {
     return new HttpHeaders()
       .append('Authorization', 'Bearer ' + localStorage.getItem('token'))

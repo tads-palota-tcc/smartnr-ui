@@ -17,16 +17,9 @@
     <div class="grid">
       <div class="col-12 md:col-3 p-fluid">
         <label>Planta</label>
-        <p-autoComplete
-          dropdownMode="current"
-          [readonly]="!auth.hasPermission('INTERVENTION_WRITE')"
-          [required]="true"
-          name="plant"
-          [(ngModel)]="selectedPlant"
-          [suggestions]="plants"
-          [forceSelection]="true"
-          (completeMethod)="updatePlantList($event.query)"
-          field="code"></p-autoComplete>
+        <p-autoComplete dropdownMode="current" [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [required]="true"
+          name="plant" [(ngModel)]="selectedPlant" [suggestions]="plants" [forceSelection]="true"
+          (completeMethod)="updatePlantList($event.query)" field="code"></p-autoComplete>
       </div>
 
       <div *ngIf="selectedPlant?.id" class="col-12 md:col-3 p-fluid">
@@ -68,36 +61,38 @@
 
       <div class="col-12 md:col-3 p-fluid">
         <label>Situação</label>
-        <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="calibration.status" optionLabel="label" optionValue="value"></p-dropdown>
+        <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="calibration.status" optionLabel="label"
+          optionValue="value"></p-dropdown>
       </div>
 
       <div class="col-12 md:col-2 p-fluid">
         <label>Custo (R$)</label>
-        <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost" [(ngModel)]="calibration.cost">
+        <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost"
+          [(ngModel)]="calibration.cost">
       </div>
 
       <div class="col-12 p-fluid">
         <label>Comentários</label>
         <textarea rows="5" pInputTextarea name="comments" [(ngModel)]="calibration.comments"></textarea>
       </div>
-      
+
     </div>
 
-    <div class="grid">
-      <div *ngIf="calibration.id" class="col-6 col-offset-6 md:col-2 md:col-offset-10 p-fluid">
-        <p-fileUpload
-          [style]="{'width':'100%'}"
-          name="file"
-          mode="basic"
-          [auto]="false"
-          [maxFileSize]="2097152"
-          chooseLabel="Anexar"
-          accept="application/pdf"
-          [headers]="uploadHeaders"
-          method="put"
-          [url]="urlUploadReport"
-          (onUpload)="showUploadConfirmation()"></p-fileUpload>
+    <div *ngIf="auth.hasPermission('INTERVENTION_WRITE')" class="grid">
+
+      <div *ngIf="calibration.id && !calibration?.file?.name" class="col-6 col-offset-6 md:col-2 md:col-offset-10 p-fluid">
+        <p-fileUpload *ngIf="!calibration?.file?.name" [style]="{'width':'100%'}" name="file" mode="basic"
+          [auto]="false" [maxFileSize]="2097152" chooseLabel="Anexar relatório" accept="application/pdf"
+          [headers]="uploadHeaders" method="put" [url]="urlUploadReport" (onUpload)="afterUpload()"></p-fileUpload>
       </div>
+
+      <div *ngIf="calibration.id && calibration?.file?.name" class="col-12 md:col-8 md:col-offset-4">
+        <div class="flex flex-row justify-content-end align-items-center">
+          <a class="mr-1" href="javascript:void(0)" (click)="downloadReport(calibration.id)">{{calibration.file.name}}</a>
+          <button *ngIf="calibration?.file?.name" pButton type="button" (click)="deleteReport()">Excluir relatório</button>
+        </div>
+      </div>
+
     </div>
 
     <div class="grid">

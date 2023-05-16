@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Calibration } from 'src/app/core/model/calibration';
 import { CalibrationService } from '../calibration.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/security/auth.service';
 import { Title } from '@angular/platform-browser';
@@ -32,6 +32,7 @@ export class CalibrationFormComponent implements OnInit {
     private deviceService: DeviceService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
+    private confirmation: ConfirmationService,
     private route: ActivatedRoute,
     private router: Router,
     public auth: AuthService,
@@ -42,16 +43,20 @@ export class CalibrationFormComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.title.setTitle('Atualização de Calibração')
-      this.calibrationService.findById(id).subscribe({
-        next: (res) => {
-          this.calibration = res;
-          this.selectedPlant = res.device.plant
-        },
-        error: (err) => {
-          this.errorHandler.handle(err);
-        }
-      });
+      this.loadCalibration(id);
     }
+  }
+
+  loadCalibration(id: number) {
+    this.calibrationService.findById(id).subscribe({
+      next: (res) => {
+        this.calibration = res;
+        this.selectedPlant = res.device.plant
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
   }
 
   get updating(): boolean {
@@ -121,8 +126,43 @@ export class CalibrationFormComponent implements OnInit {
     this.router.navigate(['/calibrations/create']);
   }
 
-  showUploadConfirmation() {
+  afterUpload() {
     this.messageService.add({severity: 'success', detail: 'Arquivo anexado com sucesso'});
+    this.loadCalibration(this.calibration.id);
+  }
+
+  downloadReport(id: number) {
+    this.calibrationService.downloadReport(id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `certificado_calibracao_${id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  deleteReport() {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir o relatório?\nAo confirmar, não será possível recuperar o arquivo.',
+      accept: () => {
+        this.calibrationService.deleteReport(this.calibration.id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Relatório excluído com sucesso'});
+            this.loadCalibration(this.calibration.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
   }
 
 }
