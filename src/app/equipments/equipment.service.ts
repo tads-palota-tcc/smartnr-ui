@@ -92,5 +92,13 @@ export class EquipmentService {
   addApplicableTest(id: number, applicableTest: ApplicableTest): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/applicable-tests`, applicableTest);
   }
+
+  inactivateApplicableTest(id: number, testId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}/applicable-tests/${testId}`);
+  }
+
+  activateApplicableTest(id: number, testId: number): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${id}/applicable-tests/${testId}`, {});
+  }
   
 }

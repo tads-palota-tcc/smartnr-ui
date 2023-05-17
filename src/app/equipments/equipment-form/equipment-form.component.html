@@ -351,8 +351,8 @@
         <div class="grid">
           <div class="col">
             <p-panel header="Ensaios aplicáveis ao equipamento">
-              <p-button (click)="applicableTestDialogVisible = true" styleClass="mb-2 p-button-secondary"
-                type="button" label="Adicionar"></p-button>
+              <p-button (click)="applicableTestDialogVisible = true" styleClass="mb-2 p-button-secondary" type="button"
+                label="Adicionar"></p-button>
               <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipment.applicableTests"
                 responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
                 <ng-template pTemplate="header">
@@ -365,7 +365,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-test>
-                  <tr>
+                  <tr [ngClass]="{'inactive-text': !test.active}">
                     <td>
                       <span class="p-column-title">Nome</span>
                       {{ test.name }}
@@ -386,8 +386,11 @@
                       <button class="mr-2" type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton
                         (click)="onOpenApplicableTestDialog(test.testId)" icon="pi pi-pencil" pTooltip="Editar"
                         tooltipPosition="top"></button>
-                      <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton
-                        (click)="inactivateApplicableTest(test.testId)" icon="pi pi-trash" pTooltip="Remover"
+                      <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE') && test.active" pButton
+                        (click)="inactivateApplicableTest(test.testId)" icon="pi pi-trash" pTooltip="Desativar"
+                        tooltipPosition="top"></button>
+                      <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE') && !test.active" pButton
+                        (click)="activateApplicableTest(test.testId)" icon="pi pi-refresh" pTooltip="Reativar"
                         tooltipPosition="top"></button>
                     </td>
                   </tr>
@@ -495,13 +498,15 @@
     <div class="grid">
       <div class="col-12 md:col-4 p-fluid">
         <label>Teste</label>
-        <p-dropdown [(ngModel)]="applicableTestToAdd.test.id" name="test" [options]="tests" [placeholder]="'Selecione um teste'"
-          (onChange)="onSelectTestToApply($event.value)" optionLabel="name" optionValue="id">
+        <p-dropdown [(ngModel)]="applicableTestToAdd.test.id" name="test" [options]="tests"
+          [placeholder]="'Selecione um teste'" (onChange)="onSelectTestToApply($event.value)" optionLabel="name"
+          optionValue="id">
         </p-dropdown>
       </div>
       <div class="col-12 md:col-4 p-fluid">
         <label>Tipo de frequência</label>
-        <p-dropdown [options]="frequencyTypes" optionLabel="label" optionValue="value" name="frequencyType" [(ngModel)]="applicableTestToAdd.frequencyType">
+        <p-dropdown [options]="frequencyTypes" optionLabel="label" optionValue="value" name="frequencyType"
+          [(ngModel)]="applicableTestToAdd.frequencyType">
         </p-dropdown>
       </div>
       <div class="col-12 md:col-4 p-fluid">

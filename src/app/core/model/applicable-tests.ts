@@ -21,4 +21,5 @@ export class ApplicableTestResponse {
   frequencyType?: 'DAY' | 'MONTH' | 'YEAR';
   lastTestDate?: Date;
   nextTestDate?: Date;
+  active = true;
 }

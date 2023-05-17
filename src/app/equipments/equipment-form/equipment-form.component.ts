@@ -278,8 +278,28 @@ export class EquipmentFormComponent implements OnInit {
     return `${frequency} ${frequencyType === 'YEAR' ? yearText : frequencyType === 'MONTH' ? monthText : dayText}`;
   }
 
-  inactivateApplicableTest(testId: number) {
+  activateApplicableTest(testId: number) {
+    this.equipmentService.activateApplicableTest(this.equipment.id || 0, testId).subscribe({
+      next: (res) => {
+        this.loadEquipment(this.equipment.id || 0);
+        this.messageService.add({severity: 'success', detail: 'Teste ativado com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
 
+  inactivateApplicableTest(testId: number) {
+    this.equipmentService.inactivateApplicableTest(this.equipment.id || 0, testId).subscribe({
+      next: (res) => {
+        this.loadEquipment(this.equipment.id || 0);
+        this.messageService.add({severity: 'success', detail: 'Teste inativado com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
   }
 
   onOpenApplicableTestDialog(testId: number) {
