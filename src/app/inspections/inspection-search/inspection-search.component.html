@@ -44,43 +44,63 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
-            <th>Data da execução</th>
+            <th>Planta</th>
+            <th>Área</th>
+            <th>Equipamento</th>
+            <th>Teste</th>
+            <th class="col-dates-header">Data da execução</th>
             <th>Relatório</th>
             <th>Executante</th>
             <th>Situação</th>
             <th class="col-actions-header">Ações</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-calibration>
+        <ng-template pTemplate="body" let-inspection>
           <tr>
             <td>
               <span class="p-column-title">Id</span>
-              {{ calibration.id }}
+              {{ inspection.id }}
             </td>
             <td>
+              <span class="p-column-title">Planta</span>
+              {{ inspection.equipment.area.plant.code }}
+            </td>
+            <td>
+              <span class="p-column-title">Área</span>
+              {{ inspection.equipment.area.code }}
+            </td>
+            <td>
+              <span class="p-column-title">Equipamento</span>
+              {{ inspection.equipment.tag }}
+            </td>
+            <td>
+              <span class="p-column-title">Equipamento</span>
+              {{ inspection.test.name }}
+            </td>
+            <td class="col-dates">
               <span class="p-column-title">Data da execução</span>
-              {{ calibration.executionDate | date: 'dd/MM/yyyy' }}
+              {{ inspection.executionDate | date: 'dd/MM/yyyy' }}
             </td>
             <td>
               <span class="p-column-title">Relatório</span>
               <div class="flex flex-row justify-content-between align-items-center">
-                {{ calibration.reportNumber || '-' }}
-              <p-button (onClick)="downloadReport(calibration.id)" *ngIf="calibration?.file?.url" type="button" icon="pi pi-download" styleClass="p-button-secondary p-button-sm"></p-button>
+                {{ inspection.reportNumber || '-' }}
+              <p-button (onClick)="downloadReport(inspection.id)" *ngIf="inspection?.file?.url" type="button" icon="pi pi-download" styleClass="p-button-secondary p-button-sm"></p-button>
               </div>
             </td>
             <td>
               <span class="p-column-title">Executante</span>
-              {{ calibration.executorCompany }}
+              {{ inspection.executorCompany }}
             </td>
             <td>
               <span class="p-column-title">Situation</span>
-              {{ calibration.status === 'WAITING_REPORT' ? 'Aguardando relatório' : 'Concluído' }}
+              {{ inspection.status === 'WAITING_REPORT' ? 'Aguardando relatório' : 'Concluído' }}
             </td>
             <td class="col-actions">
-              <a routerLink="/inspections/{{calibration.id}}" pButton icon="pi pi-pencil" pTooltip="Editar"
+              <a routerLink="/inspections/{{inspection.id}}" pButton icon="pi pi-pencil" pTooltip="Editar"
                 tooltipPosition="top"></a>
               <button *ngIf="auth.hasPermission('INTERVENTION_WRITE')" pButton
-                (click)="delete(calibration.id)" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+                (click)="delete(inspection.id)" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>
