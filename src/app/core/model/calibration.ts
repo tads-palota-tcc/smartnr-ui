@@ -2,7 +2,7 @@ import { Device } from './device';
 
 export class CalibrationSummary {
   id = 0;
-  executionDate?: Date;
+  executionDate = new Date();
   reportNumber = '';
   executorCompany = '';
   file = new File();

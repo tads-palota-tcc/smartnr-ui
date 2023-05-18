@@ -27,7 +27,7 @@ export class InspectionFormComponent implements OnInit {
   tests: Test[] = []
   statusOptions: any[] = [{label: 'Aguardando relatório', value: 'WAITING_REPORT'}, {label: 'Concluído', value: 'DONE'}];
 
-  selectedPlant?: Plant;
+  selectedPlant = new Plant();
   selectedTest = new Test();
 
   constructor(
@@ -88,6 +88,8 @@ export class InspectionFormComponent implements OnInit {
       next: (res) => {
         this.inspection = res;
         this.selectedPlant = res.equipment.area.plant;
+        this.selectedTest = res.test;
+        this.inspection.executionDate = new Date(this.inspection.executionDate)
       },
       error: (err) => {
         this.errorHandler.handle(err);

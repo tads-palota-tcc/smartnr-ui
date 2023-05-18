@@ -48,7 +48,7 @@
 
       <div class="col-12 md:col-2 p-fluid">
         <label>Data da execução</label>
-        <p-calendar [(ngModel)]="calibration.executionDate" name="executionDate" ngModel
+        <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="calibration.executionDate" name="executionDate" ngModel
           #executionDate="ngModel"></p-calendar>
         <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
       </div>
