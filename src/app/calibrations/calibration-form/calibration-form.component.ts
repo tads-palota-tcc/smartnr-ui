@@ -81,8 +81,6 @@ export class CalibrationFormComponent implements OnInit {
   }
 
   updateDeviceList(tag: string) {
-    console.log(this.selectedPlant?.code);
-    console.log(tag);
     this.deviceService.findByPlantCodeAndTag(this.selectedPlant?.code || '', tag).subscribe({
       next: res => {
         this.devices = res;

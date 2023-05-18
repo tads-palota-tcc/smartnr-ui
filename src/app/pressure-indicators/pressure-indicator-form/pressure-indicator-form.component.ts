@@ -58,7 +58,6 @@ export class PressureIndicatorFormComponent implements OnInit {
     this.pressureIndicatorService.findCalibrations(id).subscribe({
       next: (res) => {
         this.calibrations = res;
-        console.log(this.calibrations);
       },
       error: (err) => {
         this.errorHandler.handle(err);

@@ -39,7 +39,6 @@ export class CalibrationSearchComponent implements OnInit {
     this.filter.page = page;
     this.calibrationService.search(this.filter).subscribe({
       next: res => {
-        console.log(res)
         this.calibrations = res.content;
         this.totalElements = res.totalElements;
       },

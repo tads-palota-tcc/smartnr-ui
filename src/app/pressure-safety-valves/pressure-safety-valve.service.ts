@@ -27,7 +27,6 @@ export class PressureSafetyValveService {
   constructor(private http: HttpClient) { }
 
   create(object: PressureSafetyValve): Observable<PressureSafetyValve> {
-    console.log(object);
     return this.http.post<PressureSafetyValve>(`${this.baseUrl}`, object);
   }
 

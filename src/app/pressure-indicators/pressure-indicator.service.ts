@@ -28,7 +28,6 @@ export class PressureIndicatorService {
   constructor(private http: HttpClient) { }
 
   create(object: PressureIndicator): Observable<PressureIndicator> {
-    console.log(object);
     return this.http.post<PressureIndicator>(`${this.baseUrl}`, object);
   }
 

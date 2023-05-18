@@ -38,7 +38,6 @@ export class InspectionSearchComponent implements OnInit {
     this.filter.page = page;
     this.inspectionService.search(this.filter).subscribe({
       next: res => {
-        console.log(res)
         this.inspections = res.content;
         this.totalElements = res.totalElements;
       },

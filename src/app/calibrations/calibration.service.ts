@@ -46,7 +46,6 @@ export class CalibrationService {
       params = params.set('status', filter.status);
     }
 
-    console.log(params)
     return this.http.get<any>(this.baseUrl, {params})
   }
 
