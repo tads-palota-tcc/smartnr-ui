@@ -100,5 +100,9 @@ export class EquipmentService {
   activateApplicableTest(id: number, testId: number): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/applicable-tests/${testId}`, {});
   }
+
+  findByPlantCodeAndTag(plantCode: string, tag: string): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(`${this.baseUrl}?plantCode=${plantCode}&tag=${tag}`);
+  }
   
 }

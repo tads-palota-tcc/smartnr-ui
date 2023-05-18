@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Calibration, CalibrationSummary } from '../core/model/calibration';
+import { Inspection } from '../core/model/Inspection';
+import { Test } from '../core/model/applicable-tests';
 
 export class InspectionFilter {
   executionDate?: Date;
@@ -21,8 +23,8 @@ export class InspectionService {
 
   constructor(private http: HttpClient) { }
 
-  create(Calibration: Calibration): Observable<Calibration> {
-    return this.http.post<Calibration>(`${this.baseUrl}`, Calibration);
+  create(inspection: Inspection): Observable<Inspection> {
+    return this.http.post<Inspection>(`${this.baseUrl}`, inspection);
   }
 
   search(filter: InspectionFilter): Observable<any> {
@@ -50,12 +52,12 @@ export class InspectionService {
     return this.http.get<any>(this.baseUrl, {params})
   }
 
-  findById(id: number): Observable<Calibration> {
-    return this.http.get<Calibration>(`${this.baseUrl}/${id}`);
+  findById(id: number): Observable<Inspection> {
+    return this.http.get<Inspection>(`${this.baseUrl}/${id}`);
   }
   
-  update(id: number, Calibration: Calibration): Observable<Calibration> {
-    return this.http.put<Calibration>(`${this.baseUrl}/${id}`, Calibration);
+  update(id: number, inspection: Inspection): Observable<Inspection> {
+    return this.http.put<Inspection>(`${this.baseUrl}/${id}`, inspection);
   }
 
   delete(id: number): Observable<void> {
@@ -77,6 +79,10 @@ export class InspectionService {
       .append('Authorization', 'Bearer ' + localStorage.getItem('token'))
       .append('Accept', 'application/json')
       
+  }
+
+  findTests(): Observable<Test[]> {
+    return this.http.get<Test[]>('http://localhost:8080/tests');
   }
 
 }

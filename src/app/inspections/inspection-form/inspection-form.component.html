@@ -1,1 +1,119 @@
-<p>inspection-form works!</p>
+<div class="container">
+
+  <div class="grid">
+    <div class="col-12">
+      <h1>{{ !auth.hasPermission('INTERVENTION_WRITE') ? 'Detalhe' : updating ? 'Atualização' : 'Cadastro'}} de
+        Inspeção</h1>
+    </div>
+  </div>
+
+  <form #f="ngForm" (submit)="save(f)">
+    <p-tabView>
+
+      <p-tabPanel header="Inspeção">
+
+        <div class="grid">
+          <div class="col-12">
+            <h3>Dados gerais</h3>
+          </div>
+        </div>
+
+        <div class="grid">
+
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Planta</label>
+            <p-autoComplete dropdownMode="current" [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [required]="true"
+              name="plant" [(ngModel)]="selectedPlant" [suggestions]="plants" [forceSelection]="true"
+              (completeMethod)="updatePlantList($event.query)" field="code"></p-autoComplete>
+          </div>
+
+          <div *ngIf="selectedPlant?.id" class="col-12 md:col-3 p-fluid">
+            <label>Equipamento</label>
+            <p-autoComplete [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [disabled]="!selectedPlant?.id"
+              [(ngModel)]="inspection.equipment" [required]="true" name="equipment" [suggestions]="equipments"
+              [forceSelection]="true" [required]="true" (completeMethod)="updateEquipmentList($event.query)"
+              field="tag"></p-autoComplete>
+          </div>
+
+          <div *ngIf="selectedPlant?.id" class="col-12 md:col-4 p-fluid">
+            <label>Teste</label>
+            <p-dropdown [(ngModel)]="selectedTest.id" name="test" [options]="tests"
+              [placeholder]="'Selecione um teste'" (onChange)="onSelectTest($event.value)" optionLabel="name"
+              optionValue="id">
+            </p-dropdown>
+          </div>
+
+        </div>
+
+        <div class="grid">
+          <div class="col-12">
+            <h3>Dados gerais</h3>
+          </div>
+        </div>
+
+        <div class="grid">
+
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Empresa executante</label>
+            <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="text" name="executorCompany"
+              [(ngModel)]="inspection.executorCompany" ngModel #executorCompany="ngModel" [required]="true"
+              [maxlength]="40">
+            <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
+          </div>
+
+          <div class="col-12 md:col-2 p-fluid">
+            <label>Data da execução</label>
+            <p-calendar [(ngModel)]="inspection.executionDate" name="executionDate" ngModel
+              #executionDate="ngModel"></p-calendar>
+            <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
+          </div>
+    
+          <div class="col-12 md:col-2 p-fluid">
+            <label>Número do relatório</label>
+            <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="text" name="reportNumber"
+              [(ngModel)]="inspection.reportNumber" ngModel #reportNumber="ngModel" [maxlength]="20">
+          </div>
+    
+          <div class="col-12 md:col-3 p-fluid">
+            <label>Situação</label>
+            <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="inspection.status" optionLabel="label"
+              optionValue="value"></p-dropdown>
+          </div>
+    
+          <div class="col-12 md:col-2 p-fluid">
+            <label>Custo (R$)</label>
+            <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost"
+              [(ngModel)]="inspection.cost">
+          </div>
+    
+          <div class="col-12 p-fluid">
+            <label>Comentários</label>
+            <textarea rows="5" pInputTextarea name="comments" [(ngModel)]="inspection.comments"></textarea>
+          </div>
+
+        </div>
+
+      </p-tabPanel>
+
+      <p-tabPanel *ngIf="inspection.id" header="Ações geradas">
+
+      </p-tabPanel>
+
+    </p-tabView>
+
+    <p-divider></p-divider>
+
+    <div class="grid">
+      <div class="col-12 flex align-items-center justify-content-start mt-4">
+        <button *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" [disabled]="!f.valid" pButton
+          type="submit">Salvar</button>
+        <button *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" (click)="newInspection(f)" class="p-button-info ml-1"
+          pButton type="button">Novo</button>
+        <a class="ml-1" routerLink="/pressure-indicators">Voltar para a listagem</a>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>

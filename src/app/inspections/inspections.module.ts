@@ -15,6 +15,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabViewModule } from 'primeng/tabview';
+import { DividerModule } from 'primeng/divider';
 
 
 @NgModule({
@@ -30,11 +32,13 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     TableModule,
     TooltipModule,
+    TabViewModule,
     InputTextModule,
     DropdownModule,
     AutoCompleteModule,
     CalendarModule,
     InputTextareaModule,
+    DividerModule,
     FileUploadModule
   ]
 })

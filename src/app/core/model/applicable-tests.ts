@@ -7,9 +7,9 @@ export class ApplicableTest {
 }
 
 export class Test {
-  id?: number;
-  name?: string;
-  description?: string;
+  id = 0;
+  name = '';
+  description = '';
   frequency?: number;
   frequencyType?: 'DAY' | 'MONTH' | 'YEAR';
 }
