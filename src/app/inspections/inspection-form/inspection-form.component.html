@@ -22,8 +22,8 @@
 
           <div class="col-12 md:col-3 p-fluid">
             <label>Planta</label>
-            <p-autoComplete dropdownMode="current" [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [required]="true"
-              name="plant" [(ngModel)]="selectedPlant" [suggestions]="plants" [forceSelection]="true"
+            <p-autoComplete dropdownMode="current" [readonly]="!auth.hasPermission('INTERVENTION_WRITE')"
+              [required]="true" name="plant" [(ngModel)]="selectedPlant" [suggestions]="plants" [forceSelection]="true"
               (completeMethod)="updatePlantList($event.query)" field="code"></p-autoComplete>
           </div>
 
@@ -63,32 +63,52 @@
 
           <div class="col-12 md:col-2 p-fluid">
             <label>Data da execução</label>
-            <p-calendar dataType="string" dateFormat="dd/mm/yy" [(ngModel)]="inspection.executionDate" name="executionDate" ngModel
-              #executionDate="ngModel"></p-calendar>
+            <p-calendar dataType="string" dateFormat="dd/mm/yy" [(ngModel)]="inspection.executionDate"
+              name="executionDate" ngModel #executionDate="ngModel"></p-calendar>
             <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
           </div>
-    
+
           <div class="col-12 md:col-2 p-fluid">
             <label>Número do relatório</label>
             <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="text" name="reportNumber"
               [(ngModel)]="inspection.reportNumber" ngModel #reportNumber="ngModel" [maxlength]="20">
           </div>
-    
+
           <div class="col-12 md:col-3 p-fluid">
             <label>Situação</label>
             <p-dropdown [options]="statusOptions" name="status" [(ngModel)]="inspection.status" optionLabel="label"
               optionValue="value"></p-dropdown>
           </div>
-    
+
           <div class="col-12 md:col-2 p-fluid">
             <label>Custo (R$)</label>
             <input [readOnly]="!auth.hasPermission('INTERVENTION_WRITE')" pInputText type="number" name="cost"
               [(ngModel)]="inspection.cost">
           </div>
-    
+
           <div class="col-12 p-fluid">
             <label>Comentários</label>
             <textarea rows="5" pInputTextarea name="comments" [(ngModel)]="inspection.comments"></textarea>
+          </div>
+
+        </div>
+
+        <div *ngIf="auth.hasPermission('INTERVENTION_WRITE')" class="grid">
+
+          <div *ngIf="inspection.id && !inspection?.file?.name"
+            class="col-6 col-offset-6 md:col-2 md:col-offset-10 p-fluid">
+            <p-fileUpload *ngIf="!inspection?.file?.name" [style]="{'width':'100%'}" name="file" mode="basic"
+              [auto]="false" [maxFileSize]="2097152" chooseLabel="Anexar relatório" accept="application/pdf"
+              [headers]="uploadHeaders" method="put" [url]="urlUploadReport" (onUpload)="afterUpload()"></p-fileUpload>
+          </div>
+
+          <div *ngIf="inspection.id && inspection?.file?.name" class="col-12 md:col-8 md:col-offset-4">
+            <div class="flex flex-row justify-content-end align-items-center">
+              <a class="mr-1" href="javascript:void(0)"
+                (click)="downloadReport(inspection.id)">{{inspection.file.name}}</a>
+              <button *ngIf="inspection?.file?.name" pButton type="button" (click)="deleteReport()">Excluir
+                relatório</button>
+            </div>
           </div>
 
         </div>

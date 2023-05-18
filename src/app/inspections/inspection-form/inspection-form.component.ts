@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Test } from 'src/app/core/model/applicable-tests';
 import { Inspection } from 'src/app/core/model/Inspection';
@@ -39,6 +39,7 @@ export class InspectionFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private errorHandler: ErrorHandlerService,
+    private confirmation: ConfirmationService,
     private title: Title
   ) {}
 
@@ -54,6 +55,14 @@ export class InspectionFormComponent implements OnInit {
 
   get updating(): boolean {
     return Boolean(this.inspection.id);
+  }
+
+  get urlUploadReport(): string {
+    return `${this.inspectionService.baseUrl}/${this.inspection.id}/reports`;
+  }
+
+  get uploadHeaders() {
+    return this.inspectionService.uploadHeaders();
   }
 
   updatePlantList(event: string) {
@@ -141,6 +150,45 @@ export class InspectionFormComponent implements OnInit {
         return;
       }
     }
+  }
+
+  afterUpload() {
+    this.messageService.add({severity: 'success', detail: 'Arquivo anexado com sucesso'});
+    this.loadInspection(this.inspection.id);
+  }
+
+  downloadReport(id: number) {
+    this.inspectionService.downloadReport(id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `relatorio_inspecao_${id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  deleteReport() {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir o relatório?\nAo confirmar, não será possível recuperar o arquivo.',
+      accept: () => {
+        this.inspectionService.deleteReport(this.inspection.id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Relatório excluído com sucesso'});
+            this.loadInspection(this.inspection.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
   }
 
 }
