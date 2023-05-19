@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Calibration, CalibrationSummary } from '../core/model/calibration';
 import { Inspection } from '../core/model/Inspection';
 import { Test } from '../core/model/applicable-tests';
+import { PendencyResponse } from '../core/model/pendency';
 
 export class InspectionFilter {
   executionDate?: Date;
@@ -82,6 +83,10 @@ export class InspectionService {
 
   findTests(): Observable<Test[]> {
     return this.http.get<Test[]>('http://localhost:8080/tests');
+  }
+
+  findPendenciesByInspection(inspectionId: number): Observable<PendencyResponse[]> {
+    return this.http.get<PendencyResponse[]>(`${this.baseUrl}/${inspectionId}/pendencies`);
   }
 
 }

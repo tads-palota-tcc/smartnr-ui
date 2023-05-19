@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DividerModule } from 'primeng/divider';
+import { PanelModule } from 'primeng/panel';
 
 
 @NgModule({
@@ -38,6 +39,8 @@ import { DividerModule } from 'primeng/divider';
     AutoCompleteModule,
     CalendarModule,
     InputTextareaModule,
+    TabViewModule,
+    PanelModule,
     DividerModule,
     FileUploadModule
   ]

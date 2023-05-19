@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,9 @@ import { PlantService } from 'src/app/plants/plant.service';
 import { AuthService } from 'src/app/security/auth.service';
 
 import { InspectionService } from '../inspection.service';
+import { PendencyService } from 'src/app/pendencies/pendency.service';
+import { Table } from 'primeng/table';
+import { PendencyResponse } from 'src/app/core/model/pendency';
 
 @Component({
   selector: 'app-inspection-form',
@@ -30,9 +33,15 @@ export class InspectionFormComponent implements OnInit {
   selectedPlant = new Plant();
   selectedTest = new Test();
 
+  pendencies: PendencyResponse[] = []
+  pendencyDialogVisible = false;
+
+  @ViewChild('pendencyTable') grid!: Table;
+
   constructor(
     public inspectionService: InspectionService,
     public plantService: PlantService,
+    public pendencyService: PendencyService,
     public equipmentService: EquipmentService,
     public auth: AuthService,
     public messageService: MessageService,
@@ -99,6 +108,19 @@ export class InspectionFormComponent implements OnInit {
         this.selectedPlant = res.equipment.area.plant;
         this.selectedTest = res.test;
         this.inspection.executionDate = new Date(this.inspection.executionDate)
+        this.loadPendencies();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  loadPendencies() {
+    this.inspectionService.findPendenciesByInspection(this.inspection.id).subscribe({
+      next: (res) => {
+        this.pendencies = res;
+        console.log(this.pendencies)
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -182,6 +204,23 @@ export class InspectionFormComponent implements OnInit {
           next: res => {
             this.messageService.add({severity: 'success', detail: 'Relatório excluído com sucesso'});
             this.loadInspection(this.inspection.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
+  }
+
+  deletePendency(id: number) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir a pendência?\nAo confirmar, não será possível recuperar os dados.',
+      accept: () => {
+        this.pendencyService.delete(id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Pendência excluída com sucesso'});
+            this.loadPendencies();
           },
           error: err => {
             this.errorHandler.handle(err);
