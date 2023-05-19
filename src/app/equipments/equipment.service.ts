@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Equipment } from '../core/model/equipment';
 import { Observable } from 'rxjs';
@@ -102,6 +102,42 @@ export class EquipmentService {
 
   findByPlantCodeAndTag(plantCode: string, tag: string): Observable<Equipment[]> {
     return this.http.get<Equipment[]>(`${this.baseUrl}?plantCode=${plantCode}&tag=${tag}`);
+  }
+
+  uploadHeaders() {
+    return new HttpHeaders()
+      .append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+      .append('Accept', 'application/json')
+  }
+
+  downloadDatabook(id: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.baseUrl}/${id}/data-book`, {headers: headers, responseType: 'blob'});
+  }
+
+  downloadSafetyJournal(id: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.baseUrl}/${id}/safety-journal`, {headers: headers, responseType: 'blob'});
+  }
+
+  downloadInstallationProject(id: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.baseUrl}/${id}/installation-project`, {headers: headers, responseType: 'blob'});
+  }
+
+  deleteDatabook(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}/data-book`);
+  }
+
+  deleteSafetyJournal(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}/safety-journal`);
+  }
+
+  deleteInstallationProject(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}/installation-project`);
   }
   
 }

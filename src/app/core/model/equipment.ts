@@ -2,7 +2,7 @@ import { ApplicableTestResponse } from './applicable-tests';
 import { Area } from './area';
 
 export class Equipment {
-  id?: number;
+  id = 0;
   tag = '';
   name = '';
   area = new Area();
@@ -33,4 +33,14 @@ export class Equipment {
   pressureIndicators: any[] = [];
   applicableTests: ApplicableTestResponse[] = [];
   active = false;
+  databookFile = new File();
+  safetyJournalFile = new File();
+  installationProjectFile = new File();
+}
+
+class File {
+  id = 0;
+  name = '';
+  type = '';
+  url = '';
 }

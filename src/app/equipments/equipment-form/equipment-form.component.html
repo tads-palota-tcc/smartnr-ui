@@ -9,6 +9,7 @@
 
   <form #f="ngForm" (submit)="save(f)">
     <p-tabView>
+
       <p-tabPanel header="Equipamento">
 
         <div class="grid">
@@ -143,6 +144,7 @@
         </div>
 
       </p-tabPanel>
+
       <p-tabPanel header="Instalação">
 
         <div class="grid">
@@ -185,6 +187,7 @@
         </div>
 
       </p-tabPanel>
+
       <p-tabPanel header="Documentação">
 
         <div class="grid">
@@ -202,8 +205,14 @@
               <label class="mr-2 mb-1">Possui prontuário</label>
               <div class="flex flex-row align-items-center justify-content-end">
                 <p-inputSwitch class="mr-2" name="hasDatabook" [(ngModel)]="equipment.hasDatabook"></p-inputSwitch>
-                <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" (onUpload)="onUploadDatabook($event)"
-                  [auto]="true" chooseLabel="Adicionar"></p-fileUpload>
+                <p-fileUpload *ngIf="!equipment?.databookFile?.id" [style]="{'width':'100%'}" name="file"
+                  mode="basic" [auto]="true" [maxFileSize]="2097152" chooseLabel="Anexar PDF" accept="application/pdf"
+                  [headers]="uploadHeaders" method="put" [url]="urlUploadDatabook"
+                  (onUpload)="afterUpload()"></p-fileUpload>
+                <p-button *ngIf="equipment?.databookFile?.id" label="Baixar PDF" icon="pi pi-download"
+                  styleClass="p-button-secondary mr-1" (onClick)="downloadDatabook()"></p-button>
+                <p-button *ngIf="equipment?.databookFile?.id" label="Excluir PDF" icon="pi pi-trash"
+                  styleClass="p-button-danger" (onClick)="deleteDatabook()"></p-button>
               </div>
             </div>
 
@@ -214,8 +223,14 @@
               <div class="flex flex-row align-items-center justify-content-end">
                 <p-inputSwitch class="mr-2" name="hasInstallationProject"
                   [(ngModel)]="equipment.hasInstallationProject"></p-inputSwitch>
-                <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" (onUpload)="onUploadDatabook($event)"
-                  [auto]="true" chooseLabel="Adicionar"></p-fileUpload>
+                <p-fileUpload *ngIf="!equipment?.installationProjectFile?.id" [style]="{'width':'100%'}"
+                  name="file" mode="basic" [auto]="true" [maxFileSize]="2097152"
+                  chooseLabel="Anexar PDF" accept="application/pdf" [headers]="uploadHeaders" method="put"
+                  [url]="urlUploadInstallationProject" (onUpload)="afterUpload()"></p-fileUpload>
+                <p-button *ngIf="equipment?.installationProjectFile?.id" label="Baixar PDF" icon="pi pi-download"
+                  styleClass="p-button-secondary mr-1" (onClick)="downloadInstallationProject()"></p-button>
+                <p-button *ngIf="equipment?.installationProjectFile?.id" label="Excluir PDF" icon="pi pi-trash"
+                  styleClass="p-button-danger" (onClick)="deleteInstallationProject()"></p-button>
               </div>
             </div>
 
@@ -226,8 +241,14 @@
               <div class="flex flex-row align-items-center justify-content-end">
                 <p-inputSwitch class="mr-2" name="hasSafetyJournal"
                   [(ngModel)]="equipment.hasSafetyJournal"></p-inputSwitch>
-                <p-fileUpload mode="basic" name="demo[]" url="" accept="image/*" (onUpload)="onUploadDatabook($event)"
-                  [auto]="true" chooseLabel="Adicionar"></p-fileUpload>
+                <p-fileUpload *ngIf="!equipment?.safetyJournalFile?.id" [style]="{'width':'100%'}"
+                  name="file" mode="basic" [auto]="true" [maxFileSize]="2097152" chooseLabel="Anexar PDF"
+                  accept="application/pdf" [headers]="uploadHeaders" method="put" [url]="urlUploadSafetyJournal"
+                  (onUpload)="afterUpload()"></p-fileUpload>
+                <p-button *ngIf="equipment?.safetyJournalFile?.id" label="Baixar PDF" icon="pi pi-download"
+                  styleClass="p-button-secondary mr-1" (onClick)="downloadSafetyJournal()"></p-button>
+                <p-button *ngIf="equipment?.safetyJournalFile?.id" label="Excluir PDF" icon="pi pi-trash"
+                  styleClass="p-button-danger" (onClick)="deleteSafetyJournal()"></p-button>
               </div>
             </div>
 
@@ -237,6 +258,7 @@
         </div>
 
       </p-tabPanel>
+
       <p-tabPanel header="Indicadores de pressão">
 
         <div class="grid">
@@ -403,7 +425,9 @@
       </p-tabPanel>
 
     </p-tabView>
+
     <p-divider></p-divider>
+
     <div class="grid">
       <div class="col-12 flex align-items-center justify-content-start mt-4">
         <button *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" [disabled]="!f.valid" pButton

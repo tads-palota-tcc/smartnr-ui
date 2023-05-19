@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AreaService } from 'src/app/areas/area.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Equipment } from 'src/app/core/model/equipment';
@@ -61,6 +61,7 @@ export class EquipmentFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public auth: AuthService,
+    public confirmation: ConfirmationService,
     private title: Title) { }
 
   ngOnInit(): void {
@@ -77,6 +78,22 @@ export class EquipmentFormComponent implements OnInit {
 
   get updating(): boolean {
     return Boolean(this.equipment.id);
+  }
+
+  get uploadHeaders() {
+    return this.equipmentService.uploadHeaders();
+  }
+
+  get urlUploadDatabook(): string {
+    return `${this.equipmentService.baseUrl}/${this.equipment.id}/data-book`;
+  }
+
+  get urlUploadSafetyJournal(): string {
+    return `${this.equipmentService.baseUrl}/${this.equipment.id}/safety-journal`;
+  }
+
+  get urlUploadInstallationProject(): string {
+    return `${this.equipmentService.baseUrl}/${this.equipment.id}/installation-project`;
   }
 
   loadEquipment(id: number) {
@@ -197,8 +214,111 @@ export class EquipmentFormComponent implements OnInit {
     this.router.navigate(['/equipments/create']);
   }
 
-  onUploadDatabook(event: any) {
+  afterUpload() {
+    this.messageService.add({severity: 'success', detail: 'Arquivo anexado com sucesso'});
+    this.loadEquipment(this.equipment.id || 0);
+  }
 
+  downloadDatabook() {
+    this.equipmentService.downloadDatabook(this.equipment.id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `prontuario_${this.equipment.id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  deleteDatabook() {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir o documento?\nAo confirmar, não será possível recuperar o arquivo.',
+      accept: () => {
+        this.equipmentService.deleteDatabook(this.equipment.id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Prontuário excluído com sucesso'});
+            this.loadEquipment(this.equipment.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
+  }
+
+  downloadInstallationProject() {
+    this.equipmentService.downloadInstallationProject(this.equipment.id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `projeto_instalacao${this.equipment.id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  deleteInstallationProject() {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir o documento?\nAo confirmar, não será possível recuperar o arquivo.',
+      accept: () => {
+        this.equipmentService.deleteInstallationProject(this.equipment.id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Projeto de instalação excluído com sucesso'});
+            this.loadEquipment(this.equipment.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
+  }
+
+  downloadSafetyJournal() {
+    this.equipmentService.downloadSafetyJournal(this.equipment.id).subscribe({
+      next: (res) => {
+        let url = window.URL.createObjectURL(res);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `registro_seguranca${this.equipment.id}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  deleteSafetyJournal() {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir o documento?\nAo confirmar, não será possível recuperar o arquivo.',
+      accept: () => {
+        this.equipmentService.deleteSafetyJournal(this.equipment.id).subscribe({
+          next: res => {
+            this.messageService.add({severity: 'success', detail: 'Registro de segurança excluído com sucesso'});
+            this.loadEquipment(this.equipment.id);
+          },
+          error: err => {
+            this.errorHandler.handle(err);
+          }
+        });
+      }
+    });
   }
 
   onBindPressureIndicator() {
