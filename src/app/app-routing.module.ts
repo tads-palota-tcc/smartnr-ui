@@ -59,6 +59,12 @@ const routes: Routes = [
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
+    path: 'pendencies',
+    loadChildren: () => import('./pendencies/pendencies.module').then(m => m.PendenciesModule),
+    canActivate: [AuthGuard],
+    data: {roles: ['ACTIONS_READ', 'REPORTS_READ']}
+  },
+  {
     path: 'page-not-found',
     component: PageNotFoundComponent
   },
