@@ -126,10 +126,10 @@
         <div class="grid">
           <div class="col">
             <p-panel header="Ações geradas durante a inspeção">
-              <p-button (click)="pendencyDialogVisible = true" styleClass="mb-2 p-button-secondary"
-                type="button" label="Adicionar"></p-button>
-              <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="pendencies"
-                responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #pendencyTable>
+              <p-button (click)="pendencyDialogVisible = true" styleClass="mb-2 p-button-secondary" type="button"
+                label="Adicionar"></p-button>
+              <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="pendencies" responsiveLayout='stack'
+                [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #pendencyTable>
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Autor</th>
@@ -192,6 +192,56 @@
     </div>
 
   </form>
+
+  <p-dialog header="Nova Pendência" [(visible)]="pendencyDialogVisible" [modal]="true" [style]="{width: '70vw'}">
+    <div class="grid">
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Tipo de pendência</label>
+        <p-dropdown [options]="pendencyTypeOptions" [(ngModel)]="pendencyToSave.type" optionLabel="label"
+          optionValue="value">
+        </p-dropdown>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Status</label>
+        <p-dropdown [options]="pendencyStatusOptions" [(ngModel)]="pendencyToSave.status" optionLabel="label"
+          optionValue="value">
+        </p-dropdown>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Prazo</label>
+        <p-calendar dataType="string" dateFormat="dd/mm/yy" [(ngModel)]="pendencyToSave.deadLine"
+          name="deadLine" ngModel #deadLine="ngModel"></p-calendar>
+        <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Custo (R$)</label>
+        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="number" name="name"
+          [(ngModel)]="pendencyToSave.cost" ngModel #name="ngModel">
+      </div>
+      <div class="col-12 md:col-4 p-fluid">
+        <label>Responsável</label>
+        <p-autoComplete [readonly]="!auth.hasPermission('EQUIPMENT_WRITE')" [required]="true" name="responsible"
+          [(ngModel)]="pendencyToSave.responsible.id" [suggestions]="pendencyResponsibleOptions" [forceSelection]="true"
+          [required]="true" (completeMethod)="updateResponsibleList($event.query)" field="name"></p-autoComplete>
+      </div>
+      <div class="col-12 md:col-12 p-fluid">
+        <label>Descrição</label>
+        <textarea [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" rows="5" cols="30" pInputTextarea
+          [(ngModel)]="pendencyToSave.description" ngModel #tag="ngModel" [required]="true"></textarea>
+      </div>
+      <div class="col-12 md:col-12 p-fluid">
+        <label>Ação</label>
+        <textarea [readOnly]="!auth.hasPermission('EQUIPMENT_WRITE')" rows="5" cols="30" pInputTextarea
+          [(ngModel)]="pendencyToSave.action" ngModel #tag="ngModel" [required]="true"></textarea>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12">
+        <button type="button" pButton (click)="savePendency()">Salvar</button>
+      </div>
+    </div>
+  </p-dialog>
 
 
 </div>

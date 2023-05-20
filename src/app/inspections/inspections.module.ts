@@ -18,6 +18,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { PanelModule } from 'primeng/panel';
     TabViewModule,
     PanelModule,
     DividerModule,
+    DialogModule,
     FileUploadModule
   ]
 })

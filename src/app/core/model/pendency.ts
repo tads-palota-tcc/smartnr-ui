@@ -3,7 +3,9 @@ export class PendencyCreationRequest {
   description = '';
   action = '';
   deadLine = new Date();
-  pendencyType: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
+  status: 'STARTED' | 'COMPLETED' | 'CANCELED' = 'STARTED';
+  cost = 0;
+  type: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
   inspection = new InspectionRequest();
 }
 
@@ -15,7 +17,7 @@ export class PendencyResponse {
   action = '';
   openedAt = new Date();
   deadLine = new Date();
-  pendencyType: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
+  type: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
   status: 'STARTED' | 'COMPLETED' | 'CANCELED' = 'STARTED';
   inspection = new InspectionResponse();
 }

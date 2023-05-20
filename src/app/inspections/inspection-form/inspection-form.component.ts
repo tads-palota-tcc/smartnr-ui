@@ -15,6 +15,8 @@ import { InspectionService } from '../inspection.service';
 import { PendencyService } from 'src/app/pendencies/pendency.service';
 import { Table } from 'primeng/table';
 import { PendencyResponse } from 'src/app/core/model/pendency';
+import { PendencyCreationRequest } from 'src/app/core/model/pendency';
+import { UserService } from 'src/app/core/user.service';
 
 @Component({
   selector: 'app-inspection-form',
@@ -34,7 +36,20 @@ export class InspectionFormComponent implements OnInit {
   selectedTest = new Test();
 
   pendencies: PendencyResponse[] = []
+  pendencyToSave = new PendencyCreationRequest();
   pendencyDialogVisible = false;
+  pendencyTypeOptions: any[] = [
+    {label: 'Obrigatória', value: 'MANDATORY'},
+    {label: 'Recomendada', value: 'RECOMMENDATION'},
+    {label: 'Opcional', value: 'OPTIONAL'}
+  ];
+  pendencyStatusOptions: any[] = [
+    {label: 'Aberto', value: 'STARTED'},
+    {label: 'Concluído', value: 'COMPLETED'},
+    {label: 'Cancelado', value: 'CANCELED'}
+  ];
+
+  pendencyResponsibleOptions: any [] = [];
 
   @ViewChild('pendencyTable') grid!: Table;
 
@@ -47,6 +62,7 @@ export class InspectionFormComponent implements OnInit {
     public messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
+    private userService: UserService,
     private errorHandler: ErrorHandlerService,
     private confirmation: ConfirmationService,
     private title: Title
@@ -86,6 +102,14 @@ export class InspectionFormComponent implements OnInit {
     this.equipmentService.findByPlantCodeAndTag(this.selectedPlant?.code || '', tag).subscribe({
       next: res => {
         this.equipments = res;
+      }
+    });
+  }
+
+  updateResponsibleList(event: string) {
+    this.userService.findTop10ByName(event).subscribe({
+      next: res => {
+        this.pendencyResponsibleOptions = res;
       }
     });
   }
@@ -226,6 +250,19 @@ export class InspectionFormComponent implements OnInit {
             this.errorHandler.handle(err);
           }
         });
+      }
+    });
+  }
+
+  savePendency() {
+    this.pendencyToSave.inspection.id = this.inspection.id;
+    console.log(this.pendencyToSave)
+    this.pendencyService.create(this.pendencyToSave).subscribe({
+      next: (res) => {
+        this.messageService.add({severity: 'success', detail: 'Pendência salva com sucesso'});
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
       }
     });
   }
