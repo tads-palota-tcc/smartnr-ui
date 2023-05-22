@@ -209,9 +209,9 @@
       </div>
       <div class="col-12 md:col-3 p-fluid">
         <label>Prazo</label>
-        <p-calendar dataType="string" dateFormat="dd/mm/yy" [(ngModel)]="pendencyToSave.deadLine"
-          name="deadLine" ngModel #deadLine="ngModel"></p-calendar>
-        <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
+        <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="pendencyToSave.deadLine" name="deadLine" ngModel
+          #deadLine="ngModel"></p-calendar>
+        <app-message [control]="deadLine.control" error="required" text="Campo obrigatório"></app-message>
       </div>
       <div class="col-12 md:col-3 p-fluid">
         <label>Custo (R$)</label>
@@ -221,7 +221,7 @@
       <div class="col-12 md:col-4 p-fluid">
         <label>Responsável</label>
         <p-autoComplete [readonly]="!auth.hasPermission('EQUIPMENT_WRITE')" [required]="true" name="responsible"
-          [(ngModel)]="pendencyToSave.responsible.id" [suggestions]="pendencyResponsibleOptions" [forceSelection]="true"
+          [(ngModel)]="pendencyToSave.responsible" [suggestions]="pendencyResponsibleOptions" [forceSelection]="true"
           [required]="true" (completeMethod)="updateResponsibleList($event.query)" field="name"></p-autoComplete>
       </div>
       <div class="col-12 md:col-12 p-fluid">

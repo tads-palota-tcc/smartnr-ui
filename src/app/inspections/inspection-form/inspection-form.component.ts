@@ -256,10 +256,11 @@ export class InspectionFormComponent implements OnInit {
 
   savePendency() {
     this.pendencyToSave.inspection.id = this.inspection.id;
-    console.log(this.pendencyToSave)
     this.pendencyService.create(this.pendencyToSave).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: 'Pendência salva com sucesso'});
+        this.loadPendencies();
+        this.pendencyDialogVisible = false;
       },
       error: (err) => {
         this.errorHandler.handle(err);
