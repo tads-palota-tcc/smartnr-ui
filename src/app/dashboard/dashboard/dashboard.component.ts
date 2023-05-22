@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { EquipmentSituation } from 'src/app/core/model/equipment';
+import { PendencyByPlant } from 'src/app/core/model/statistics';
+import { StatisticsService } from 'src/app/core/statistics.service';
 import { EquipmentService, SituationFilter } from 'src/app/equipments/equipment.service';
 
 @Component({
@@ -15,12 +17,14 @@ export class DashboardComponent implements OnInit {
   equipmentsSituationTotalElements: number = 0;
   filter = new SituationFilter();
 
+  pendenciesByPlantData: PendencyByPlant[] = [];
+
   pendenciesByPlant = {
-    labels: ['RGD1', 'RGD2', 'PEL1', 'PEL2'],
+    labels: [''],
     datasets: [
       {
-        data: [22, 18, 31, 6],
-        backgroundColor: ['#ff9900', '#109618', '#990099', '#3b3eac']
+        data: [0],
+        backgroundColor: ['#ff9900']
       }
     ]
   };
@@ -37,11 +41,11 @@ export class DashboardComponent implements OnInit {
   };
 
   pendenciesByResponsible = {
-    labels: ['Alexandre', 'Marina', 'Juliana', 'Miguel'],
+    labels: [''],
     datasets: [
       {
-        data: [22, 18, 31, 6],
-        backgroundColor: ['#ff9900', '#109618', '#990099', '#3b3eac']
+        data: [0],
+        backgroundColor: ['#ff9900']
       }
     ]
   };
@@ -113,11 +117,38 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private equipmentService: EquipmentService,
+    private statisticsService: StatisticsService,
     private errorHandler: ErrorHandlerService
   ) {}
 
+  findPlantsPendencies() {
+    this.statisticsService.findPlantsPendencies().subscribe({
+      next: (res) => {
+        this.pendenciesByPlant.labels = res.map(r => r.plant);
+        this.pendenciesByPlant.datasets[0].data = res.map(r => r.pendencies);
+        for (let p of this.pendenciesByPlant.labels) {
+          this.pendenciesByPlant.datasets[0].backgroundColor.push(this.getRandomColor());
+        }
+      }
+    });
+  }
+
+  findResponsiblePendencies() {
+    this.statisticsService.findResponsiblePendencies().subscribe({
+      next: (res) => {
+        this.pendenciesByResponsible.labels = res.map(r => r.responsible);
+        this.pendenciesByResponsible.datasets[0].data = res.map(r => r.pendencies);
+        for (let p of this.pendenciesByResponsible.labels) {
+          this.pendenciesByResponsible.datasets[0].backgroundColor.push(this.getRandomColor());
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.searchEquipmentsSituation();
+    this.findPlantsPendencies();
+    this.findResponsiblePendencies()
   }
 
   onChangeEquipmentsSituationPage(event: LazyLoadEvent) {
@@ -137,5 +168,14 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  private getRandomColor() {
+    return `rgb(${this.getRandomNumber()}, ${this.getRandomNumber()}, ${this.getRandomNumber()})`;
+  }
+
+  private getRandomNumber() {
+    return Math.floor(Math.random() * (100) + 80);
+  }
+
 
 }
