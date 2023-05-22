@@ -1,10 +1,11 @@
 export class PendencyCreationRequest {
+  id?: number;
   responsible = new UserRequest();
   description = '';
   action = '';
   deadLine = new Date();
   status: 'STARTED' | 'COMPLETED' | 'CANCELED' = 'STARTED';
-  cost = 0;
+  cost?: number;
   type: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
   inspection = new InspectionRequest();
 }
@@ -19,6 +20,7 @@ export class PendencyResponse {
   deadLine = new Date();
   type: 'MANDATORY' | 'RECOMMENDATION' | 'OPTIONAL' = 'MANDATORY';
   status: 'STARTED' | 'COMPLETED' | 'CANCELED' = 'STARTED';
+  cost?: number;
   inspection = new InspectionResponse();
 }
 

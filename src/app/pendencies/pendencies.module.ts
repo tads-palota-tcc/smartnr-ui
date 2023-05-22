@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PendenciesRoutingModule } from './pendencies-routing.module';
 import { PendencyFormComponent } from './pendency-form/pendency-form.component';
 import { PendencySearchComponent } from './pendency-search/pendency-search.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { PendencySearchComponent } from './pendency-search/pendency-search.compo
     TableModule,
     TooltipModule,
     InputTextModule,
+    AutoCompleteModule,
     DropdownModule,
     CalendarModule,
     InputTextareaModule

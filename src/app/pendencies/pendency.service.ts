@@ -68,4 +68,8 @@ export class PendencyService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+  update(id: number, obj: PendencyCreationRequest): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}`, obj);
+  }
+
 }

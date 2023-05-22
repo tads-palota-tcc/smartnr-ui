@@ -89,7 +89,7 @@
             <td class="col-actions">
               <a routerLink="/pendencies/{{pendency.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
               <button *ngIf="auth.hasPermission('ACTIONS_WRITE')" pButton (click)="delete(pendency.id)" icon="pi pi-trash"
-                pTooltip="Inativar" tooltipPosition="top"></button>
+                pTooltip="Excluir" tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>

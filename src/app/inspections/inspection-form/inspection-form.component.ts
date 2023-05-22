@@ -254,12 +254,48 @@ export class InspectionFormComponent implements OnInit {
     });
   }
 
+  editPendency(id: number) {
+    this.pendencyService.findById(id).subscribe({
+      next: (res) => {
+        this.pendencyToSave = res;
+        this.pendencyToSave.deadLine = new Date(this.pendencyToSave.deadLine);
+        this.pendencyDialogVisible = true;
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
+  }
+
   savePendency() {
     this.pendencyToSave.inspection.id = this.inspection.id;
+    if (!this.pendencyToSave.id) {
+      this.createPendency();
+    } else {
+      this.updatePendency();
+    }
+  }
+
+  private createPendency() {
     this.pendencyService.create(this.pendencyToSave).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: 'Pendência salva com sucesso'});
         this.loadPendencies();
+        this.pendencyToSave = new PendencyCreationRequest();
+        this.pendencyDialogVisible = false;
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
+
+  private updatePendency() {
+    this.pendencyService.update(this.pendencyToSave.id || 0, this.pendencyToSave).subscribe({
+      next: (res) => {
+        this.messageService.add({severity: 'success', detail: 'Pendência salva com sucesso'});
+        this.loadPendencies();
+        this.pendencyToSave = new PendencyCreationRequest();
         this.pendencyDialogVisible = false;
       },
       error: (err) => {
