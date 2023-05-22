@@ -8,7 +8,8 @@
     <div class="col-12">
       <p-tabView>
         <p-tabPanel header="Painel sinalizador">
-          <p-table [value]="panel" [tableStyle]="{ 'min-width': '50rem' }">
+          <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="equipmentsSituation" [paginator]="true" [lazy]="true"
+        [totalRecords]="equipmentsSituationTotalElements" (onLazyLoad)="onChangeEquipmentsSituationPage($event)" [rows]="10" responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
             <ng-template pTemplate="header">
               <tr>
                 <th>Equipamento</th>
@@ -22,19 +23,19 @@
                 <td><a routerLink="/">{{equipment.tag}}</a></td>
                 <td>{{equipment.plant}}</td>
                 <td>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'OK'" icon="pi pi-check" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="!equipment.expiredInspections && !equipment.nextToExpireInspections" icon="pi pi-check" [rounded]="true"
                     severity="success" value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NOK'" icon="pi pi-times" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.expiredInspections" icon="pi pi-times" [rounded]="true"
                     severity="danger" value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.inspection === 'NEAR'" icon="pi pi-exclamation" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="!equipment.expiredInspections && equipment.nextToExpireInspections" icon="pi pi-exclamation" [rounded]="true"
                     severity="warning" value="Vencendo"></p-tag>
                 </td>
                 <td>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'OK'" icon="pi pi-check" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="!equipment.expiredCalibrations && !equipment.nextToExpireCalibrations" icon="pi pi-check" [rounded]="true"
                     severity="success" value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NOK'" icon="pi pi-times" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.expiredCalibrations" icon="pi pi-times" [rounded]="true"
                     severity="danger" value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.calibrations === 'NEAR'" icon="pi pi-exclamation" [rounded]="true"
+                  <p-tag [style]="{width: '60%'}" *ngIf="!equipment.expiredCalibrations && equipment.nextToExpireCalibrations" icon="pi pi-exclamation" [rounded]="true"
                     severity="warning" value="Vencendo"></p-tag>
                 </td>
               </tr>
@@ -50,7 +51,7 @@
               </p-panel>
             </div>
             <div class="col-12 md:col-6">
-              <p-table [value]="panel" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
+              <p-table [value]="equipmentsSituation" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Planta</th>
@@ -94,7 +95,7 @@
               </p-panel>
             </div>
             <div class="col-12 md:col-6">
-              <p-table [value]="panel" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
+              <p-table [value]="equipmentsSituation" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="6">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Planta</th>

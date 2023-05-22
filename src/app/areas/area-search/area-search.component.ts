@@ -45,7 +45,7 @@ export class AreaSearchComponent implements OnInit {
       error: err => {
         this.errorHandler.handle(err);
       }
-    })
+    });
   }
 
   onChangePage(event: LazyLoadEvent) {

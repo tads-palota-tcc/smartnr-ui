@@ -38,6 +38,15 @@ export class Equipment {
   installationProjectFile = new File();
 }
 
+export class EquipmentSituation {
+  tag = '';
+  plant = '';
+  expiredInspections = 0;
+  nextToExpireInspections = 0;
+  expiredCalibrations = 0;
+  nextToExpireCalibrations = 0;
+}
+
 class File {
   id = 0;
   name = '';

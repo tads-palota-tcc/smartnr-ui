@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Equipment } from '../core/model/equipment';
+import { Equipment, EquipmentSituation } from '../core/model/equipment';
 import { Observable } from 'rxjs';
 import { ApplicableTest, Test } from '../core/model/applicable-tests';
+import { Page } from '../shared/model/page';
 
 export class EquipmentFilter {
   id?: string;
@@ -12,6 +13,13 @@ export class EquipmentFilter {
   status: 'active' | 'inactive' = 'active';
   page: number = 0;
   size: number = 5;
+}
+
+export class SituationFilter {
+  tag?: string;
+  plant?: string;
+  page: number = 0;
+  size: number = 10;
 }
 
 @Injectable({
@@ -138,6 +146,23 @@ export class EquipmentService {
 
   deleteInstallationProject(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}/installation-project`);
+  }
+
+  findEquipmentsSituation(filter: SituationFilter): Observable<Page<EquipmentSituation>> {
+    let params = new HttpParams()
+      .set('page', filter.page)
+      .set('size', filter.size)
+      .set('status', 'active');
+
+    if (filter.tag) {
+      params = params.set('tag', filter.tag);
+    }
+
+    if (filter.plant) {
+      params = params.set('plant', filter.plant)
+    }
+    
+    return this.http.get<Page<EquipmentSituation>>(`${this.baseUrl}/situation`, {params});
   }
   
 }

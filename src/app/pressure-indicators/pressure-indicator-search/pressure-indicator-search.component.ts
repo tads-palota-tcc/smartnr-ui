@@ -5,6 +5,7 @@ import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api'
 import { AuthService } from 'src/app/security/auth.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Title } from '@angular/platform-browser';
+import { PressureIndicator } from 'src/app/core/model/pressure-indicator';
 
 @Component({
   selector: 'app-pressure-indicator-search',
@@ -15,7 +16,7 @@ export class PressureIndicatorSearchComponent implements OnInit {
 
   statusOptions: any[] = [{ label: 'Ativos', value: 'active' }, { label: 'Inativos', value: 'inactive' }];
 
-  pressureIndicators = [];
+  pressureIndicators: PressureIndicator[] = [];
   totalElements: number = 0;
   filter = new PressureIndicatorFilter();
 
@@ -40,6 +41,7 @@ export class PressureIndicatorSearchComponent implements OnInit {
       next: res => {
         this.pressureIndicators = res.content;
         this.totalElements = res.totalElements;
+        console.log(this.pressureIndicators);
       },
       error: err => {
         this.errorHandler.handle(err);

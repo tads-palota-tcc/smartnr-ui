@@ -1,24 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LazyLoadEvent } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { EquipmentSituation } from 'src/app/core/model/equipment';
+import { EquipmentService, SituationFilter } from 'src/app/equipments/equipment.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  panel = [
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'NEAR', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'NEAR', calibrations: 'NOK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-    {plant: 'RGD1', tag: 'CP-001', inspection: 'OK', calibrations: 'OK'},
-  ];
+  equipmentsSituation: EquipmentSituation[] = [];
+  equipmentsSituationTotalElements: number = 0;
+  filter = new SituationFilter();
 
   pendenciesByPlant = {
     labels: ['RGD1', 'RGD2', 'PEL1', 'PEL2'],
@@ -115,5 +110,32 @@ export class DashboardComponent {
 
     }
   };
+
+  constructor(
+    private equipmentService: EquipmentService,
+    private errorHandler: ErrorHandlerService
+  ) {}
+
+  ngOnInit(): void {
+    this.searchEquipmentsSituation();
+  }
+
+  onChangeEquipmentsSituationPage(event: LazyLoadEvent) {
+    const page = event!.first! / event!.rows!
+    this.searchEquipmentsSituation(page);
+  }
+
+  searchEquipmentsSituation(page: number = 0): void {
+    this.filter.page = page;
+    this.equipmentService.findEquipmentsSituation(this.filter).subscribe({
+      next: res => {
+        this.equipmentsSituation = res.content;
+        this.equipmentsSituationTotalElements = res.totalElements;
+      },
+      error: err => {
+        this.errorHandler.handle(err);
+      }
+    });
+  }
 
 }
