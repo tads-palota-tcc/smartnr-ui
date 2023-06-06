@@ -13,9 +13,9 @@ import { ToastModule } from 'primeng/toast';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AreasModule } from './areas/areas.module';
+import { AreasModule } from './features/areas/areas.module';
 import { CoreModule } from './core/core.module';
-import { PlantsModule } from './plants/plants.module';
+import { PlantsModule } from './features/plants/plants.module';
 import { AppHttpInterceptor } from './security/app-http-interceptor';
 import { AuthGuard } from './security/auth.guard';
 

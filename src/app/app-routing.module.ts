@@ -12,55 +12,55 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard],
     data: {roles: ['REPORTS_READ']}
   },
   {
     path: 'plants',
-    loadChildren: () => import('./plants/plants.module').then(m => m.PlantsModule),
+    loadChildren: () => import('./features/plants/plants.module').then(m => m.PlantsModule),
     canActivate: [AuthGuard],
     data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
   },
   {
     path: 'areas',
-    loadChildren: () => import('./areas/areas.module').then(m => m.AreasModule),
+    loadChildren: () => import('./features/areas/areas.module').then(m => m.AreasModule),
     canActivate: [AuthGuard],
     data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
   },
   {
     path: 'equipments',
-    loadChildren: () => import('./equipments/equipments.module').then(m => m.EquipmentsModule),
+    loadChildren: () => import('./features/equipments/equipments.module').then(m => m.EquipmentsModule),
     canActivate: [AuthGuard],
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
     path: 'pressure-indicators',
-    loadChildren: () => import('./pressure-indicators/pressure-indicators.module').then(m => m.PressureIndicatorsModule),
+    loadChildren: () => import('./features/pressure-indicators/pressure-indicators.module').then(m => m.PressureIndicatorsModule),
     canActivate: [AuthGuard],
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
     path: 'pressure-safety-valves',
-    loadChildren: () => import('./pressure-safety-valves/pressure-safety-valves.module').then(m => m.PressureSafetyValvesModule),
+    loadChildren: () => import('./features/pressure-safety-valves/pressure-safety-valves.module').then(m => m.PressureSafetyValvesModule),
     canActivate: [AuthGuard],
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
     path: 'calibrations',
-    loadChildren: () => import('./calibrations/calibrations.module').then(m => m.CalibrationsModule),
+    loadChildren: () => import('./features/calibrations/calibrations.module').then(m => m.CalibrationsModule),
     canActivate: [AuthGuard],
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
     path: 'inspections',
-    loadChildren: () => import('./inspections/inspections.module').then(m => m.InspectionsModule),
+    loadChildren: () => import('./features/inspections/inspections.module').then(m => m.InspectionsModule),
     canActivate: [AuthGuard],
     data: {roles: ['EQUIPMENT_READ', 'EQUIPMENT_WRITE']}
   },
   {
     path: 'pendencies',
-    loadChildren: () => import('./pendencies/pendencies.module').then(m => m.PendenciesModule),
+    loadChildren: () => import('./features/pendencies/pendencies.module').then(m => m.PendenciesModule),
     canActivate: [AuthGuard],
     data: {roles: ['ACTIONS_READ', 'REPORTS_READ']}
   },
