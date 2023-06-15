@@ -35,48 +35,8 @@
         <app-message [control]="name.control" error="maxlength"
           text="Máximo {{name.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
       </div>
-    </div>
 
-    <div class="grid">
-      <div class="col-12">
-        <h3>Endereço</h3>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="col-12 md:col-4 p-fluid">
-        <label>Rua</label>
-        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="streetName" [(ngModel)]="plant.address.streetName" ngModel
-          #streetName="ngModel" [maxlength]="40">
-        <app-message [control]="streetName.control" error="maxlength"
-          text="Máximo {{streetName.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
-      </div>
-  
-      <div class="col-12 md:col-2 p-fluid">
-        <label>Número</label>
-        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="number" [(ngModel)]="plant.address.number" ngModel #number="ngModel"
-          [maxlength]="10">
-        <app-message [control]="number.control" error="maxlength"
-          text="Máximo {{number.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
-      </div>
-  
-      <div class="col-12 md:col-2 p-fluid">
-        <label>Complemento</label>
-        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="complement" [(ngModel)]="plant.address.complement" ngModel
-          #complement="ngModel" [maxlength]="20">
-        <app-message [control]="complement.control" error="maxlength"
-          text="Máximo {{complement.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
-      </div>
-  
-      <div class="col-12 md:col-4 p-fluid">
-        <label>Bairro</label>
-        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="neigborhood" [(ngModel)]="plant.address.neighborhood" ngModel
-          #neigborhood="ngModel" [maxlength]="40">
-        <app-message [control]="neigborhood.control" error="maxlength"
-          text="Máximo {{neigborhood.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
-      </div>
-  
-      <div class="col-12 md:col-4 p-fluid">
+      <div class="col-12 md:col-8 p-fluid">
         <label>Cidade</label>
         <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="text" name="city" [(ngModel)]="plant.address.city" ngModel #city="ngModel"
           [required]="true" [maxlength]="40">
@@ -85,16 +45,12 @@
           text="Máximo {{city.errors?.['maxlength']?.requiredLength}} caracteres"></app-message>
       </div>
   
-      <div class="col-12 md:col-3 p-fluid">
+      <div class="col-12 md:col-4 p-fluid">
         <label>Estado</label>
         <p-dropdown [readonly]="!auth.hasPermission('INSTALATION_WRITE')" [options]="states" name="state" [(ngModel)]="plant.address.state" optionLabel="display" optionValue="value"
           placeholder="Selecione um estado" [filter]="true" [required]="true"></p-dropdown>
       </div>
-  
-      <div class="col-12 md:col-2 p-fluid">
-        <label>CEP</label>
-        <p-inputMask [readonly]="!auth.hasPermission('INSTALATION_WRITE')" name="zipCode" [(ngModel)]="plant.address.zipCode" mask="99.999-999" [unmask]="true"></p-inputMask>
-      </div>
+
     </div>
 
     <div class="grid">

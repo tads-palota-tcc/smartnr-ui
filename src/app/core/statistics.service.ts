@@ -1,11 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Equipment } from '../core/model/equipment';
-import { EquipmentFilter } from '../features/equipments/equipment.service';
-import { PressureIndicator } from '../core/model/pressure-indicator';
-import { CalibrationSummary } from '../core/model/calibration';
-import { PendencyByPlant, PendencyByResponsible } from './model/statistics';
+import { CostForecast, PendencyByPlant, PendencyByResponsible } from './model/statistics';
 
 
 @Injectable({
@@ -26,4 +22,8 @@ export class StatisticsService {
     return this.http.get<PendencyByResponsible[]>(`${this.baseUrl}/responsibles-pendencies`);
   }
   
+  findCostForecast(plantId: number): Observable<CostForecast[]> {
+    return this.http.get<CostForecast[]>(`${this.baseUrl}/costs-forecast?plantId=${plantId}`);
+  }
+
 }

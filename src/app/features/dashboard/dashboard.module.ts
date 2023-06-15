@@ -10,6 +10,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { RouterModule } from '@angular/router';
 import { TagModule } from 'primeng/tag';
+import { FormsModule } from '@angular/forms';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -19,13 +21,15 @@ import { TagModule } from 'primeng/tag';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     DashboardRoutingModule,
     SharedModule,
     PanelModule,
     ChartModule,
     TabViewModule,
     TableModule,
-    TagModule
+    TagModule,
+    AutoCompleteModule
   ]
 })
 export class DashboardModule { }

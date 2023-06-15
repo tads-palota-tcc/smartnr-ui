@@ -188,7 +188,7 @@
 
       </p-tabPanel>
 
-      <p-tabPanel header="Documentação">
+      <p-tabPanel *ngIf="updating" header="Documentação">
 
         <div class="grid">
           <div class="col-12">
@@ -259,7 +259,7 @@
 
       </p-tabPanel>
 
-      <p-tabPanel header="Indicadores de pressão">
+      <p-tabPanel *ngIf="updating" header="Indicadores de pressão">
 
         <div class="grid">
           <div class="col-12">
@@ -311,7 +311,7 @@
 
       </p-tabPanel>
 
-      <p-tabPanel header="Válvulas de segurança">
+      <p-tabPanel *ngIf="updating" header="Válvulas de segurança">
 
         <div class="grid">
           <div class="col-12">
@@ -362,7 +362,7 @@
 
       </p-tabPanel>
 
-      <p-tabPanel header="Ensaios aplicáveis">
+      <p-tabPanel *ngIf="updating" header="Ensaios aplicáveis">
 
         <div class="grid">
           <div class="col-12">

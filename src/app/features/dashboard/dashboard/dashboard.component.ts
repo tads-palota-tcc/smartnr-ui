@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { EquipmentSituation } from 'src/app/core/model/equipment';
+import { Plant } from 'src/app/core/model/plant';
 import { PendencyByPlant } from 'src/app/core/model/statistics';
 import { StatisticsService } from 'src/app/core/statistics.service';
 import { EquipmentService, SituationFilter } from 'src/app/features/equipments/equipment.service';
+import { PlantService } from '../../plants/plant.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,8 @@ export class DashboardComponent implements OnInit {
   equipmentsSituation: EquipmentSituation[] = [];
   equipmentsSituationTotalElements: number = 0;
   filter = new SituationFilter();
+  plants: Plant[] = [];
+  selectedPlant = new Plant();
 
   pendenciesByPlantData: PendencyByPlant[] = [];
 
@@ -61,25 +65,25 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  estimatedCost = {
-    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+  costForecast = {
+    labels: [''],
     datasets: [
       {
         label: 'Inspeções',
         backgroundColor: '#F00',
         borderColor: '#F00',
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: [0]
       },
       {
         label: 'Calibrações',
         backgroundColor: '#00F',
         borderColor: '#00F',
-        data: [28, 48, 40, 19, 86, 27, 90]
+        data: [0]
       }
     ]
   };
 
-  estimatedCostOptions = {
+  costForecastOptions = {
     maintainAspectRatio: false,
     aspectRatio: 0.8,
     plugins: {
@@ -120,6 +124,7 @@ export class DashboardComponent implements OnInit {
     private statisticsService: StatisticsService,
     private errorHandler: ErrorHandlerService
   ) {}
+  
 
   findPlantsPendencies() {
     this.statisticsService.findPlantsPendencies().subscribe({
@@ -145,10 +150,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  findCostForecast() {
+    this.statisticsService.findCostForecast(this.selectedPlant.id || 1).subscribe({
+      next: (res) => {
+        console.log(res)
+        this.costForecast.labels = res.map(r => `${r.month}/${r.year}`);
+        this.costForecast.datasets[0].data = res.map(r => r.inspectionCost);
+        this.costForecast.datasets[1].data = res.map(r => r.calibrationCost);
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.searchEquipmentsSituation();
     this.findPlantsPendencies();
     this.findResponsiblePendencies()
+    this.findCostForecast();
   }
 
   onChangeEquipmentsSituationPage(event: LazyLoadEvent) {
