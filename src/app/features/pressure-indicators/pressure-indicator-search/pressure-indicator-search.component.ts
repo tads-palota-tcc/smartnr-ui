@@ -41,7 +41,6 @@ export class PressureIndicatorSearchComponent implements OnInit {
       next: res => {
         this.pressureIndicators = res.content;
         this.totalElements = res.totalElements;
-        console.log(this.pressureIndicators);
       },
       error: err => {
         this.errorHandler.handle(err);

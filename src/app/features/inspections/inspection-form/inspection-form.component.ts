@@ -144,7 +144,6 @@ export class InspectionFormComponent implements OnInit {
     this.inspectionService.findPendenciesByInspection(this.inspection.id).subscribe({
       next: (res) => {
         this.pendencies = res;
-        console.log(this.pendencies)
       },
       error: (err) => {
         this.errorHandler.handle(err);

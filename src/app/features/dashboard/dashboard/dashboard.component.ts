@@ -153,7 +153,6 @@ export class DashboardComponent implements OnInit {
   findCostForecast() {
     this.statisticsService.findCostForecast(this.selectedPlant.id || 1).subscribe({
       next: (res) => {
-        console.log(res)
         this.costForecast.labels = res.map(r => `${r.month}/${r.year}`);
         this.costForecast.datasets[0].data = res.map(r => r.inspectionCost);
         this.costForecast.datasets[1].data = res.map(r => r.calibrationCost);

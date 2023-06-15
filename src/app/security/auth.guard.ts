@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.auth.isAccessTokenInvalid()) {
+    if (this.auth.isAccessTokenInvalid() && this.auth.isRefreshTokenInvalid()) {
       this.router.navigate(['/auth/login']);
       return false;
     }

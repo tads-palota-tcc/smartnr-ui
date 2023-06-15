@@ -55,6 +55,12 @@ export class AuthService {
     return !token || this.jwtHelper.isTokenExpired(token);
   }
 
+  isRefreshTokenInvalid() {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    return !refreshToken || this.jwtHelper.isTokenExpired(refreshToken);
+  }
+
   hasPermission(persmission: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(persmission);
   }
