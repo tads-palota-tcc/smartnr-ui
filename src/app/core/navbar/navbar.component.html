@@ -1,17 +1,22 @@
 <nav class="navbar">
   <div class="container">
-    <div class="grid">
-      <div class="col-12">
-        <a href="javascript:;" class="navbar-toggle" (click)="showMenu = !showMenu">
-          <i class="pi pi-bars"></i>
-        </a>
-        <a routerLink="/">SmartNR-13</a>
+    <div class="flex flex-wrap align-content-center justify-content-between">
+      <div class="grid">
+        <div class="col-12">
+          <a href="javascript:;" class="navbar-toggle mr-4" (click)="showMenu = !showMenu">
+            <i class="pi pi-bars"></i>
+          </a>
+          <a class="navbar-logo" routerLink="/">SmartNR-13</a>
+        </div>
       </div>
+        <a class="navbar-logout" href="javascript:;" (click)="logout()">Sair</a>
     </div>
   </div>
 
   <ul [ngClass]="showMenu ? 'navbar-menu' : 'navbar-menu-hidden'">
     <li class="navbar-user">{{ authService.jwtPayload?.name }}</li>
+    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+      (click)="showMenu = !showMenu" routerLink="/dashboard">Dashboard</a></li>
     <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
     <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a

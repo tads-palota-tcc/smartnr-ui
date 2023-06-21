@@ -49,6 +49,12 @@ export class AuthService {
     }
   }
 
+  clearAccessToken() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    this.jwtPayload = null;
+  }
+
   isAccessTokenInvalid() {
     const token = localStorage.getItem('token');
 

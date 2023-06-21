@@ -1,10 +1,25 @@
 .navbar {
   background-color: #1e94d2;
-  padding: 20px 0 10px;
+  padding: 10px 0 10px;
 }
 
 .navbar-toggle {
   color: white;
+  font-size: 1.5em;
+}
+
+.navbar-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.navbar-logout {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding-top: 7px;
 }
 
 .navbar-menu {
