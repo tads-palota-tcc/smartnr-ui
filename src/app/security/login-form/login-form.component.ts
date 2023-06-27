@@ -17,8 +17,8 @@ export class LoginFormComponent {
     private errorHandler: ErrorHandlerService) {
   }
 
-  email = 'alexandre.palota@gmail.com';
-  password = '123456';
+  email = '';
+  password = '';
   jwtPayload!: any;
 
   login() {

@@ -41,8 +41,18 @@
 
   <div class="grid">
     <div class="col">
-      <p-table styleClass="p-datatable-sm p-datatable-gridlines" [value]="areas" [paginator]="true" [lazy]="true"
-        [totalRecords]="totalElements" (onLazyLoad)="onChangePage($event)" [rows]="5" responsiveLayout='stack' [breakpoint]="'960px'" [tableStyle]="{ 'min-width': '1rem' }" #table>
+      <p-table 
+        tyleClass="p-datatable-sm p-datatable-gridlines"
+        [value]="areas"
+        [paginator]="true"
+        [lazy]="true"
+        [totalRecords]="totalElements"
+        (onLazyLoad)="onChangePage($event)"
+        [rows]="5"
+        responsiveLayout='stack'
+        [breakpoint]="'960px'"
+        [tableStyle]="{ 'min-width': '1rem' }"
+        #table>
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
@@ -77,10 +87,20 @@
             </td>
             <td class="col-actions">
               <a routerLink="/areas/{{area.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton (click)="inactivate(area.id)" icon="pi pi-trash"
-                pTooltip="Inativar" tooltipPosition="top"></button>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton (click)="activate(area.id)" icon="pi pi-undo"
-                pTooltip="Ativar" tooltipPosition="top"></button>
+              <button
+                *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'"
+                pButton
+                (click)="inactivate(area.id)"
+                icon="pi pi-trash"
+                pTooltip="Inativar"
+                tooltipPosition="top"></button>
+              <button
+                *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'"
+                pButton
+                (click)="activate(area.id)"
+                icon="pi pi-undo"
+                pTooltip="Ativar"
+                tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>
