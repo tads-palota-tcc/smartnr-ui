@@ -9,7 +9,7 @@ import { CostForecast, PendencyByPlant, PendencyByResponsible } from './model/st
 })
 export class StatisticsService {
 
-  baseUrl = 'http://localhost:8080/statistics';
+  baseUrl = 'http://18.232.31.12:8080/statistics';
 
   constructor(private http: HttpClient) { }
 

@@ -27,7 +27,7 @@ export class SituationFilter {
 })
 export class EquipmentService {
 
-  baseUrl = 'http://localhost:8080/equipments'
+  baseUrl = 'http://18.232.31.12:8080/equipments'
 
   constructor(private http: HttpClient) { }
 
@@ -93,7 +93,7 @@ export class EquipmentService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('http://localhost:8080/tests');
+    return this.http.get<Test[]>('http://18.232.31.12:8080/tests');
   }
 
   addApplicableTest(id: number, applicableTest: ApplicableTest): Observable<void> {

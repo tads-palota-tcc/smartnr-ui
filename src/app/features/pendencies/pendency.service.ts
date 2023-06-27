@@ -20,7 +20,7 @@ export class PendencyFilter {
 })
 export class PendencyService {
 
-  baseUrl = 'http://localhost:8080/pendencies';
+  baseUrl = 'http://18.232.31.12:8080/pendencies';
 
   constructor(private http: HttpClient) { }
 

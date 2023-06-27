@@ -21,8 +21,8 @@ export class PressureSafetyValveFilter {
 })
 export class PressureSafetyValveService {
 
-  baseUrl = 'http://localhost:8080/pressure-safety-valves'
-  deviceUrl = 'http://localhost:8080/devices'
+  baseUrl = 'http://18.232.31.12:8080/pressure-safety-valves'
+  deviceUrl = 'http://18.232.31.12:8080/devices'
 
   constructor(private http: HttpClient) { }
 

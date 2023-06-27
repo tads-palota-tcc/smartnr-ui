@@ -19,7 +19,7 @@ export class PlantFilter {
 })
 export class PlantService {
 
-  plantsUrl = 'http://localhost:8080/plants'
+  plantsUrl = 'http://18.232.31.12:8080/plants'
 
   constructor(private http: HttpClient) { }
 

@@ -20,7 +20,7 @@ export class InspectionFilter {
 })
 export class InspectionService {
 
-  baseUrl = 'http://localhost:8080/inspections';
+  baseUrl = 'http://18.232.31.12:8080/inspections';
 
   constructor(private http: HttpClient) { }
 
@@ -82,7 +82,7 @@ export class InspectionService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('http://localhost:8080/tests');
+    return this.http.get<Test[]>('http://18.232.31.12:8080/tests');
   }
 
   findPendenciesByInspection(inspectionId: number): Observable<PendencyResponse[]> {

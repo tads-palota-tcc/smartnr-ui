@@ -17,7 +17,7 @@ export class CalibrationFilter {
 })
 export class CalibrationService {
 
-  baseUrl = 'http://localhost:8080/calibrations'
+  baseUrl = 'http://18.232.31.12:8080/calibrations'
 
   constructor(private http: HttpClient) { }
 

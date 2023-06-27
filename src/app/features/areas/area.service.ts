@@ -18,7 +18,7 @@ export class AreaFilter {
 })
 export class AreaService {
 
-  areasUrl = 'http://localhost:8080/areas'
+  areasUrl = 'http://18.232.31.12:8080/areas'
 
   constructor(private http: HttpClient) { }
 

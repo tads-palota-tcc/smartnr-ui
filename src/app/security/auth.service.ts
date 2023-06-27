@@ -16,7 +16,7 @@ export class AuthResponse {
 })
 export class AuthService {
 
-  authUrl = 'http://localhost:8080/auth';
+  authUrl = 'http://18.232.31.12:8080/auth';
   jwtPayload!: any;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router, private errorHandler: ErrorHandlerService) {
@@ -24,6 +24,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
+    console.log('Service.login');
     return this.http.post<AuthResponse>(`${this.authUrl}/login`, {email, password});
   }
 

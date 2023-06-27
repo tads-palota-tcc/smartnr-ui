@@ -22,8 +22,8 @@ export class PressureIndicatorFilter {
 })
 export class PressureIndicatorService {
 
-  baseUrl = 'http://localhost:8080/pressure-indicators'
-  deviceUrl = 'http://localhost:8080/devices'
+  baseUrl = 'http://18.232.31.12:8080/pressure-indicators'
+  deviceUrl = 'http://18.232.31.12:8080/devices'
 
   constructor(private http: HttpClient) { }
 

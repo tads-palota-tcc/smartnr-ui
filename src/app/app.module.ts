@@ -46,8 +46,8 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['localhost:8080'],
-        disallowedRoutes: ['http://localhost:8080/auth/login', 'http://localhost:8080/auth/refresh-token']
+        allowedDomains: [''],
+        disallowedRoutes: ['http://18.232.31.12:8080/auth/login', 'http://18.232.31.12:8080/auth/refresh-token']
       },
     }),
     BrowserModule,
