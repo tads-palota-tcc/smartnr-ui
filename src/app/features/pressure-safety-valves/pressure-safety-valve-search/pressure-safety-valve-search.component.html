@@ -89,10 +89,10 @@
             <td class="col-actions">
               <a routerLink="/pressure-safety-valves/{{psv.id}}" pButton icon="pi pi-pencil" pTooltip="Editar"
                 tooltipPosition="top"></a>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton
+              <button *ngIf="auth.hasPermission('INSTALLATION_WRITE') && filter.status === 'active'" pButton
                 (click)="inactivate(psv.id)" icon="pi pi-trash" pTooltip="Inativar"
                 tooltipPosition="top"></button>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton
+              <button *ngIf="auth.hasPermission('INSTALLATION_WRITE') && filter.status === 'inactive'" pButton
                 (click)="activate(psv.id)" icon="pi pi-undo" pTooltip="Ativar" tooltipPosition="top"></button>
             </td>
           </tr>

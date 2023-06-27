@@ -3,7 +3,7 @@
     <div class="col">
       <h1>Plantas</h1>
     </div>
-    <div *ngIf="auth.hasPermission('INSTALATION_WRITE')" class="col-4 md:col-2 p-fluid">
+    <div *ngIf="auth.hasPermission('INSTALLATION_WRITE')" class="col-4 md:col-2 p-fluid">
       <a routerLink="/plants/create" pButton icon="pi pi-plus" label="Nova" pTooltip="Nova Planta" tooltipPosition="top"></a>
     </div>
   </div>
@@ -68,9 +68,9 @@
             </td>
             <td class="col-actions">
               <a routerLink="/plants/{{plant.id}}" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'active'" pButton (click)="inactivate(plant.id)" icon="pi pi-trash"
+              <button *ngIf="auth.hasPermission('INSTALLATION_WRITE') && filter.status === 'active'" pButton (click)="inactivate(plant.id)" icon="pi pi-trash"
                 pTooltip="Inativar" tooltipPosition="top"></button>
-              <button *ngIf="auth.hasPermission('INSTALATION_WRITE') && filter.status === 'inactive'" pButton (click)="activate(plant.id)" icon="pi pi-undo"
+              <button *ngIf="auth.hasPermission('INSTALLATION_WRITE') && filter.status === 'inactive'" pButton (click)="activate(plant.id)" icon="pi pi-undo"
                 pTooltip="Ativar" tooltipPosition="top"></button>
             </td>
           </tr>

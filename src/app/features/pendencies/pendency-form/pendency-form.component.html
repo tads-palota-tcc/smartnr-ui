@@ -34,7 +34,7 @@
       </div>
       <div class="col-12 md:col-3 p-fluid">
         <label>Custo (R$)</label>
-        <input [readOnly]="!auth.hasPermission('INSTALATION_WRITE')" pInputText type="number" name="cost"
+        <input [readOnly]="!auth.hasPermission('INSTALLATION_WRITE')" pInputText type="number" name="cost"
           [(ngModel)]="pendency.cost" ngModel #name="ngModel">
       </div>
       <div class="col-12 md:col-4 p-fluid">

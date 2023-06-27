@@ -15,11 +15,11 @@
 
   <ul [ngClass]="showMenu ? 'navbar-menu' : 'navbar-menu-hidden'">
     <li class="navbar-user">{{ authService.jwtPayload?.name }}</li>
-    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+    <li *ngIf="authService.hasPermission('INSTALLATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
       (click)="showMenu = !showMenu" routerLink="/dashboard">Dashboard</a></li>
-    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+    <li *ngIf="authService.hasPermission('INSTALLATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/plants">Plantas</a></li>
-    <li *ngIf="authService.hasPermission('INSTALATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
+    <li *ngIf="authService.hasPermission('INSTALLATION_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/areas">Áreas</a></li>
     <li *ngIf="authService.hasPermission('EQUIPMENT_READ')" class="navbar-menu-item" routerLinkActive="active"><a
         (click)="showMenu = !showMenu" routerLink="/equipments">Equipamentos</a></li>

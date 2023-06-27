@@ -20,13 +20,13 @@ const routes: Routes = [
     path: 'plants',
     loadChildren: () => import('./features/plants/plants.module').then(m => m.PlantsModule),
     canActivate: [AuthGuard],
-    data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
+    data: {roles: ['INSTALLATION_READ', 'INSTALLATION_WRITE']}
   },
   {
     path: 'areas',
     loadChildren: () => import('./features/areas/areas.module').then(m => m.AreasModule),
     canActivate: [AuthGuard],
-    data: {roles: ['INSTALATION_READ', 'INSTALATION_WRITE']}
+    data: {roles: ['INSTALLATION_READ', 'INSTALLATION_WRITE']}
   },
   {
     path: 'equipments',

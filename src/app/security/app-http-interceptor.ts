@@ -13,6 +13,8 @@ export class AppHttpInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+      const accessToken = localStorage.getItem('token');
+
       if (req.url.includes('/assets')) {
         return next.handle(req);
       }
