@@ -46,7 +46,7 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['18.232.31.12:8080'],
+        allowedDomains: ['api.smartnr.com.br'],
         disallowedRoutes: ['https://api.smartnr.com.br/auth/login', 'https://api.smartnr.com.br/auth/refresh-token']
       },
     }),
