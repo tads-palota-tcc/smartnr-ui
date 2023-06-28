@@ -10,7 +10,7 @@ import { Device } from '../../core/model/device';
 })
 export class DeviceService {
 
-  baseUrl = 'http://18.232.31.12:8080/devices';
+  baseUrl = 'https://api.smartnr.com.br/devices';
   
   constructor(private http: HttpClient) { }
 

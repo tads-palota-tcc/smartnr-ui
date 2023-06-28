@@ -21,8 +21,8 @@ export class PressureSafetyValveFilter {
 })
 export class PressureSafetyValveService {
 
-  baseUrl = 'http://18.232.31.12:8080/pressure-safety-valves'
-  deviceUrl = 'http://18.232.31.12:8080/devices'
+  baseUrl = 'https://api.smartnr.com.br/pressure-safety-valves'
+  deviceUrl = 'https://api.smartnr.com.br/devices'
 
   constructor(private http: HttpClient) { }
 

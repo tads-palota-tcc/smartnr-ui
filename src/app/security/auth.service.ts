@@ -16,7 +16,7 @@ export class AuthResponse {
 })
 export class AuthService {
 
-  authUrl = 'http://18.232.31.12:8080/auth';
+  authUrl = 'https://api.smartnr.com.br/auth';
   jwtPayload!: any;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router, private errorHandler: ErrorHandlerService) {

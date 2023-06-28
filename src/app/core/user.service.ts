@@ -9,7 +9,7 @@ import { User } from './model/user';
 })
 export class UserService {
 
-  baseUrl = 'http://18.232.31.12:8080/users';
+  baseUrl = 'https://api.smartnr.com.br/users';
   
   constructor(private http: HttpClient) { }
 

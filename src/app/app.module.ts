@@ -47,7 +47,7 @@ export function tokenGetter(): string {
       config: {
         tokenGetter,
         allowedDomains: ['18.232.31.12:8080'],
-        disallowedRoutes: ['http://18.232.31.12:8080/auth/login', 'http://18.232.31.12:8080/auth/refresh-token']
+        disallowedRoutes: ['https://api.smartnr.com.br/auth/login', 'https://api.smartnr.com.br/auth/refresh-token']
       },
     }),
     BrowserModule,

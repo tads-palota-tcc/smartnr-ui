@@ -20,7 +20,7 @@ export class InspectionFilter {
 })
 export class InspectionService {
 
-  baseUrl = 'http://18.232.31.12:8080/inspections';
+  baseUrl = 'https://api.smartnr.com.br/inspections';
 
   constructor(private http: HttpClient) { }
 
@@ -82,7 +82,7 @@ export class InspectionService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('http://18.232.31.12:8080/tests');
+    return this.http.get<Test[]>('https://api.smartnr.com.br/tests');
   }
 
   findPendenciesByInspection(inspectionId: number): Observable<PendencyResponse[]> {

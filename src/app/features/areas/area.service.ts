@@ -18,7 +18,7 @@ export class AreaFilter {
 })
 export class AreaService {
 
-  areasUrl = 'http://18.232.31.12:8080/areas'
+  areasUrl = 'https://api.smartnr.com.br/areas'
 
   constructor(private http: HttpClient) { }
 

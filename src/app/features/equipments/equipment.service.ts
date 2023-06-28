@@ -27,7 +27,7 @@ export class SituationFilter {
 })
 export class EquipmentService {
 
-  baseUrl = 'http://18.232.31.12:8080/equipments'
+  baseUrl = 'https://api.smartnr.com.br/equipments'
 
   constructor(private http: HttpClient) { }
 
@@ -93,7 +93,7 @@ export class EquipmentService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('http://18.232.31.12:8080/tests');
+    return this.http.get<Test[]>('https://api.smartnr.com.br/tests');
   }
 
   addApplicableTest(id: number, applicableTest: ApplicableTest): Observable<void> {

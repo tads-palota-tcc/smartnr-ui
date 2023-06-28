@@ -9,7 +9,7 @@ import { CostForecast, PendencyByPlant, PendencyByResponsible } from './model/st
 })
 export class StatisticsService {
 
-  baseUrl = 'http://18.232.31.12:8080/statistics';
+  baseUrl = 'https://api.smartnr.com.br/statistics';
 
   constructor(private http: HttpClient) { }
 
