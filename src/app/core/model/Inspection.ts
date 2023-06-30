@@ -1,7 +1,7 @@
 import { Area } from "./area";
 
 export class Inspection {
-  id = 0;
+  id!: number;
   executorCompany = '';
   reportNumber = '';
   comments = '';
