@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CalibrationSummary } from '../../core/model/calibration';
 import { PressureSafetyValve } from '../../core/model/pressure-safety-valve';
+import { environment } from 'src/environments/environment';
 
 export class PressureSafetyValveFilter {
   id?: string;
@@ -21,10 +22,13 @@ export class PressureSafetyValveFilter {
 })
 export class PressureSafetyValveService {
 
-  baseUrl = 'https://api.smartnr.com.br/pressure-safety-valves'
-  deviceUrl = 'https://api.smartnr.com.br/devices'
+  baseUrl!: string;
+  deviceUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/pressure-safety-valves`;
+    this.deviceUrl = `${environment.apiUrl}/devices`;
+  }
 
   create(object: PressureSafetyValve): Observable<PressureSafetyValve> {
     return this.http.post<PressureSafetyValve>(`${this.baseUrl}`, object);

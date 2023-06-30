@@ -5,6 +5,7 @@ import { Calibration, CalibrationSummary } from '../../core/model/calibration';
 import { Inspection } from '../../core/model/Inspection';
 import { Test } from '../../core/model/applicable-tests';
 import { PendencyResponse } from '../../core/model/pendency';
+import { environment } from 'src/environments/environment';
 
 export class InspectionFilter {
   executionDate?: Date;
@@ -20,9 +21,11 @@ export class InspectionFilter {
 })
 export class InspectionService {
 
-  baseUrl = 'https://api.smartnr.com.br/inspections';
+  baseUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/inspections`;
+  }
 
   create(inspection: Inspection): Observable<Inspection> {
     return this.http.post<Inspection>(`${this.baseUrl}`, inspection);
@@ -82,7 +85,7 @@ export class InspectionService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('https://api.smartnr.com.br/tests');
+    return this.http.get<Test[]>(`${environment.apiUrl}/tests`);
   }
 
   findPendenciesByInspection(inspectionId: number): Observable<PendencyResponse[]> {

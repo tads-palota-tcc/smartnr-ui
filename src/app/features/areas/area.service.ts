@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Area } from '../../core/model/area';
+import { environment } from 'src/environments/environment';
 
 export class AreaFilter {
   id?: string;
@@ -18,9 +19,11 @@ export class AreaFilter {
 })
 export class AreaService {
 
-  areasUrl = 'https://api.smartnr.com.br/areas'
+  areasUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.areasUrl = `${environment.apiUrl}/areas`;
+  }
 
   create(area: Area): Observable<Area> {
     return this.http.post<Area>(`${this.areasUrl}`, area);

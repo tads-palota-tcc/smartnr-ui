@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Area } from '../../core/model/area';
 import { PendencyCreationRequest, PendencyResponse } from '../../core/model/pendency';
+import { environment } from 'src/environments/environment';
 
 export class PendencyFilter {
   id?: number;
@@ -20,9 +20,11 @@ export class PendencyFilter {
 })
 export class PendencyService {
 
-  baseUrl = 'https://api.smartnr.com.br/pendencies';
+  baseUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/pendencies`;
+  }
 
   create(obj: PendencyCreationRequest): Observable<PendencyResponse> {
     return this.http.post<PendencyResponse>(`${this.baseUrl}`, obj);

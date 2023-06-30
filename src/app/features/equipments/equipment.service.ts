@@ -4,6 +4,7 @@ import { Equipment, EquipmentSituation } from '../../core/model/equipment';
 import { Observable } from 'rxjs';
 import { ApplicableTest, Test } from '../../core/model/applicable-tests';
 import { Page } from '../../shared/model/page';
+import { environment } from 'src/environments/environment';
 
 export class EquipmentFilter {
   id?: string;
@@ -27,9 +28,11 @@ export class SituationFilter {
 })
 export class EquipmentService {
 
-  baseUrl = 'https://api.smartnr.com.br/equipments'
+  baseUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/equipments`;
+  }
 
   create(object: Equipment): Observable<Equipment> {
     return this.http.post<Equipment>(`${this.baseUrl}`, object);
@@ -93,7 +96,7 @@ export class EquipmentService {
   }
 
   findTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('https://api.smartnr.com.br/tests');
+    return this.http.get<Test[]>(`${environment.apiUrl}/tests`);
   }
 
   addApplicableTest(id: number, applicableTest: ApplicableTest): Observable<void> {

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Calibration, CalibrationSummary } from '../../core/model/calibration';
+import { environment } from 'src/environments/environment';
 
 export class CalibrationFilter {
   executionDate?: Date;
@@ -17,9 +18,11 @@ export class CalibrationFilter {
 })
 export class CalibrationService {
 
-  baseUrl = 'https://api.smartnr.com.br/calibrations'
+  baseUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/calibrations`;
+  }
 
   create(Calibration: Calibration): Observable<Calibration> {
     return this.http.post<Calibration>(`${this.baseUrl}`, Calibration);

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Device } from '../../core/model/device';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -10,9 +11,11 @@ import { Device } from '../../core/model/device';
 })
 export class DeviceService {
 
-  baseUrl = 'https://api.smartnr.com.br/devices';
+  baseUrl!: string;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/devices`;
+  }
 
   findByPlantCodeAndTag(plantCode: string, tag: string): Observable<Device[]> {
     return this.http.get<Device[]>(`${this.baseUrl}?plantCode=${plantCode}&tag=${tag}`);

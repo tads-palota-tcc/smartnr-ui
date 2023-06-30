@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Page } from '../../shared/model/page';
-import { PlantSummaryResponse } from './plant';
 import { Plant } from '../../core/model/plant';
+import { environment } from 'src/environments/environment';
 
 export class PlantFilter {
   id?: string;
@@ -19,9 +18,11 @@ export class PlantFilter {
 })
 export class PlantService {
 
-  plantsUrl = 'https://api.smartnr.com.br/plants'
+  plantsUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.plantsUrl = `${environment.apiUrl}/plants`;
+  }
 
   create(plant: Plant): Observable<Plant> {
     return this.http.post<Plant>(`${this.plantsUrl}`, plant);

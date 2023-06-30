@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Equipment } from '../../core/model/equipment';
-import { EquipmentFilter } from '../../features/equipments/equipment.service';
 import { PressureIndicator } from '../../core/model/pressure-indicator';
 import { CalibrationSummary } from '../../core/model/calibration';
+import { environment } from 'src/environments/environment';
 
 export class PressureIndicatorFilter {
   id?: string;
@@ -22,10 +21,13 @@ export class PressureIndicatorFilter {
 })
 export class PressureIndicatorService {
 
-  baseUrl = 'https://api.smartnr.com.br/pressure-indicators'
-  deviceUrl = 'https://api.smartnr.com.br/devices'
+  baseUrl!: string;
+  deviceUrl!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/pressure-indicators`;
+    this.deviceUrl = `${environment.apiUrl}/devices`;
+  }
 
   create(object: PressureIndicator): Observable<PressureIndicator> {
     return this.http.post<PressureIndicator>(`${this.baseUrl}`, object);

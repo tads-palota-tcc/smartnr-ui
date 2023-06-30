@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export class AuthResponse {
   access_token: string = '';
@@ -16,10 +17,11 @@ export class AuthResponse {
 })
 export class AuthService {
 
-  authUrl = 'https://api.smartnr.com.br/auth';
+  authUrl!: string;
   jwtPayload!: any;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router, private errorHandler: ErrorHandlerService) {
+    this.authUrl = `${environment.apiUrl}/auth`;
     this.loadToken();
   }
 

@@ -18,6 +18,7 @@ import { CoreModule } from './core/core.module';
 import { PlantsModule } from './features/plants/plants.module';
 import { AppHttpInterceptor } from './security/app-http-interceptor';
 import { AuthGuard } from './security/auth.guard';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(localePt);
 
@@ -46,8 +47,8 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['api.smartnr.com.br'],
-        disallowedRoutes: ['https://api.smartnr.com.br/auth/login', 'https://api.smartnr.com.br/auth/refresh-token']
+        allowedDomains: environment.tokenAllowedDomains,
+        disallowedRoutes: environment.tokenDisallowedRoutes
       },
     }),
     BrowserModule,
