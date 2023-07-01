@@ -17,6 +17,7 @@ import { Table } from 'primeng/table';
 import { PendencyResponse } from 'src/app/core/model/pendency';
 import { PendencyCreationRequest } from 'src/app/core/model/pendency';
 import { UserService } from 'src/app/core/user.service';
+import { Equipment } from 'src/app/core/model/equipment';
 
 @Component({
   selector: 'app-inspection-form',
@@ -33,6 +34,7 @@ export class InspectionFormComponent implements OnInit {
   statusOptions: any[] = [{label: 'Aguardando relatório', value: 'WAITING_REPORT'}, {label: 'Concluído', value: 'DONE'}];
 
   selectedPlant = new Plant();
+  selectedEquipment = new Equipment();
   selectedTest = new Test();
 
   pendencies: PendencyResponse[] = []
@@ -71,7 +73,6 @@ export class InspectionFormComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Cadastro de Inspeção');
     const id = this.route.snapshot.params['id'];
-    this.loadTests();
     if (id) {
       this.title.setTitle('Atualização de Inspeção')
       this.loadInspection(id);
@@ -106,23 +107,27 @@ export class InspectionFormComponent implements OnInit {
     });
   }
 
+  updateTestList(equipmentId: number) {
+    this.equipmentService.findById(equipmentId).subscribe({
+      next: (res) => {
+        this.tests = res.applicableTests.map(at => {
+          const test = new Test();
+          test.id = at.testId || 0;
+          test.name = at.name;
+          test.frequency = at.frequency;
+          test.frequencyType = at.frequencyType;
+          return test;
+        });
+      }
+    })
+  }
+
   updateResponsibleList(event: string) {
     this.userService.findTop10ByName(event).subscribe({
       next: res => {
         this.pendencyResponsibleOptions = res;
       }
     });
-  }
-
-  loadTests() {
-    this.inspectionService.findTests().subscribe({
-      next: (res) => {
-        this.tests = res;
-      },
-      error: (err) => {
-        this.errorHandler.handle(err);
-      }
-    })
   }
 
   loadInspection(id: number) {
@@ -141,7 +146,7 @@ export class InspectionFormComponent implements OnInit {
   }
 
   loadPendencies() {
-    this.inspectionService.findPendenciesByInspection(this.inspection.id).subscribe({
+    this.inspectionService.findPendenciesByInspection(this.inspection.id || 0).subscribe({
       next: (res) => {
         this.pendencies = res;
       },
@@ -160,12 +165,15 @@ export class InspectionFormComponent implements OnInit {
   }
 
   private create(form: NgForm) {
+    console.log('create - inspection')
+    console.log(this.inspection);
     this.inspectionService.create(this.inspection).subscribe({
       next: (res) => {
-        this.messageService.add({severity: 'success', detail: `Inspeção cadastrado com Id=${res.id}`});
-        this.router.navigate([`/inspections/${res.id}`])
+        this.messageService.add({severity: 'success', detail: 'Inspeção cadastrada com sucesso'});
+        this.router.navigate([`/inspections/${res?.id}`])
       },
       error: (err) => {
+        console.log(err)
         this.errorHandler.handle(err);
       }
     });
@@ -199,7 +207,7 @@ export class InspectionFormComponent implements OnInit {
 
   afterUpload() {
     this.messageService.add({severity: 'success', detail: 'Arquivo anexado com sucesso'});
-    this.loadInspection(this.inspection.id);
+    this.loadInspection(this.inspection.id || 0);
   }
 
   downloadReport(id: number) {
@@ -223,10 +231,10 @@ export class InspectionFormComponent implements OnInit {
     this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir o relatório?\nAo confirmar, não será possível recuperar o arquivo.',
       accept: () => {
-        this.inspectionService.deleteReport(this.inspection.id).subscribe({
+        this.inspectionService.deleteReport(this.inspection.id || 0).subscribe({
           next: res => {
             this.messageService.add({severity: 'success', detail: 'Relatório excluído com sucesso'});
-            this.loadInspection(this.inspection.id);
+            this.loadInspection(this.inspection.id || 0);
           },
           error: err => {
             this.errorHandler.handle(err);
@@ -267,7 +275,7 @@ export class InspectionFormComponent implements OnInit {
   }
 
   savePendency() {
-    this.pendencyToSave.inspection.id = this.inspection.id;
+    this.pendencyToSave.inspection.id = this.inspection.id || 0;
     if (!this.pendencyToSave.id) {
       this.createPendency();
     } else {

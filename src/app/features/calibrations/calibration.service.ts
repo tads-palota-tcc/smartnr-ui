@@ -5,9 +5,9 @@ import { Calibration, CalibrationSummary } from '../../core/model/calibration';
 import { environment } from 'src/environments/environment';
 
 export class CalibrationFilter {
-  executionDate?: Date;
   reportNumber?: string;
   executorCompany?: string;
+  deviceTag?: string;
   status: 'WAITING_REPORT' | 'DONE' | '' = '';
   page: number = 0;
   size: number = 5;
@@ -33,16 +33,16 @@ export class CalibrationService {
       .set('page', filter.page)
       .set('size', filter.size)
     
-    if (filter.executionDate) {
-      params = params.set('executionDate', filter.executionDate.toString());
-    }
-
     if (filter.reportNumber) {
       params = params.set('reportNumber', filter.reportNumber);
     }
     
     if (filter.executorCompany) {
       params = params.set('executorCompany', filter.executorCompany);
+    }
+
+    if (filter.deviceTag) {
+      params = params.set('deviceTag', filter.deviceTag);
     }
 
     if (filter.status) {

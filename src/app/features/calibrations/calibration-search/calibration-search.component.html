@@ -11,9 +11,10 @@
 
   <form (submit)="search()" autocomplete="off">
     <div class="grid">
-      <div class="col-12 md:col-2 p-fluid">
-        <label for="">Data da execução</label>
-        <input pInputText [(ngModel)]="filter.executionDate" name="executionDate" type="text">
+      
+      <div class="col-12 md:col-3 p-fluid">
+        <label for="">Tag dispositivo</label>
+        <input pInputText [(ngModel)]="filter.deviceTag" name="executorCompany" type="text">
       </div>
       <div class="col-12 md:col p-fluid">
         <label for="">Relatório</label>
@@ -44,6 +45,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Id</th>
+            <th>Dispositivo</th>
             <th>Data da execução</th>
             <th>Relatório</th>
             <th>Executante</th>
@@ -56,6 +58,10 @@
             <td>
               <span class="p-column-title">Id</span>
               {{ calibration.id }}
+            </td>
+            <td>
+              <span class="p-column-title">Dispositivo</span>
+              {{ calibration?.device?.tag || '-' }}
             </td>
             <td>
               <span class="p-column-title">Data da execução</span>

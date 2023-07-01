@@ -31,11 +31,11 @@
             <label>Equipamento</label>
             <p-autoComplete [readonly]="!auth.hasPermission('INTERVENTION_WRITE')" [disabled]="!selectedPlant.id"
               [(ngModel)]="inspection.equipment" [required]="true" name="equipment" [suggestions]="equipments"
-              [forceSelection]="true" [required]="true" (completeMethod)="updateEquipmentList($event.query)"
+              [forceSelection]="true" [required]="true" (completeMethod)="updateEquipmentList($event.query)" (onSelect)="updateTestList($event?.id)"
               field="tag"></p-autoComplete>
           </div>
 
-          <div *ngIf="selectedPlant.id" class="col-12 md:col-4 p-fluid">
+          <div *ngIf="inspection?.equipment?.id" class="col-12 md:col-4 p-fluid">
             <label>Teste</label>
             <p-dropdown [(ngModel)]="selectedTest.id" name="selectedTest" [options]="tests"
               [placeholder]="'Selecione um teste'" (onChange)="onSelectTest($event.value)" optionLabel="name"
@@ -63,7 +63,7 @@
 
           <div class="col-12 md:col-2 p-fluid">
             <label>Data da execução</label>
-            <p-calendar dataType="string" dateFormat="dd/mm/yy" [(ngModel)]="inspection.executionDate"
+            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="inspection.executionDate"
               name="executionDate" ngModel #executionDate="ngModel"></p-calendar>
             <app-message [control]="executorCompany.control" error="required" text="Campo obrigatório"></app-message>
           </div>

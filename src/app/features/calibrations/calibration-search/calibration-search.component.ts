@@ -6,6 +6,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { AuthService } from 'src/app/security/auth.service';
 
 import { CalibrationFilter, CalibrationService } from '../calibration.service';
+import { Calibration } from 'src/app/core/model/calibration';
 
 @Component({
   selector: 'app-calibration-search',
@@ -16,7 +17,7 @@ export class CalibrationSearchComponent implements OnInit {
 
   statusOptions: any[] = [{label: 'Todas', value: ''}, {label: 'Aguardando relatório', value: 'WAITING_REPORT'}, {label: 'Concluído', value: 'DONE'}];
 
-  calibrations = [];
+  calibrations: Calibration[] = [];
   totalElements: number = 0;
   filter = new CalibrationFilter();
 

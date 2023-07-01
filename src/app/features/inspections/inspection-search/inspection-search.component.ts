@@ -54,7 +54,7 @@ export class InspectionSearchComponent implements OnInit {
 
   delete(id: number) {
     this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir a calibração?\nAo confirmar, todos os arquivos e registros também serão excluídos permanentemente.',
+      message: 'Tem certeza que deseja excluir a inspeção?\nAo confirmar, todos os arquivos e registros também serão excluídos permanentemente.',
       accept: () => {
         this.inspectionService.delete(id).subscribe({
           next: res => {
