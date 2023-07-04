@@ -70,8 +70,7 @@ export class EquipmentFormComponent implements OnInit {
     if (id) {
       this.loadEquipment(id);
       this.title.setTitle('Atualização de Equipamento');
-      this.loadPressureIndicatorList(this.equipment.area.plant.id || 0);
-      this.loadPressureSafetyValveList();
+      this.loadPressureSafetyValveList(this.equipment.area.plant.id || 0);
       this.loadTestsList();
     }
   }
@@ -101,6 +100,7 @@ export class EquipmentFormComponent implements OnInit {
       next: (res) => {
         this.equipment = res;
         this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0)
+        this.loadPressureSafetyValveList(this.equipment?.area?.plant?.id || 0)
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -127,8 +127,8 @@ export class EquipmentFormComponent implements OnInit {
     });
   }
 
-  loadPressureSafetyValveList() {
-    this.pressureSafetyValveService.findAvailable().subscribe({
+  loadPressureSafetyValveList(plantId: number) {
+    this.pressureSafetyValveService.findAvailable(plantId).subscribe({
       next: (res) => {
         this.availablePressureSafetyValves = res;
       },
@@ -326,7 +326,6 @@ export class EquipmentFormComponent implements OnInit {
     this.equipmentService.bindPressureIndicator(this.equipment.id || 0, this.pressureIndicatorToBind.id || 0).subscribe({
       next: (res) => {
         this.loadEquipment(this.equipment.id || 0);
-        this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo vinculado com sucesso'});
       },
       error: (err) => {
@@ -339,7 +338,6 @@ export class EquipmentFormComponent implements OnInit {
   onBindPressureSafetyValve() {
     this.equipmentService.bindPressureSafetyValve(this.equipment.id || 0, this.pressureSafetyValveToBind.id || 0).subscribe({
       next: (res) => {
-        this.loadPressureSafetyValveList();
         this.loadEquipment(this.equipment.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo vinculado com sucesso'});
       },
@@ -353,7 +351,6 @@ export class EquipmentFormComponent implements OnInit {
   onUnbindPressureIndicator(id: number) {
     this.equipmentService.unbindPressureIndicator(this.equipment.id || 0, id).subscribe({
       next: (res) => {
-        this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0);
         this.loadEquipment(this.equipment.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo desvinculado com sucesso'});
       },
@@ -367,7 +364,6 @@ export class EquipmentFormComponent implements OnInit {
   onUnbindPressureSafetyValve(id: number) {
     this.equipmentService.unbindPressureSafetyValve(this.equipment.id || 0, id).subscribe({
       next: (res) => {
-        this.loadPressureSafetyValveList();
         this.loadEquipment(this.equipment.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo desvinculado com sucesso'});
       },
