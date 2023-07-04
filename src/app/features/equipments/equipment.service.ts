@@ -151,19 +151,11 @@ export class EquipmentService {
     return this.http.delete(`${this.baseUrl}/${id}/installation-project`);
   }
 
-  findEquipmentsSituation(filter: SituationFilter): Observable<Page<EquipmentSituation>> {
+  findEquipmentsSituation(plantId: number | null, page: number): Observable<Page<EquipmentSituation>> {
     let params = new HttpParams()
-      .set('page', filter.page)
-      .set('size', filter.size)
-      .set('status', 'active');
-
-    if (filter.tag) {
-      params = params.set('tag', filter.tag);
-    }
-
-    if (filter.plant) {
-      params = params.set('plant', filter.plant)
-    }
+      .set('page', page)
+      .set('size', 10)
+      .set('plantId', plantId || '');
     
     return this.http.get<Page<EquipmentSituation>>(`${this.baseUrl}/situation`, {params});
   }

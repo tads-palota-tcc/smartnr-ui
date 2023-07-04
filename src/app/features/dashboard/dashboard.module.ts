@@ -11,6 +11,7 @@ import { TableModule } from 'primeng/table';
 import { RouterModule } from '@angular/router';
 import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
@@ -23,6 +24,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     RouterModule,
     FormsModule,
     DashboardRoutingModule,
+    DropdownModule,
     SharedModule,
     PanelModule,
     ChartModule,

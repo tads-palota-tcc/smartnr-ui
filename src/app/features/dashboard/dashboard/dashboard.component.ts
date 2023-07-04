@@ -121,6 +121,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private equipmentService: EquipmentService,
+    private plantService: PlantService,
     private statisticsService: StatisticsService,
     private errorHandler: ErrorHandlerService
   ) {}
@@ -164,10 +165,26 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadPlants();
     this.searchEquipmentsSituation();
     this.findPlantsPendencies();
     this.findResponsiblePendencies()
     this.findCostForecast();
+  }
+
+  loadPlants() {
+    this.plantService.findAll().subscribe({
+      next: (res) => {
+        this.plants = res;
+      },
+      error: (err) => {
+        this.errorHandler.handle(err);
+      }
+    })
+  }
+
+  updateDashboard() {
+    this.searchEquipmentsSituation();
   }
 
   onChangeEquipmentsSituationPage(event: LazyLoadEvent) {
@@ -177,7 +194,7 @@ export class DashboardComponent implements OnInit {
 
   searchEquipmentsSituation(page: number = 0): void {
     this.filter.page = page;
-    this.equipmentService.findEquipmentsSituation(this.filter).subscribe({
+    this.equipmentService.findEquipmentsSituation(this.selectedPlant?.id || null, this.filter.page).subscribe({
       next: res => {
         this.equipmentsSituation = res.content;
         this.equipmentsSituationTotalElements = res.totalElements;

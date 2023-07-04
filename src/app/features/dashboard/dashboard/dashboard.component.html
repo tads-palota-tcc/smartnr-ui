@@ -5,6 +5,12 @@
       <h1>Dashboard</h1>
     </div>
 
+    <div class="col-12 md:col-3 p-fluid">
+      <label>Planta</label>
+      <p-dropdown [options]="plants" name="plant" [(ngModel)]="selectedPlant" optionLabel="code"
+        placeholder="Selecione uma Planta" [required]="false" (onChange)="updateDashboard()"></p-dropdown>
+    </div>
+
     <div class="col-12">
       <p-tabView>
 

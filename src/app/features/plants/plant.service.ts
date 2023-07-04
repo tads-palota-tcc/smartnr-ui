@@ -49,6 +49,10 @@ export class PlantService {
     return this.http.get<any>(this.plantsUrl, {params})
   }
 
+  findAll(): Observable<Plant[]> {
+    return this.http.get<Plant[]>(`${this.plantsUrl}/all`);
+  }
+
   findById(id: number): Observable<Plant> {
     return this.http.get<Plant>(`${this.plantsUrl}/${id}`);
   }
