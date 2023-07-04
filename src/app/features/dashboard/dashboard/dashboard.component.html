@@ -29,25 +29,33 @@
             </ng-template>
             <ng-template pTemplate="body" let-equipment>
               <tr>
-                <td><a href="/equipments/{{equipment.id}}">{{equipment.tag}}</a></td>
-                <td>{{equipment.plant}}</td>
                 <td>
-                  <p-tag [style]="{width: '60%'}"
+                  <span class="p-column-title">Equipamento</span>
+                  <a href="/equipments/{{equipment.id}}">{{equipment.tag}}</a>
+                </td>
+                <td>
+                  <span class="p-column-title">Planta</span>
+                  {{equipment.plant}}
+                </td>
+                <td>
+                  <span class="p-column-title">Inspeções</span>
+                  <p-tag [style]="{padding: '16px'}"
                     *ngIf="!equipment.expiredInspections && !equipment.nextToExpireInspections" icon="pi pi-check"
                     [rounded]="true" severity="success" value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.expiredInspections" icon="pi pi-times"
+                  <p-tag [style]="{padding: '16px'}" *ngIf="equipment.expiredInspections" icon="pi pi-times"
                     [rounded]="true" severity="danger" value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}"
+                  <p-tag [style]="{padding: '16px'}"
                     *ngIf="!equipment.expiredInspections && equipment.nextToExpireInspections" icon="pi pi-exclamation"
                     [rounded]="true" severity="warning" value="Vencendo"></p-tag>
                 </td>
                 <td>
-                  <p-tag [style]="{width: '60%'}"
+                  <span class="p-column-title">Calibrações</span>
+                  <p-tag [style]="{padding: '16px'}"
                     *ngIf="!equipment.expiredCalibrations && !equipment.nextToExpireCalibrations" icon="pi pi-check"
                     [rounded]="true" severity="success" value="Em dia"></p-tag>
-                  <p-tag [style]="{width: '60%'}" *ngIf="equipment.expiredCalibrations" icon="pi pi-times"
+                  <p-tag [style]="{padding: '16px'}" *ngIf="equipment.expiredCalibrations" icon="pi pi-times"
                     [rounded]="true" severity="danger" value="Atrasado"></p-tag>
-                  <p-tag [style]="{width: '60%'}"
+                  <p-tag [style]="{padding: '16px'}"
                     *ngIf="!equipment.expiredCalibrations && equipment.nextToExpireCalibrations"
                     icon="pi pi-exclamation" [rounded]="true" severity="warning" value="Vencendo"></p-tag>
                 </td>
