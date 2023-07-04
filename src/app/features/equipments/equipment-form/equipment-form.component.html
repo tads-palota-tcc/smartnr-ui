@@ -294,7 +294,7 @@
                     </td>
                     <td>
                       <span class="p-column-title">Nome</span>
-                      {{ pi.lastCalibration }}
+                      {{ pi.lastCalibrationDate | date: 'dd/MM/yyyy' }}
                     </td>
                     <td class="col-actions">
                       <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton
@@ -346,7 +346,7 @@
                     </td>
                     <td>
                       <span class="p-column-title">Nome</span>
-                      {{ psv.lastCalibration }}
+                      {{ psv.lastCalibrationDate | date: 'dd/MM/yyyy' }}
                     </td>
                     <td class="col-actions">
                       <button type="button" *ngIf="auth.hasPermission('EQUIPMENT_WRITE')" pButton

@@ -1,5 +1,7 @@
 import { ApplicableTestResponse } from './applicable-tests';
 import { Area } from './area';
+import { PressureIndicator } from './pressure-indicator';
+import { PressureSafetyValve } from './pressure-safety-valve';
 
 export class Equipment {
   id = 0;
@@ -29,8 +31,8 @@ export class Equipment {
   hasDatabook = false;
   hasSafetyJournal = false;
   hasInstallationProject = false;
-  pressureSafetyValves: any[] = [];
-  pressureIndicators: any[] = [];
+  pressureSafetyValves: PressureSafetyValve[] = [];
+  pressureIndicators: PressureIndicator[] = [];
   applicableTests: ApplicableTestResponse[] = [];
   active = false;
   databookFile = new File();
