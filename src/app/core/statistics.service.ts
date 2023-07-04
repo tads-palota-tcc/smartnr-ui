@@ -25,7 +25,7 @@ export class StatisticsService {
     return this.http.get<PendencyByResponsible[]>(`${this.baseUrl}/responsibles-pendencies`);
   }
   
-  findCostForecast(plantId: number): Observable<CostForecast[]> {
+  findCostForecast(plantId: number | ''): Observable<CostForecast[]> {
     return this.http.get<CostForecast[]>(`${this.baseUrl}/costs-forecast?plantId=${plantId}`);
   }
 

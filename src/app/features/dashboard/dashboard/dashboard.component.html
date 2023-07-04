@@ -29,7 +29,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-equipment>
               <tr>
-                <td><a routerLink="/">{{equipment.tag}}</a></td>
+                <td><a href="/equipments/{{equipment.id}}">{{equipment.tag}}</a></td>
                 <td>{{equipment.plant}}</td>
                 <td>
                   <p-tag [style]="{width: '60%'}"

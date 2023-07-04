@@ -39,6 +39,7 @@ export class Equipment {
 }
 
 export class EquipmentSituation {
+  id = 0;
   tag = '';
   plant = '';
   expiredInspections = 0;
