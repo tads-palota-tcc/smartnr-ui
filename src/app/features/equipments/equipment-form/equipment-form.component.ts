@@ -68,11 +68,11 @@ export class EquipmentFormComponent implements OnInit {
     this.title.setTitle('Cadastro de Equipamento');
     const id = this.route.snapshot.params['id'];
     if (id) {
+      this.loadEquipment(id);
       this.title.setTitle('Atualização de Equipamento');
-      this.loadPressureIndicatorList();
+      this.loadPressureIndicatorList(this.equipment.area.plant.id || 0);
       this.loadPressureSafetyValveList();
       this.loadTestsList();
-      this.loadEquipment(id);
     }
   }
 
@@ -100,6 +100,7 @@ export class EquipmentFormComponent implements OnInit {
     this.equipmentService.findById(id).subscribe({
       next: (res) => {
         this.equipment = res;
+        this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0)
       },
       error: (err) => {
         this.errorHandler.handle(err);
@@ -115,8 +116,8 @@ export class EquipmentFormComponent implements OnInit {
     });
   }
 
-  loadPressureIndicatorList() {
-    this.pressureIndicatorService.findAvailable().subscribe({
+  loadPressureIndicatorList(plantId: number) {
+    this.pressureIndicatorService.findAvailable(plantId).subscribe({
       next: (res) => {
         this.availablePressureIndicators = res;
       },
@@ -324,8 +325,8 @@ export class EquipmentFormComponent implements OnInit {
   onBindPressureIndicator() {
     this.equipmentService.bindPressureIndicator(this.equipment.id || 0, this.pressureIndicatorToBind.id || 0).subscribe({
       next: (res) => {
-        this.loadPressureIndicatorList();
         this.loadEquipment(this.equipment.id || 0);
+        this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo vinculado com sucesso'});
       },
       error: (err) => {
@@ -352,7 +353,7 @@ export class EquipmentFormComponent implements OnInit {
   onUnbindPressureIndicator(id: number) {
     this.equipmentService.unbindPressureIndicator(this.equipment.id || 0, id).subscribe({
       next: (res) => {
-        this.loadPressureIndicatorList();
+        this.loadPressureIndicatorList(this.equipment?.area?.plant?.id || 0);
         this.loadEquipment(this.equipment.id || 0);
         this.messageService.add({severity: 'success', detail: 'Dispositivo desvinculado com sucesso'});
       },

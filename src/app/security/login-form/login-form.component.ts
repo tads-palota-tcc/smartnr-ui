@@ -24,8 +24,6 @@ export class LoginFormComponent {
   login() {
     const resultado = this.authService.login(this.email, this.password).subscribe({
       next: (res) => {
-        console.log('LoginForm.login')
-        console.log(res);
         this.authService.storeToken(res.access_token);
         this.authService.storeRefreshToken(res.refresh_token);
         this.router.navigate(['/dashboard']);

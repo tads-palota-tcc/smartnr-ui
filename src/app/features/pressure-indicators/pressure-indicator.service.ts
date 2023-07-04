@@ -70,8 +70,8 @@ export class PressureIndicatorService {
     return this.http.get<CalibrationSummary[]>(`${this.deviceUrl}/${deviceId}/calibrations`);
   }
 
-  findAvailable(): Observable<PressureIndicator[]> {
-    return this.http.get<PressureIndicator[]>(`${this.baseUrl}/available`);
+  findAvailable(plantId: number): Observable<PressureIndicator[]> {
+    return this.http.get<PressureIndicator[]>(`${this.baseUrl}/available?plantId=${plantId}`);
   }
 
   update(id: number, object: PressureIndicator): Observable<PressureIndicator> {

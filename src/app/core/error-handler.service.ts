@@ -11,7 +11,6 @@ export class ErrorHandlerService {
   constructor(private messageService: MessageService, private router: Router) { }
 
   handle(errorResponse: any) {
-    console.log(typeof errorResponse)
     let message: string;
 
     if (typeof errorResponse === 'string') {

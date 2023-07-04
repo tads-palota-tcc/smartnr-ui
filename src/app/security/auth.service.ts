@@ -26,7 +26,6 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    console.log('Service.login');
     return this.http.post<AuthResponse>(`${this.authUrl}/login`, {email, password});
   }
 

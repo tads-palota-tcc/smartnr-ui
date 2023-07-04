@@ -165,15 +165,12 @@ export class InspectionFormComponent implements OnInit {
   }
 
   private create(form: NgForm) {
-    console.log('create - inspection')
-    console.log(this.inspection);
     this.inspectionService.create(this.inspection).subscribe({
       next: (res) => {
         this.messageService.add({severity: 'success', detail: 'Inspeção cadastrada com sucesso'});
         this.router.navigate([`/inspections/${res?.id}`])
       },
       error: (err) => {
-        console.log(err)
         this.errorHandler.handle(err);
       }
     });

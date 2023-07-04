@@ -14,7 +14,6 @@ export class NavbarComponent {
   constructor(public authService: AuthService, public router: Router) {}
 
   logout() {
-    console.log('Logout')
     this.authService.clearAccessToken();
     this.router.navigate(['auth/login']);
   }
